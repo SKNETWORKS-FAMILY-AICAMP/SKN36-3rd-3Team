@@ -1,0 +1,11 @@
+# 초기 RAG 후보 의존성. 설치·통합 검증 후 버전 고정 예정.
+python-dotenv
+langchain
+langchain-community
+langchain-openai
+langchain-text-splitters
+langchain-chroma
+chromadb
+pandas
+requests
+pypdf
