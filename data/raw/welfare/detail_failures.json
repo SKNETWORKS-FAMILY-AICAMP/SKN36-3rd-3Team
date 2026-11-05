@@ -1,0 +1,7 @@
+[
+  {
+    "servId": "WLF00001100",
+    "error_type": "RuntimeError",
+    "error": "HTTP 429: <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OpenAPI_ServiceResponse>\n<cmmMsgHeader>\n  <errMsg>LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR</errMsg>\n  <returnAuthMsg>일일 서비스 요청제한 횟수 초과 에러</returnAuthMsg>\n  <returnReasonCode>22</returnReasonCode>\n</cmmMsgHeader>\n</OpenAPI_ServiceResponse>\n"
+  }
+]
