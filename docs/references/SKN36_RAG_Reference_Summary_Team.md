@@ -1,3 +1,5 @@
+# Issue: 이전 기수 유사 프로젝트 조사 및 Markdown 업로드 #3 [https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN36-3rd-3Team/issues/3#issue-6194798455]
+
 # SKN36 3팀 | 이전 기수 RAG 프로젝트 벤치마킹 핵심 요약
 
 > **팀원 공통 열람용 · 2026.11.05 · 5명(팀장 1명 포함) · 7일 MVP**  
