@@ -9,3 +9,4 @@ chromadb
 pandas
 requests
 pypdf
+streamlit==1.56.0
