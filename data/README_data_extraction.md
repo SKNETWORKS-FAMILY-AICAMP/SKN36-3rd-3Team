@@ -1,3 +1,8 @@
+## 🔗 관련 Issue
+
+Refs #고령층을 위한 정책 데이터셋 및 API 조사 #1
+https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN36-3rd-3Team/issues/1#issue-6194793784
+
 # docs: 고령층 복지정책 API 조사·수집 결과 및 챗봇 활용 계획 정리
 
 ## 📌 PR 개요
@@ -91,10 +96,6 @@ servId 추출 → 상세 API 개별 요청 (XML)
 - `README_welfare_data_collection.md` — API 수집 및 데이터 구조 상세 설명
 - `ISSUE_고령층_정책데이터_API_수집_활용.md` — Issue 요구사항 대응 상세 보고서
 - [공공데이터포털 API 상세 페이지](https://www.data.go.kr/data/15090532/openapi.do)
-
-## 🔗 관련 Issue
-
-Refs #이슈번호
 
 > PR 등록 전에 `#이슈번호`를 실제 Issue 번호로 교체해 주세요. 위 관련 문서도 실제 커밋에 포함된 경우에만 유지해 주세요.
 
