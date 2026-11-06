@@ -1,0 +1,17 @@
+{
+  "source_url": "https://www.data.go.kr/data/15056929/openapi.do",
+  "endpoint": "",
+  "format": "json",
+  "key_param": "",
+  "page_param": "",
+  "size_param": "",
+  "page_size": 100,
+  "max_pages": 1000,
+  "start_page": 1,
+  "records_path": "",
+  "total_path": "",
+  "success_path": "",
+  "success_values": [],
+  "params": {},
+  "field_map": {"id": "", "title": "", "address": "", "phone": "", "sido": "", "sigungu": ""}
+}
