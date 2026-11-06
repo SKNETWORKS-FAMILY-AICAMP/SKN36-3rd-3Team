@@ -1,238 +1,217 @@
+"""중앙부처 복지서비스 상세정보 수집기 (기존 파일 보존/이어받기).
 
-import os
+위치: <프로젝트>/scripts/collect_welfare_details.py
+데이터: <프로젝트>/data/raw/welfare/
+실행: py scripts/collect_welfare_details.py
+사전 점검(호출 없음): py scripts/collect_welfare_details.py --check
+필수 라이브러리: requests
+"""
+
+import argparse
 import json
+import os
+import re
 import time
-import random
-import requests
 import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
 from pathlib import Path
 
-# =====================================
-# 1. 기본 설정
-# =====================================
+import requests
 
-API_KEY = os.environ["DATA_API_KEY"]
+# 스크립트 위치를 기준으로 계산하므로 현재 터미널 위치와 무관합니다.
+ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = ROOT / "data" / "raw" / "welfare"
+LIST_FILE = DATA_DIR / "welfare_list.json"
+DETAIL_DIR = DATA_DIR / "details"
+LOG_FILE = DATA_DIR / "detail_failures.json"
 
 API_URL = (
     "http://apis.data.go.kr/B554287/"
-    "NationalWelfareInformationsV001/"
-    "NationalWelfaredetailedV001"
+    "NationalWelfareInformationsV001/NationalWelfaredetailedV001"
 )
+MAX_CALLS_PER_RUN = 100  # 상세조회: 활용 신청 화면 기준 일일 100회 (재시도 포함)
+WAIT_SECONDS = 2.0
+RETRY_COUNT = 2  # 일시적 네트워크/서버 오류에만 최대 2회 추가 시도
 
-DATA_DIR = Path("welfare_data")
-DETAIL_DIR = DATA_DIR / "details"
 
-DETAIL_DIR.mkdir(parents=True, exist_ok=True)
+class StopCollection(Exception):
+    """재시도하지 않고 수집을 멈춰야 하는 상황."""
 
-LIST_PATH = DATA_DIR / "welfare_list.json"
-FAIL_PATH = DATA_DIR / "detail_failures.json"
 
-# API 요청 사이 대기 시간
-REQUEST_DELAY = 2
-
-# 일시적 오류 재시도 횟수
-MAX_RETRIES = 3
-
-# =====================================
-# 2. 기존 목록 불러오기
-# =====================================
-
-with open(LIST_PATH, "r", encoding="utf-8") as f:
-    services = json.load(f)
-
-print("=" * 50)
-print("중앙부처 복지서비스 상세정보 수집 시작")
-print(f"전체 서비스: {len(services)}건")
-print("=" * 50)
-
-# =====================================
-# 3. XML 응답 검사
-# =====================================
-
-def validate_xml(content, expected_id):
-    root = ET.fromstring(content)
-
-    result_code = root.findtext("resultCode")
-    result_message = root.findtext("resultMessage")
-
-    if result_code != "0":
-        raise ValueError(
-            f"API 응답 오류: {result_code} / {result_message}"
+def load_api_key():
+    """환경변수 우선, 없으면 프로젝트 루트의 .env에서 인증키를 읽습니다."""
+    key = os.environ.get("DATA_API_KEY", "").strip()
+    if not key or "발급받은" in key or "여기에" in key:
+        env_file = ROOT / ".env"
+        if env_file.is_file():
+            for line in env_file.read_text(encoding="utf-8-sig").splitlines():
+                name, sep, value = line.strip().partition("=")
+                if sep and name.strip() == "DATA_API_KEY":
+                    key = value.strip().strip('"').strip("'")
+                    break
+    if not key or "발급받은" in key or "여기에" in key:
+        raise SystemExit(
+            "API 인증키가 없습니다. 최상위 .env에 DATA_API_KEY=실제키 를 "
+            "설정하거나 PowerShell 환경변수에 설정하세요."
         )
+    return key
 
-    returned_id = root.findtext("servId")
 
-    if returned_id != expected_id:
-        raise ValueError(
-            f"서비스 ID 불일치: {returned_id}"
+def validate_xml(raw, expected_id):
+    """서비스 ID, 결과 코드, 필수 필드를 확인합니다."""
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError:
+        raise ValueError("올바른 XML 응답이 아닙니다") from None
+
+    code = (root.findtext("resultCode") or "").strip()
+    if code != "0":
+        api_error = (
+            root.findtext(".//errMsg")
+            or root.findtext(".//returnAuthMsg")
+            or root.findtext("resultMessage")
+            or "상세 오류 메시지 없음"
         )
+        raise ValueError(f"API 오류 (resultCode={code or '없음'}): {api_error[:150]}")
 
-    if not root.findtext("servNm"):
-        raise ValueError("서비스명이 없습니다.")
+    if (root.findtext("servId") or "").strip() != expected_id:
+        raise ValueError("서비스 ID 불일치")
+    if not (root.findtext("servNm") or "").strip():
+        raise ValueError("서비스명 누락")
 
-    return root
 
-# =====================================
-# 4. API 요청 함수
-# =====================================
-
-def fetch_detail(serv_id):
-
-    params = {
-        "serviceKey": API_KEY,
-        "servId": serv_id
-    }
-
-    for attempt in range(1, MAX_RETRIES + 1):
+def fetch_detail(session, api_key, serv_id, usage):
+    """API 요청. HTTP 429/인증 오류/비정상 XML이면 즉시 중단합니다."""
+    for attempt in range(RETRY_COUNT + 1):
+        if usage["calls"] >= MAX_CALLS_PER_RUN:
+            raise StopCollection("이번 실행의 API 요청 100회에 도달했습니다")
+        usage["calls"] += 1
 
         try:
-            response = requests.get(
+            response = session.get(
                 API_URL,
-                params=params,
-                timeout=30
+                params={"serviceKey": api_key, "callTp": "D", "servId": serv_id},
+                timeout=30,
             )
-
-            # 호출 제한 또는 인증 문제
-            if response.status_code in [401, 403, 429]:
-                raise RuntimeError(
-                    f"HTTP {response.status_code}: "
-                    f"{response.text[:300]}"
-                )
-
-            response.raise_for_status()
-
-            validate_xml(response.content, serv_id)
-
-            return response.content
-
-        except (
-            requests.exceptions.Timeout,
-            requests.exceptions.ConnectionError
-        ) as e:
-
-            print(f"  일시적 네트워크 오류: {e}")
-
-            if attempt == MAX_RETRIES:
-                raise
-
-            wait = min(30, 2 ** attempt + random.random())
-            print(f"  {wait:.1f}초 후 재시도")
-            time.sleep(wait)
-
-        except requests.exceptions.HTTPError as e:
-
-            status = e.response.status_code
-
-            if status not in [500, 502, 503, 504]:
-                raise
-
-            if attempt == MAX_RETRIES:
-                raise
-
-            wait = min(30, 2 ** attempt + random.random())
-            print(f"  서버 오류 {status}, {wait:.1f}초 대기")
-            time.sleep(wait)
-
-    raise RuntimeError("최대 재시도 횟수 초과")
-
-# =====================================
-# 5. 기존 파일 검증 및 수집
-# =====================================
-
-success = 0
-skipped = 0
-failed = []
-
-try:
-    for index, service in enumerate(services, 1):
-
-        serv_id = service.get("servId")
-
-        if not serv_id:
-            failed.append({
-                "index": index,
-                "error": "servId 없음"
-            })
+        except (requests.Timeout, requests.ConnectionError) as exc:
+            if attempt == RETRY_COUNT:
+                raise StopCollection(f"네트워크 오류 반복: {type(exc).__name__}") from None
+            time.sleep(3 * (attempt + 1))
             continue
+        except requests.RequestException as exc:
+            # 요청 URL에는 인증키가 포함될 수 있어 예외 전문을 출력하지 않습니다.
+            raise StopCollection(f"요청 오류: {type(exc).__name__}") from None
 
-        output_path = DETAIL_DIR / f"{serv_id}.xml"
-
-        # 기존 파일이 있으면 내용까지 검증
-        if output_path.exists():
-
-            try:
-                validate_xml(
-                    output_path.read_bytes(),
-                    serv_id
-                )
-
-                skipped += 1
-                print(
-                    f"[{index}/{len(services)}] "
-                    f"기존 파일 확인: {serv_id}"
-                )
-                continue
-
-            except Exception as e:
-                print(
-                    f"기존 파일 검증 실패: {serv_id} / {e}"
-                )
-                print("해당 파일을 다시 수집합니다.")
+        if response.status_code == 429:
+            raise StopCollection("HTTP 429: 일일 호출 한도 초과 (초기화 후 재실행)")
+        if response.status_code in (401, 403):
+            raise StopCollection(f"HTTP {response.status_code}: 인증키 또는 사용 권한 확인 필요")
+        if response.status_code in (500, 502, 503, 504):
+            if attempt == RETRY_COUNT:
+                raise StopCollection(f"서버 오류 반복: HTTP {response.status_code}")
+            time.sleep(3 * (attempt + 1))
+            continue
+        if response.status_code != 200:
+            raise StopCollection(f"HTTP {response.status_code}: 응답 확인 필요")
 
         try:
-            content = fetch_detail(serv_id)
+            validate_xml(response.content, serv_id)
+        except ValueError as exc:
+            raise StopCollection(str(exc).replace(api_key, "[REDACTED]")) from None
+        return response.content
 
-            # 저장 도중 중단되어도 기존 파일 보호
-            temp_path = output_path.with_suffix(".xml.tmp")
-            temp_path.write_bytes(content)
-            os.replace(temp_path, output_path)
+    raise StopCollection("요청 재시도 횟수를 초과했습니다")
 
-            success += 1
 
-            print(
-                f"[{index}/{len(services)}] "
-                f"수집 성공: {serv_id}"
+def main():
+    parser = argparse.ArgumentParser(description="복지서비스 상세 XML 이어받기 수집")
+    parser.add_argument("--check", action="store_true", help="기존 파일만 검사 (API 호출 0회)")
+    args = parser.parse_args()
+
+    if not LIST_FILE.is_file():
+        raise SystemExit(f"목록 JSON을 찾을 수 없습니다: {LIST_FILE}")
+    services = json.loads(LIST_FILE.read_text(encoding="utf-8"))
+    if not isinstance(services, list):
+        raise SystemExit("목록 JSON은 서비스 객체의 배열이어야 합니다")
+    DETAIL_DIR.mkdir(parents=True, exist_ok=True)
+
+    # 첫 실행 시 경로·기존 파일 정상 여부만 확인하는 모드
+    if args.check:
+        valid = invalid = 0
+        for service in services:
+            serv_id = str(service.get("servId") or "").strip()
+            file = DETAIL_DIR / f"{serv_id}.xml"
+            if not serv_id or not file.is_file():
+                continue
+            try:
+                validate_xml(file.read_bytes(), serv_id)
+                valid += 1
+            except ValueError:
+                invalid += 1
+        print(f"전체 목록: {len(services)}건")
+        print(f"정상 기존 상세 파일: {valid}건 / 비정상 기존 파일: {invalid}건")
+        print(f"미수집 또는 재수집 필요: {len(services) - valid}건")
+        print("--check 모드: API 호출 없이 종료했습니다.")
+        return
+
+    api_key = load_api_key()
+    usage = {"calls": 0}
+    previous = new = 0
+    failures = []
+    print(f"목록 {len(services)}건 / 회당 최대 {MAX_CALLS_PER_RUN}회 요청")
+    print(f"저장 위치: {DETAIL_DIR}")
+
+    with requests.Session() as session:
+        try:
+            for index, service in enumerate(services, 1):
+                serv_id = str(service.get("servId") or "").strip()
+                if not re.fullmatch(r"[A-Za-z0-9_-]+", serv_id):
+                    failures.append({"index": index, "error": "서비스 ID 누락/형식 오류"})
+                    continue
+
+                output = DETAIL_DIR / f"{serv_id}.xml"
+                if output.is_file():
+                    try:
+                        validate_xml(output.read_bytes(), serv_id)
+                        previous += 1
+                        continue
+                    except ValueError:
+                        print(f"[{index}/{len(services)}] 기존 XML 검증 실패 → 재수집: {serv_id}")
+
+                if usage["calls"] >= MAX_CALLS_PER_RUN:
+                    print("실행당 API 요청 제한에 도달하여 중단합니다.")
+                    break
+
+                try:
+                    xml_data = fetch_detail(session, api_key, serv_id, usage)
+                    temp = output.with_suffix(".xml.tmp")
+                    temp.write_bytes(xml_data)
+                    os.replace(temp, output)  # 정상 응답 검증 후 파일 저장
+                    new += 1
+                    print(f"[{index}/{len(services)}] 저장 성공: {serv_id} (요청 {usage['calls']}회)")
+                    time.sleep(WAIT_SECONDS)
+                except StopCollection as exc:
+                    print(f"[{index}/{len(services)}] 수집 중단: {serv_id} / {exc}")
+                    failures.append({"servId": serv_id, "error": str(exc)})
+                    break
+        except KeyboardInterrupt:
+            print("\nCtrl+C 중단: 기존에 저장한 XML은 유지됩니다.")
+        finally:
+            LOG_FILE.write_text(
+                json.dumps(
+                    {"time_utc": datetime.now(timezone.utc).isoformat(),
+                     "requests_this_run": usage["calls"], "failures": failures},
+                    ensure_ascii=False, indent=2,
+                ),
+                encoding="utf-8",
             )
+            print("\n===== 수집 결과 =====")
+            print(f"기존 정상 파일(이번 순회에서 확인): {previous}건")
+            print(f"신규 저장 파일: {new}건")
+            print(f"이번 실행 API 요청 횟수(재시도 포함): {usage['calls']}회")
+            print(f"실패/중단 기록: {LOG_FILE}")
+            print("다시 실행하면 정상 저장된 파일은 자동으로 건너뜁니다.")
 
-        except Exception as e:
 
-            error_message = str(e)
-
-            failed.append({
-                "servId": serv_id,
-                "error_type": type(e).__name__,
-                "error": error_message
-            })
-
-            print("\n" + "=" * 50)
-            print("API 수집 오류 발생")
-            print(f"서비스 ID: {serv_id}")
-            print(f"오류 유형: {type(e).__name__}")
-            print(f"오류 내용: {error_message}")
-            print("=" * 50)
-
-            # 연속 오류 방지를 위해 즉시 중단
-            print("추가 API 호출을 중단합니다.")
-            break
-
-        time.sleep(REQUEST_DELAY)
-
-except KeyboardInterrupt:
-    print("\n사용자가 수집을 중단했습니다.")
-
-finally:
-    with open(FAIL_PATH, "w", encoding="utf-8") as f:
-        json.dump(
-            failed,
-            f,
-            ensure_ascii=False,
-            indent=2
-        )
-
-    print("\n" + "=" * 50)
-    print("수집 작업 종료")
-    print(f"이번 실행 신규 수집: {success}건")
-    print(f"기존 정상 파일: {skipped}건")
-    print(f"이번 실행 실패: {len(failed)}건")
-    print(f"확인된 정상 파일: {success + skipped}건")
-    print("=" * 50)
+if __name__ == "__main__":
+    main()
