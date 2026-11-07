@@ -1,41 +1,42 @@
+"""중앙부처 복지서비스 목록 API 연결 검사 (1회 요청).
 
-import os
+사용: uv run python scripts/test_api.py
+설정: 프로젝트 최상위 .env 에 DATA_API_KEY=새_디코딩_인증키
+실패하더라도 요청 URL/인증키를 출력하지 않습니다.
+"""
+
 import requests
-import xml.etree.ElementTree as ET
+from _welfare_api import LIST_URL, WelfareAPIError, load_api_key, safe_get_xml
 
-API_KEY = os.environ["DATA_API_KEY"]
 
-url = (
-    "http://apis.data.go.kr/B554287/"
-    "NationalWelfareInformationsV001/"
-    "NationalWelfarelistV001"
-)
+def main() -> None:
+    key = load_api_key()
+    with requests.Session() as session:
+        _, root = safe_get_xml(
+            session,
+            LIST_URL,
+            {
+                "serviceKey": key,
+                "callTp": "L",
+                "pageNo": 1,
+                "numOfRows": 5,
+                "srchKeyCode": "001",
+            },
+        )
 
-params = {
-    "serviceKey": API_KEY,
-    "callTp": "L",
-    "pageNo": 1,
-    "numOfRows": 10,
-    "srchKeyCode": "001"
-}
+    count = root.findtext("totalCount")
+    items = root.findall(".//servList")
+    print("HTTP 상태: 200")
+    print("API 결과 코드: 0")
+    print("전체 서비스 수:", count or "정보 없음")
+    print("첫 페이지 정책:")
+    for service in items:
+        print(" -", service.findtext("servId", ""), service.findtext("servNm", ""))
+    print("API 연결 확인 완료 (인증키 비공개)")
 
-response = requests.get(
-    url,
-    params=params,
-    timeout=30
-)
 
-response.raise_for_status()
-
-root = ET.fromstring(response.content)
-
-print("HTTP 상태:", response.status_code)
-print("전체 서비스 수:", root.findtext("totalCount"))
-print("결과 코드:", root.findtext("resultCode"))
-print("결과 메시지:", root.findtext("resultMessage"))
-
-for service in root.findall("servList"):
-    print(
-        service.findtext("servId"),
-        service.findtext("servNm")
-    )
+if __name__ == "__main__":
+    try:
+        main()
+    except WelfareAPIError as exc:
+        raise SystemExit(str(exc)) from None

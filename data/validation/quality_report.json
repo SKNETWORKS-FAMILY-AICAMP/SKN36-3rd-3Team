@@ -1,0 +1,60 @@
+{
+  "report_type": "RAG_pre_splitting_data_validation",
+  "run_utc": "2026-11-07T10:15:00.346692+00:00",
+  "source_root": ".",
+  "scope": "before_rag_splitting",
+  "central_list_count": 461,
+  "central_valid_xml": 299,
+  "central_missing_xml": 162,
+  "local_input_found": false,
+  "local_input_file": null,
+  "facilities_input_found": false,
+  "central_input_file": "data/raw/welfare/welfare_list.json",
+  "policy_count": 461,
+  "unique_policy_ids": 461,
+  "by_source_quality": {
+    "central_welfare_api|detail_complete": 299,
+    "central_welfare_api|list_only": 162
+  },
+  "policy_counts_by_sido": {
+    "미확인": 461
+  },
+  "detail_missing_count": 162,
+  "field_missing_count": {
+    "target_text": 162,
+    "selection_criteria_text": 162,
+    "benefit_text": 162,
+    "application_text": 162
+  },
+  "facility_count": 0,
+  "facility_region_counts": {},
+  "facility_invalid_coordinates": 0,
+  "duplicate_policy_id_count": 0,
+  "source_issue_count": 0,
+  "pending_region_review": 461,
+  "pending_policy_pdf_links": 0,
+  "invalid_source_url_count": 0,
+  "elderly_relevance_counts": {
+    "unclassified_needs_review": 319,
+    "candidate": 142
+  },
+  "same_title_review_count": 0,
+  "data_complete_for_splitting": false,
+  "pdf": {
+    "pdf_count": 0,
+    "pdf_pages": 0,
+    "pdf_sections": 0,
+    "pdf_tables_detected": 0,
+    "pages_for_visual_review": 0,
+    "all_sections_review_pending": true,
+    "pdf_source_availability": "missing"
+  },
+  "limitations": [
+    "Only input files physically present were processed; unavailable PDFs/local welfare/VWorld sources are not treated as completed.",
+    "Region scope is not approved automatically. Missing county name does not imply nationwide or province-wide coverage.",
+    "Policy-PDF links require human review; there is no automatic approval.",
+    "The XML repeat fields are preserved in central_detail_parsed.jsonl, including multi-step application procedure.",
+    "PDF sections are preliminary: bookmarks or page-level fallback. Semantic boundaries and tables require human checking.",
+    "No RAG splitting, embedding, vector index, PostgreSQL write or external API request was performed."
+  ]
+}
