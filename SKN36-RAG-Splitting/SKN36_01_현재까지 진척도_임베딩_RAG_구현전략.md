@@ -1,5 +1,9 @@
 # SKN36 3차 프로젝트 | 전체 브랜치 진단 및 RAG 구현 종합 전략
 
+정리된 자료를 전달받아 청킹 작업 #9
+https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN36-3rd-3Team/issues/9#issue-6237876675
+
+
 > **조사 기준:** 2026-11-09 (KST)  
 > **대상 저장소:** [SKNETWORKS-FAMILY-AICAMP/SKN36-3rd-3Team](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN36-3rd-3Team)  
 > **목적:** *RAG를 얼마나 이해하고 논리적으로 설계·구현·평가했는지* 보여 주는 교육용 MVP 완성  
