@@ -1,11 +1,11 @@
 {
   "report_type": "RAG_pre_splitting_data_validation",
-  "run_utc": "2026-11-08T14:33:24.090315+00:00",
+  "run_utc": "2026-11-08T15:20:20.555591+00:00",
   "source_root": ".",
   "scope": "before_rag_splitting",
   "central_list_count": 461,
-  "central_valid_xml": 399,
-  "central_missing_xml": 62,
+  "central_valid_xml": 461,
+  "central_missing_xml": 0,
   "local_input_found": false,
   "local_input_file": null,
   "facilities_input_found": false,
@@ -13,19 +13,13 @@
   "policy_count": 461,
   "unique_policy_ids": 461,
   "by_source_quality": {
-    "central_welfare_api|detail_complete": 399,
-    "central_welfare_api|list_only": 62
+    "central_welfare_api|detail_complete": 461
   },
   "policy_counts_by_sido": {
     "미확인": 461
   },
-  "detail_missing_count": 62,
-  "field_missing_count": {
-    "target_text": 62,
-    "selection_criteria_text": 62,
-    "benefit_text": 62,
-    "application_text": 62
-  },
+  "detail_missing_count": 0,
+  "field_missing_count": {},
   "facility_count": 0,
   "facility_region_counts": {},
   "facility_invalid_coordinates": 0,
@@ -35,8 +29,8 @@
   "pending_policy_pdf_links": 0,
   "invalid_source_url_count": 0,
   "elderly_relevance_counts": {
-    "unclassified_needs_review": 313,
-    "candidate": 148
+    "unclassified_needs_review": 310,
+    "candidate": 151
   },
   "same_title_review_count": 0,
   "data_complete_for_splitting": false,

@@ -399,64 +399,64 @@ central:WLF00000095,사회보험사각지대해소 사업(두루누리 사회보
 central:WLF00003180,긴급복지 생계지원,,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00003179,긴급복지 의료지원,,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00001183,다문화보육료지원,영유아,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006282,보훈가족 심리재활서비스 지원,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006265,연탄쿠폰,"아동,청소년,청년,중장년,노년",candidate,original_life_stage_tag,pending
+central:WLF00006282,보훈가족 심리재활서비스 지원,"노년, 청년, 중장년",candidate,original_life_stage_tag,pending
+central:WLF00006265,연탄쿠폰,"중장년, 노년, 청소년, 아동, 청년",candidate,original_life_stage_tag,pending
 central:WLF00006310,개인회생 파산 종합지원(지원센터),,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006314,사회통합프로그램,,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006311,법문화교육(교육센터),청소년,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006317,발달장애인 자기주도 재직자 훈련,,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006324,무료법률구조,,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006331,자살예방센터 운영,,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006333,건강보험 산정특례,,unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006333,건강보험 산정특례,,candidate,source_text_mention,pending
 central:WLF00006309,법률구조,,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006298,자동차사고 피해자 지원사업,,unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006298,자동차사고 피해자 지원사업,,candidate,source_text_mention,pending
 central:WLF00006308,무료법률상담,,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006294,장애인 등록 신청,,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006315,가족전용상담전화,"영유아,아동,청소년,청년,중장년,노년,임신 · 출산",candidate,original_life_stage_tag,pending
+central:WLF00006315,가족전용상담전화,"영유아, 중장년, 임신 · 출산, 노년, 청소년, 아동, 청년",candidate,original_life_stage_tag,pending
 central:WLF00006318,경계선지능청년지원 사업,청년,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006266,청년미래적금,청년,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006335,유아 단계적 무상교육·보육 실현,영유아,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006334,장애인거주시설 이용,,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006332,아동 입원진료비 지원,아동,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006319,대지급금,"청소년,청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006290,경남동행론(직접대출),"청년,중장년,노년",candidate,original_life_stage_tag,pending
+central:WLF00006319,대지급금,"청년, 청소년, 노년, 중장년",candidate,original_life_stage_tag,pending
+central:WLF00006290,경남동행론(직접대출),"노년, 청년, 중장년",candidate,original_life_stage_tag,pending
 central:WLF00006316,전문기술인재장학금,청년,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006313,건강보험 임신출산 진료비(국민행복카드),"영유아,임신 · 출산",unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006312,성매매 방지 및 피해자 지원,"아동,청소년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006307,자립지원 전담기관 운영,"아동,청소년,청년",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006313,건강보험 임신출산 진료비(국민행복카드),"임신 · 출산, 영유아",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006312,성매매 방지 및 피해자 지원,"아동, 청소년, 노년",candidate,original_life_stage_tag,pending
+central:WLF00006307,자립지원 전담기관 운영,"아동, 청소년, 청년",unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006306,중앙취업지원센터 운영 지원,청소년,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006305,고졸자 후속관리 지원모델 개발사업,청년,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006304,보훈원 양육지원,"아동,청소년",unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006301,"위기청년(가족돌봄, 고립은둔) 전담 지원사업","청소년,청년",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006304,보훈원 양육지원,"청소년, 아동",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006301,"위기청년(가족돌봄, 고립은둔) 전담 지원사업","청년, 청소년",candidate,source_text_mention,pending
 central:WLF00006299,지역장애인보건의료센터,,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006303,치매안심재산관리서비스 시범사업,"중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006302,성착취 피해 아동·청소년 퇴소자립지원수당,"아동,청소년",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006303,치매안심재산관리서비스 시범사업,"노년, 중장년",candidate,original_life_stage_tag,pending
+central:WLF00006302,성착취 피해 아동·청소년 퇴소자립지원수당,"아동, 청소년",unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006300,조산아 및 저체중출생아 본인부담금 경감,영유아,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006297,장애인 창업보육실 운영,"청년,중장년",unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006293,4·19혁명공로수당,"청년,중장년",unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006296,국가보훈대상자 친환경차량(전기･수소차) 지원,"청년,중장년,노년",candidate,original_life_stage_tag,pending
+central:WLF00006297,장애인 창업보육실 운영,"중장년, 청년",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006293,4·19혁명공로수당,"청년, 중장년",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006296,국가보훈대상자 친환경차량(전기･수소차) 지원,"노년, 청년, 중장년",candidate,original_life_stage_tag,pending
 central:WLF00006292,난임치료휴가급여 지원,임신 · 출산,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006295,마을변호사,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006288,서민금융진흥원 금융상품 알선,"청년,중장년",unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006264,생활안정자금(융자)(이차보전),"청년,중장년,노년",candidate,original_life_stage_tag,pending
+central:WLF00006295,마을변호사,"중장년, 청년, 노년",candidate,original_life_stage_tag,pending
+central:WLF00006288,서민금융진흥원 금융상품 알선,"청년, 중장년",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006264,생활안정자금(융자)(이차보전),"청년, 노년, 중장년",candidate,original_life_stage_tag,pending
 central:WLF00006291,요실금 치료지원 사업,노년,candidate,original_life_stage_tag,pending
-central:WLF00006289,위기임신 및 보호출산 지원,"영유아,아동,임신 · 출산",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006289,위기임신 및 보호출산 지원,"영유아, 임신 · 출산, 아동",unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006287,출소(예정)자 갱생보호사업,,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006286,고졸 후학습자 장학사업(희망사다리Ⅱ유형),청년,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006285,영구 불임 예상 난자·정자 냉동 지원사업,임신 · 출산,unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006284,한부모가족 공동 생활가정형(매입임대) 주거지원,,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006283,체불 근로자 생계비 융자,"청년,중장년",unclassified_needs_review,no_specific_older_adult_evidence,pending
+central:WLF00006283,체불 근로자 생계비 융자,"중장년, 청년",unclassified_needs_review,no_specific_older_adult_evidence,pending
 central:WLF00006279,LPG용기 사용가구 시설개선,,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006278,서민금융진흥원 소액보험(한부모가정의료보험),"아동,청소년,청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006277,서민금융진흥원 신용･부채관리 컨설팅,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006276,서민금융진흥원 자영업 컨설팅,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006275,햇살론카드,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006274,햇살론일반,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006273,햇살론특례,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006272,소상공인 특례 햇살론카드,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006271,햇살론119,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006267,서민금융진흥원 금융교육,"청소년,청년,중장년,노년",candidate,original_life_stage_tag,pending
+central:WLF00006278,서민금융진흥원 소액보험(한부모가정의료보험),"중장년, 노년, 아동, 청소년, 청년",candidate,original_life_stage_tag,pending
+central:WLF00006277,서민금융진흥원 신용･부채관리 컨설팅,"청년, 노년, 중장년",candidate,original_life_stage_tag,pending
+central:WLF00006276,서민금융진흥원 자영업 컨설팅,"중장년, 노년, 청년",candidate,original_life_stage_tag,pending
+central:WLF00006275,햇살론카드,"청년, 노년, 중장년",candidate,original_life_stage_tag,pending
+central:WLF00006274,햇살론일반,"중장년, 노년, 청년",candidate,original_life_stage_tag,pending
+central:WLF00006273,햇살론특례,"청년, 노년, 중장년",candidate,original_life_stage_tag,pending
+central:WLF00006272,소상공인 특례 햇살론카드,"중장년, 노년, 청년",candidate,original_life_stage_tag,pending
+central:WLF00006271,햇살론119,"청년, 노년, 중장년",candidate,original_life_stage_tag,pending
+central:WLF00006267,서민금융진흥원 금융교육,"청년, 청소년, 노년, 중장년",candidate,original_life_stage_tag,pending
 central:WLF00006270,중소기업 취업연계 장학사업 (희망사다리 I유형),청년,unclassified_needs_review,no_specific_older_adult_evidence,pending
-central:WLF00006269,미소금융,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006268,불법사금융예방대출,"청년,중장년,노년",candidate,original_life_stage_tag,pending
-central:WLF00006263,저소득 지역가입자 보험료 지원,"청년,중장년,노년",candidate,original_life_stage_tag,pending
+central:WLF00006269,미소금융,"청년, 노년, 중장년",candidate,original_life_stage_tag,pending
+central:WLF00006268,불법사금융예방대출,"중장년, 노년, 청년",candidate,original_life_stage_tag,pending
+central:WLF00006263,저소득 지역가입자 보험료 지원,"중장년, 노년, 청년",candidate,original_life_stage_tag,pending
