@@ -1,18 +1,29 @@
-"""Answer-generation node with careful source handling and missing-evidence fallback."""
+
+"""Welfare Answer Agent: 검색 근거를 기반으로 LLM 답변 생성."""
+
 from __future__ import annotations
+
 import json
 from typing import Any, Callable
+
 from .state import WelfareState
 from src.generation.prompts import SYSTEM_PROMPT
 
 
 def source_from_doc(doc: dict[str, Any]) -> dict[str, Any] | None:
+    """검색 문서에서 사용자에게 표시할 출처 정보를 추출한다."""
+
     md = doc.get("metadata") or {}
+
+    # 테스트용 Mock 문서는 실제 출처로 표시하지 않는다.
     if md.get("is_mock") or str(doc.get("id", "")).startswith("mock-"):
         return None
+
     kind = doc.get("record_type")
+
     if kind not in ("policy", "guideline"):
         return None
+
     return {
         "source_type": kind,
         "title": doc.get("title") or md.get("title") or None,
@@ -27,46 +38,121 @@ def source_from_doc(doc: dict[str, Any]) -> dict[str, Any] | None:
     }
 
 
-def make_answer_node(llm_call: Callable[[str, str], str], *, mock: bool = False):
+def make_answer_node(
+    llm_call: Callable[[str, str], str],
+    *,
+    mock: bool = False,
+):
+    """LangGraph에서 사용할 Welfare Answer 노드를 생성한다."""
+
     def node(state: WelfareState) -> WelfareState:
+
+        # 1. Retrieval Agent가 반환한 결과 가져오기
         result = state.get("retrieval_result", {})
         docs = state.get("retrieved_docs", [])
         graph = state.get("graph_results", [])
-        is_mock = mock or result.get("verification_level") == "mock_only"
-        has_evidence = bool(result.get("has_evidence", bool(docs or graph)))
-        # Graph-only rows may lack verified source documents; do not treat them as factual evidence yet.
+
+        # 2. Mock 모드인지 확인
+        is_mock = (
+            mock
+            or result.get("verification_level") == "mock_only"
+        )
+
+        # 3. 검색 근거 존재 여부 확인
+        has_evidence = bool(
+            result.get("has_evidence", bool(docs or graph))
+        )
+
+        # 근거가 없으면 LLM 답변 생성하지 않음
         if not has_evidence or (not docs and not is_mock):
             return {
-                "answer": "확인할 수 있는 복지정책 근거를 찾지 못했습니다. 지역이나 필요한 지원 종류를 조금 더 알려주시겠어요?",
-                "answer_status": "no_evidence", "sources": [],
+                "answer": (
+                    "확인할 수 있는 복지정책 근거를 찾지 못했습니다. "
+                    "지역이나 필요한 지원 종류를 조금 더 알려주시겠어요?"
+                ),
+                "answer_status": "no_evidence",
+                "sources": [],
             }
+
+        # 4. Mock 모드에서는 실제 정책 답변을 생성하지 않음
         if is_mock:
             return {
-                "answer": "[테스트 응답] 현재는 가상 검색 자료로 LangGraph 흐름을 확인 중입니다. 실제 정책 안내는 DB 연결 및 검증 후 가능합니다.",
-                "answer_status": "no_evidence", "sources": [],
+                "answer": (
+                    "[테스트 응답] 현재는 가상 검색 자료로 "
+                    "LangGraph 흐름을 확인 중입니다. "
+                    "실제 정책 안내는 DB 연결 및 검증 후 가능합니다."
+                ),
+                "answer_status": "no_evidence",
+                "sources": [],
             }
-        # Limit untrusted evidence size before sending to an LLM.
-        pieces = [{"text": str(d.get("text", ""))[:2400], "title": d.get("title"),
-                   "parent_id": d.get("parent_id"), "source_url": d.get("source_url")}
-                  for d in docs[:5]]
+
+        # 5. LLM에 전달할 Qdrant 문서 정리
+        pieces = [
+            {
+                "text": str(doc.get("text", ""))[:2400],
+                "title": doc.get("title"),
+                "parent_id": doc.get("parent_id"),
+                "source_url": doc.get("source_url"),
+            }
+            for doc in docs[:5]
+        ]
+
+        # 6. Neo4j 관계 정보
+        # 신청 자격이 검증된 사실로 취급하지 않는다.
         graph_facts = graph[:5]
-        prompt = json.dumps({
-            "question": state["question"],
-            "recent_history": state.get("history", [])[-4:],
-            "documents": pieces,
-            "graph_information_unverified_for_eligibility": graph_facts,
-            "verification_notes": result.get("warnings", []),
-        }, ensure_ascii=False, default=str)
+
+        # 7. LLM 프롬프트 생성
+        prompt = json.dumps(
+            {
+                "question": state["question"],
+                "recent_history": state.get("history", [])[-4:],
+                "documents": pieces,
+                "graph_information_unverified_for_eligibility": graph_facts,
+                "verification_notes": result.get("warnings", []),
+            },
+            ensure_ascii=False,
+            default=str,
+        )
+
+        # 정서적 어려움이 감지된 경우
         if state.get("safety_status") == "distress":
-            prompt += "\n사용자가 정서적 어려움을 나타냈으므로, 먼저 짧게 공감하고 이용 가능한 지원 정보만 근거와 함께 안내하세요."
+            prompt += (
+                "\n사용자가 정서적 어려움을 나타냈으므로, "
+                "먼저 짧게 공감하고 이용 가능한 지원 정보만 "
+                "근거와 함께 안내하세요."
+            )
+
+        # 8. LLM 호출
         try:
             answer = llm_call(SYSTEM_PROMPT, prompt)
+
             if not answer or not answer.strip():
                 raise ValueError("LLM 빈 응답")
+
         except Exception as exc:
-            # Do not expose API keys or raw provider errors to end users.
-            return {"answer": "답변을 생성하는 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.",
-                    "answer_status": "error", "sources": [], "generation_error_type": type(exc).__name__}
-        sources = [src for d in docs if (src := source_from_doc(d)) is not None]
-        return {"answer": answer.strip(), "answer_status": "answered", "sources": sources}
+            # 내부 API 오류나 API 키를 사용자에게 노출하지 않음
+            return {
+                "answer": (
+                    "답변을 생성하는 중 문제가 발생했습니다. "
+                    "잠시 후 다시 시도해 주세요."
+                ),
+                "answer_status": "error",
+                "sources": [],
+                "generation_error_type": type(exc).__name__,
+            }
+
+        # 9. 사용자에게 보여줄 출처 정리
+        sources = [
+            source
+            for doc in docs
+            if (source := source_from_doc(doc)) is not None
+        ]
+
+        # 10. 최종 답변 반환
+        return {
+            "answer": answer.strip(),
+            "answer_status": "success",
+            "sources": sources,
+        }
+
     return node
