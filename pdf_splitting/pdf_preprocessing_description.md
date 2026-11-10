@@ -1,6 +1,6 @@
 # 노인복지정책 PDF 전처리 흐름
 
-[`pdf_preprocessing_step_by_step.ipynb`](pdf_preprocessing_step_by_step.ipynb)는 복지정책 PDF 4종을 페이지별 JSON으로 정리한 뒤, 장·절·항 단위로 통합하고 필터링하는 노트북입니다.
+[`pdf_preprocessing.ipynb`](pdf_preprocessing.ipynb)는 복지정책 PDF 4종을 페이지별 JSON으로 정리한 뒤, 장·절·항 단위로 통합하고 필터링하는 노트북입니다.
 
 1. **모델과 PDF 불러오기**  
    `.env`의 `OPENAI_API_KEY`로 GPT-6 Sol을 연결합니다. Responses API의 추론 강도는 `high`입니다. `PyMuPDF4LLMLoader`로 원본 PDF 4종을 페이지별 Markdown으로 읽습니다. API 키가 없거나 모델 호출에 실패하면 실행을 멈춥니다.
@@ -22,4 +22,10 @@
 6. **중복과 관련성 필터링**  
    GPT-6 Sol이 모든 섹션을 검토하고, 노인 정책과 명백히 무관하거나 같은 맥락에서 완전히 중복된 항목만 별도의 재검증을 거쳐 제외합니다. 고령자가 이용할 수 있는 일반 복지, 같은 정책의 요약과 상세 지침, 판단이 불확실한 항목은 유지합니다. 필터링 결과는 `guideline_sections_filtered.jsonl`에 따로 저장합니다.
 
-**최종 출력**은 `data/preprocessed_reproduced/` 아래의 페이지 JSON 4개, 통합 JSONL 2개, `images/`입니다. 파일을 다시 열어 구조와 이미지 참조를 검사한 뒤 출력 폴더에 게시합니다.
+**최종 출력**은 임시로 `data/preprocessed_reproduced/` 에 저장하며, 페이지 JSON 4개, 통합 JSONL 2개, `images/` 로 출력됩니다. 파일을 다시 열어 구조와 이미지 참조를 검사한 뒤 출력 폴더에 게시합니다.
+
+## 표본 실행 결과
+
+[`pdf_preprocessing_sample_run.ipynb`](pdf_preprocessing_sample_run.ipynb)는 원본 노트북과 **코드가 같고, 표본 실행 결과가 저장된 사본**입니다. 원본 노트북은 PDF 4종 전체를 OpenAI API로 처리하지만, 표본에서는 많은 토큰 소모를 줄이기 위해PDF 4종의 총 6쪽을 실행하여 결과를 저장했습니다.
+
+생계급여 지원 예시와 기초연금 선정기준액 표를 복원하고, 노인일자리 표의 병합 셀을 바로잡았습니다. 표본 결과에는 섹션 14개와 이미지 2개가 포함되어 있습니다. 사본에서 `Run All`을 누르면 원본과 동일하게 전체 PDF 처리와 API 호출이 시작됩니다.

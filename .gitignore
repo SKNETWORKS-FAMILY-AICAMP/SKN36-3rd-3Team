@@ -1,0 +1,15 @@
+# Python 가상환경
+.venv/
+
+# 환경변수 및 API Key
+.env
+
+# Python 캐시
+__pycache__/
+
+# Jupyter Notebook 임시 파일
+.ipynb_checkpoints/
+
+# 팀장이 아닌 경우 제외해야 하는 파일 (팀장은 해당 내용을 삭제)
+uv.lock
+pyproject.toml
