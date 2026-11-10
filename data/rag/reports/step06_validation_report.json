@@ -1,0 +1,78 @@
+{
+  "input": "C:\\Users\\User\\OneDrive\\Desktop\\SKN 부트캠프\\3rd-project\\SKN36-3rd-3Team-1\\data\\preprocessed\\pdf\\guideline_sections_filtered.jsonl",
+  "total_rows": 1189,
+  "valid_sections": 1189,
+  "errors_count": 0,
+  "errors": [],
+  "warnings_count": 14,
+  "warnings": [
+    {
+      "section_id": "welfare_services_2026_p0003_01",
+      "warning": "missing title or section heading"
+    },
+    {
+      "section_id": "welfare_services_2026_p0368_01",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "welfare_services_2026_p0382_01",
+      "warning": "missing title or section heading"
+    },
+    {
+      "section_id": "elderly_welfare_2026_vol1_p0007_01",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "elderly_welfare_2026_vol1_p0068_01",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "elderly_welfare_2026_vol1_p0208_01",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "elderly_welfare_2026_vol2_p0134_01",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "elderly_welfare_2026_vol2_p0314_02",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "basic_pension_2026_p0013_01",
+      "warning": "missing title or section heading"
+    },
+    {
+      "section_id": "basic_pension_2026_p0081_01",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "basic_pension_2026_p0244_01",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "basic_pension_2026_p0253_01",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "basic_pension_2026_p0308_01",
+      "warning": "long section; needs chunking"
+    },
+    {
+      "section_id": "basic_pension_2026_p0315_01",
+      "warning": "missing title or section heading"
+    }
+  ],
+  "sources": {
+    "2026_기초연금_사업안내": 186,
+    "2026_나에게_힘이_되는_복지서비스": 530,
+    "2026_노인보건복지사업안내_1권": 209,
+    "2026_노인보건복지사업안내_2권": 264
+  },
+  "missing_image_paths_count": 0,
+  "missing_image_paths": [],
+  "image_files_checked": false,
+  "max_content_characters": 49592,
+  "documents_created": 1189,
+  "output_dir": "data\\rag\\documents"
+}

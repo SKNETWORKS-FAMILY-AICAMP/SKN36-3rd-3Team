@@ -1,0 +1,60 @@
+{
+  "settings": {
+    "chunk_size_chars": 800,
+    "overlap_chars": 150,
+    "id_rule": "uuid.uuid5(uuid.NAMESPACE_URL, chunk_id)",
+    "evaluation": "retrieval A/B not yet performed; embedding and query labels required"
+  },
+  "inputs": {
+    "policies": 574,
+    "guidelines": 1189
+  },
+  "strategies": {
+    "A_fixed": {
+      "policy": {
+        "strategy": "fixed",
+        "input_documents": 574,
+        "chunks": 662,
+        "unique_parent_documents": 574,
+        "errors": [],
+        "min_chunk_chars": 149,
+        "avg_chunk_chars": 484.42,
+        "max_chunk_chars": 800
+      },
+      "guideline": {
+        "strategy": "fixed",
+        "input_documents": 1189,
+        "chunks": 2738,
+        "unique_parent_documents": 1189,
+        "errors": [],
+        "min_chunk_chars": 76,
+        "avg_chunk_chars": 626.21,
+        "max_chunk_chars": 800
+      },
+      "total_chunks": 3400
+    },
+    "B_structure": {
+      "policy": {
+        "strategy": "structure",
+        "input_documents": 574,
+        "chunks": 675,
+        "unique_parent_documents": 574,
+        "errors": [],
+        "min_chunk_chars": 85,
+        "avg_chunk_chars": 456.96,
+        "max_chunk_chars": 800
+      },
+      "guideline": {
+        "strategy": "structure",
+        "input_documents": 1189,
+        "chunks": 3190,
+        "unique_parent_documents": 1189,
+        "errors": [],
+        "min_chunk_chars": 75,
+        "avg_chunk_chars": 499.29,
+        "max_chunk_chars": 800
+      },
+      "total_chunks": 3865
+    }
+  }
+}
