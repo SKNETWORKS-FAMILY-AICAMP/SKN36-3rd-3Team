@@ -1,0 +1,80 @@
+# 팀 공통 로컬 개발용 Docker Compose
+# 기존 PostgreSQL/Qdrant named volume 및 Neo4j bind mount 경로 유지 (데이터 보호)
+# Elasticsearch/Kibana/setup은 현재 3차 프로젝트에서 사용하지 않아 제외
+services:
+  neo4j:
+    # 사용할 Docker 이미지 (neo4j의 최신 버전)
+    image: neo4j:latest
+    # 컨테이너 이름 (나중에 컨테이너를 찾을 때 사용)
+    container_name: neo4j
+    # 컨테이너가 종료되면 자동으로 재시작 (unless-stopped: 수동으로 중지한 경우 제외)
+    restart: unless-stopped
+    
+    # 포트 매핑: 호스트(컴퓨터):컨테이너 내부
+    ports:
+      - "7474:7474"  # HTTP - Neo4j Browser 접속용 (웹 브라우저에서 http://localhost:7474)
+      - "7687:7687"  # Bolt - 애플리케이션에서 Neo4j에 연결할 때 사용하는 프로토콜
+    
+    # 환경 변수 설정 (Neo4j의 동작을 제어)
+    environment:
+      # 인증 정보: 사용자명/비밀번호 (기본값: neo4j/test1234)
+      - NEO4J_AUTH=neo4j/test1234
+      # 설치할 플러그인 (APOC: 그래프 알고리즘 및 유틸리티 함수 제공, GDS: Graph Data Science)
+      - NEO4J_PLUGINS=["apoc", "graph-data-science"]
+      # APOC 및 GDS 플러그인의 모든 함수를 제한 없이 사용 가능하도록 설정
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*,gds.*
+      # 메모리 설정: 초기 힙 메모리 크기 (512MB)
+      - NEO4J_dbms_memory_heap_initial__size=512m
+      # 메모리 설정: 최대 힙 메모리 크기 (2GB)
+      - NEO4J_dbms_memory_heap_max__size=2G
+      # 메모리 설정: 페이지 캐시 크기 (1GB) - 디스크 읽기 성능 향상
+      - NEO4J_dbms_memory_pagecache_size=1G
+    
+    # 볼륨 마운트: 컨테이너 내부 데이터를 호스트에 저장 (데이터 영속성 보장)
+    volumes:
+      - ./database/neo4j/data:/data          # 데이터베이스 데이터 저장 (그래프 데이터가 여기 저장됨)
+      - ./database/neo4j/logs:/logs          # 로그 파일 저장
+      - ./database/neo4j/import:/var/lib/neo4j/import  # CSV 등 임포트 파일을 넣을 위치
+      - ./database/neo4j/plugins:/plugins    # 플러그인 파일 저장
+    
+    # 헬스체크: 컨테이너가 정상 작동하는지 주기적으로 확인
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:7474"]
+      interval: 10s    # 10초마다 체크
+      timeout: 5s      # 5초 내에 응답이 없으면 타임아웃
+      retries: 5       # 5번 실패하면 비정상으로 판단
+
+  postgres:
+    image: postgres:16
+    container_name: welfare-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dev_password_change_me}
+      POSTGRES_DB: ${POSTGRES_DB:-welfare_db}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ############################################################
+  # Qdrant
+  ############################################################
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: always
+
+volumes:
+  postgres_data:
+  qdrant_storage:
