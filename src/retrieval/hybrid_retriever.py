@@ -14,6 +14,7 @@ from .evidence_validator import validate_evidence
 Mode = Literal["vector", "graph", "hybrid"]
 
 
+
 def retrieve_welfare(
     question: str,
     mode: Mode = "hybrid",
@@ -22,6 +23,7 @@ def retrieve_welfare(
     qdrant_search: Callable[..., list[dict[str, Any]]] | None = None,
     neo4j_policy_search: Callable[..., dict[str, Any]] | None = None,
     neo4j_question_search: Callable[..., list[dict[str, Any]]] | None = None,
+    neo4j_guideline_search: Callable[..., dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Return unified evidence, not an LLM answer.
 
@@ -42,6 +44,8 @@ def retrieve_welfare(
     documents: list[dict[str, Any]] = []
     graph_results: list[dict[str, Any]] = []
     graph_only_results: list[dict[str, Any]] = []
+    guideline_results: list[dict[str, Any]] = []
+
 
     if mode in ("vector", "hybrid"):
         if qdrant_search is None:
@@ -51,7 +55,57 @@ def retrieve_welfare(
         if not isinstance(documents, list):
             raise TypeError("Qdrant 검색 결과는 list[dict]여야 합니다.")
 
+
     if mode == "hybrid":
+        if neo4j_policy_search is None:
+            from .neo4j_retriever import search_neo4j
+            neo4j_policy_search = search_neo4j
+
+        if neo4j_guideline_search is None:
+            from .neo4j_retriever import search_neo4j_guideline
+            neo4j_guideline_search = search_neo4j_guideline
+
+        # 1. 정책 청크는 기존 policy_id로 검색
+        policy_ids = list(dict.fromkeys(
+            str(d["policy_id"])
+            for d in documents
+            if isinstance(d, dict)
+            and d.get("record_type") == "policy"
+            and d.get("policy_id")
+        ))
+
+        for policy_id in policy_ids:
+            graph_results.append(
+                neo4j_policy_search(policy_id)
+            )
+
+        # 2. PDF 청크는 chunk_id로 검색
+        guideline_docs = [
+            d for d in documents
+            if isinstance(d, dict)
+            and d.get("record_type") == "guideline"
+            and d.get("chunk_id")
+        ]
+
+        seen_chunks = set()
+
+        for doc in guideline_docs:
+            chunk_id = str(doc["chunk_id"])
+
+            if chunk_id in seen_chunks:
+                continue
+            seen_chunks.add(chunk_id)
+
+            result = neo4j_guideline_search(chunk_id)
+
+            # 다른 청크나 섹션 결과를 잘못 연결하지 않도록 검증
+            if (
+                result.get("found")
+                and result.get("chunk_id") == chunk_id
+                and result.get("section_id") == doc.get("section_id")
+            ):
+                guideline_results.append(result)
+
         if neo4j_policy_search is None:
             from .neo4j_retriever import search_neo4j
             neo4j_policy_search = search_neo4j
@@ -81,8 +135,13 @@ def retrieve_welfare(
         "mode": mode,
         "documents": checked["documents"],
         "graph_results": checked["graph_results"],
+        "guideline_results": guideline_results,
         "graph_only_results": graph_only_results,
-        "has_evidence": checked["has_evidence"] or bool(graph_only_results),
+        "has_evidence": (
+            checked["has_evidence"]
+            or bool(graph_only_results)
+            or bool(guideline_results)
+        ),
         "verification_level": checked["verification_level"],
         "warnings": warnings,
     }
@@ -97,3 +156,4 @@ if __name__ == "__main__":
     parser.add_argument("--k", type=int, default=5)
     args = parser.parse_args()
     print(json.dumps(retrieve_welfare(args.question, args.mode, args.k), ensure_ascii=False, indent=2))
+
