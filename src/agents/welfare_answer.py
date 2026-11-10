@@ -97,22 +97,45 @@ def make_answer_node(
             for doc in docs[:5]
         ]
 
-        # 6. Neo4j 관계 정보
-        # 신청 자격이 검증된 사실로 취급하지 않는다.
+        # 6. Neo4j 정책 및 PDF 관계 정보
+        # 관계 정보는 검색 보조 근거이며 신청 자격의 확정 근거가 아님
         graph_facts = graph[:5]
 
+        guideline_facts = []
+        for item in result.get("guideline_results", [])[:5]:
+            if not isinstance(item, dict) or not item.get("found"):
+                continue
+
+            guideline_facts.append({
+                "chunk_id": item.get("chunk_id"),
+                "section_id": item.get("section_id"),
+                "section": item.get("section"),
+                "document": item.get("document"),
+            })
+
         # 7. LLM 프롬프트 생성
+        # Qdrant 문서 + Neo4j 정책 관계 + PDF 섹션 정보
         prompt = json.dumps(
             {
                 "question": state["question"],
                 "recent_history": state.get("history", [])[-4:],
+
+                # Qdrant에서 검색된 정책 및 PDF 본문
                 "documents": pieces,
+
+                # Neo4j에서 조회한 정책 관계
                 "graph_information_unverified_for_eligibility": graph_facts,
+
+                # Neo4j에서 조회한 PDF 원본/목차 관계
+                "guideline_section_information": guideline_facts,
+
+                # 검증 결과 및 주의사항
                 "verification_notes": result.get("warnings", []),
             },
             ensure_ascii=False,
             default=str,
         )
+
 
         # 정서적 어려움이 감지된 경우
         if state.get("safety_status") == "distress":
