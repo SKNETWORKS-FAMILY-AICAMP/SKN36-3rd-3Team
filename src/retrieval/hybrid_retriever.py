@@ -106,54 +106,9 @@ def retrieve_welfare(
             ):
                 guideline_results.append(result)
 
-        if neo4j_policy_search is None:
-            from .neo4j_retriever import search_neo4j
-            neo4j_policy_search = search_neo4j
-        # Only policy hits have an existing canonical policy_id.
-        # PDF sections must NOT be coerced into arbitrary policy IDs.
-        policy_ids = list(dict.fromkeys(
-            str(d["policy_id"]) for d in documents
-            if isinstance(d, dict) and d.get("record_type") == "policy" and d.get("policy_id")
-        ))
-        for policy_id in policy_ids:
-            graph_results.append(neo4j_policy_search(policy_id))
-
     if mode == "graph":
         if neo4j_question_search is None:
             from .neo4j_retriever import search_neo4j_only
             neo4j_question_search = search_neo4j_only
         graph_only_results = neo4j_question_search(question.strip(), limit=k)
-        if not isinstance(graph_only_results, list):
-            raise TypeError("Neo4j 단독 검색 결과는 list[dict]여야 합니다.")
-
-    checked = validate_evidence(documents, graph_results)
-    warnings = list(checked["warnings"])
-    if mode == "graph":
-        warnings.append("Neo4j 단독 검색은 키워드 기반 초기 베이스라인이며, 관계 근거·출처는 별도 확인 필요")
-    return {
-        "question": question.strip(),
-        "mode": mode,
-        "documents": checked["documents"],
-        "graph_results": checked["graph_results"],
-        "guideline_results": guideline_results,
-        "graph_only_results": graph_only_results,
-        "has_evidence": (
-            checked["has_evidence"]
-            or bool(graph_only_results)
-            or bool(guideline_results)
-        ),
-        "verification_level": checked["verification_level"],
-        "warnings": warnings,
-    }
-
-
-if __name__ == "__main__":
-    import argparse
-    import json
-    parser = argparse.ArgumentParser()
-    parser.add_argument("question", help="복지정책 질문")
-    parser.add_argument("--mode", choices=["vector", "graph", "hybrid"], default="hybrid")
-    parser.add_argument("--k", type=int, default=5)
-    args = parser.parse_args()
-    print(json.dumps(retrieve_welfare(args.question, args.mode, args.k), ensure_ascii=False, indent=2))
-
+        
