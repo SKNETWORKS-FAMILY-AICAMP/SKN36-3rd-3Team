@@ -1,0 +1,465 @@
+﻿label,qid,checked,passed_count,ok,note,allow_missing,block_leaked
+A_fixed/qwen3-embedding:0.6b,T01,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,T02,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,T03,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,T04,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,T05,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,T06,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,T07,True,1224,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,T08,True,1222,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,T09,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V01,True,1223,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V02,True,1222,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V03,True,1223,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V04,True,1220,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V05,True,1222,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V06,True,1225,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V07,True,1219,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V08,True,1218,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V09,True,1225,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V10,True,1225,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V11,True,1218,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V12,True,1217,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V13,True,1196,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V14,True,1199,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V15,True,1196,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V16,True,1199,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V17,True,1198,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V18,True,1194,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V19,True,1221,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V20,True,1194,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V21,True,1221,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V22,True,1200,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V23,True,1220,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V24,True,1223,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V25,True,1223,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V26,True,1224,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V27,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V28,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V29,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V30,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V31,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V32,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V33,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V34,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V35,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,V36,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W01,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W02,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W03,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W04,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W05,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W06,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W07,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W08,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W09,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W10,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W11,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W12,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W13,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W14,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W15,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W16,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W17,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W18,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W19,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W20,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W21,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W22,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W23,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W24,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W25,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W26,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W27,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W28,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W29,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W30,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W31,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W32,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W33,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W34,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W35,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W36,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W37,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W38,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W39,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W40,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/qwen3-embedding:0.6b,W41,True,1220,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W42,True,1223,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W43,True,1222,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W44,True,1224,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W45,True,1222,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W46,True,1218,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W47,True,1220,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W48,True,1222,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W49,True,1194,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W50,True,1200,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W51,True,1200,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W52,True,1200,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W53,True,1222,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W54,True,1224,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W55,True,1222,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W56,True,1219,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W57,True,1221,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W58,True,1220,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W59,True,1223,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W60,True,1223,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W61,True,1217,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W62,True,1200,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W63,True,1194,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W64,True,1198,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W65,True,1222,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W66,True,1220,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W67,True,1200,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W68,True,1194,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,V37,True,1224,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W69,True,1196,True,,[],[]
+A_fixed/qwen3-embedding:0.6b,W70,True,1222,True,,[],[]
+A_fixed/KURE-v1,T01,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,T02,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,T03,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,T04,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,T05,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,T06,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,T07,True,1224,True,,[],[]
+A_fixed/KURE-v1,T08,True,1222,True,,[],[]
+A_fixed/KURE-v1,T09,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V01,True,1223,True,,[],[]
+A_fixed/KURE-v1,V02,True,1222,True,,[],[]
+A_fixed/KURE-v1,V03,True,1223,True,,[],[]
+A_fixed/KURE-v1,V04,True,1220,True,,[],[]
+A_fixed/KURE-v1,V05,True,1222,True,,[],[]
+A_fixed/KURE-v1,V06,True,1225,True,,[],[]
+A_fixed/KURE-v1,V07,True,1219,True,,[],[]
+A_fixed/KURE-v1,V08,True,1218,True,,[],[]
+A_fixed/KURE-v1,V09,True,1225,True,,[],[]
+A_fixed/KURE-v1,V10,True,1225,True,,[],[]
+A_fixed/KURE-v1,V11,True,1218,True,,[],[]
+A_fixed/KURE-v1,V12,True,1217,True,,[],[]
+A_fixed/KURE-v1,V13,True,1196,True,,[],[]
+A_fixed/KURE-v1,V14,True,1199,True,,[],[]
+A_fixed/KURE-v1,V15,True,1196,True,,[],[]
+A_fixed/KURE-v1,V16,True,1199,True,,[],[]
+A_fixed/KURE-v1,V17,True,1198,True,,[],[]
+A_fixed/KURE-v1,V18,True,1194,True,,[],[]
+A_fixed/KURE-v1,V19,True,1221,True,,[],[]
+A_fixed/KURE-v1,V20,True,1194,True,,[],[]
+A_fixed/KURE-v1,V21,True,1221,True,,[],[]
+A_fixed/KURE-v1,V22,True,1200,True,,[],[]
+A_fixed/KURE-v1,V23,True,1220,True,,[],[]
+A_fixed/KURE-v1,V24,True,1223,True,,[],[]
+A_fixed/KURE-v1,V25,True,1223,True,,[],[]
+A_fixed/KURE-v1,V26,True,1224,True,,[],[]
+A_fixed/KURE-v1,V27,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V28,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V29,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V30,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V31,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V32,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V33,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V34,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V35,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,V36,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W01,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W02,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W03,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W04,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W05,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W06,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W07,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W08,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W09,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W10,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W11,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W12,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W13,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W14,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W15,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W16,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W17,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W18,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W19,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W20,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W21,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W22,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W23,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W24,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W25,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W26,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W27,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W28,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W29,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W30,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W31,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W32,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W33,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W34,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W35,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W36,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W37,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W38,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W39,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W40,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+A_fixed/KURE-v1,W41,True,1220,True,,[],[]
+A_fixed/KURE-v1,W42,True,1223,True,,[],[]
+A_fixed/KURE-v1,W43,True,1222,True,,[],[]
+A_fixed/KURE-v1,W44,True,1224,True,,[],[]
+A_fixed/KURE-v1,W45,True,1222,True,,[],[]
+A_fixed/KURE-v1,W46,True,1218,True,,[],[]
+A_fixed/KURE-v1,W47,True,1220,True,,[],[]
+A_fixed/KURE-v1,W48,True,1222,True,,[],[]
+A_fixed/KURE-v1,W49,True,1194,True,,[],[]
+A_fixed/KURE-v1,W50,True,1200,True,,[],[]
+A_fixed/KURE-v1,W51,True,1200,True,,[],[]
+A_fixed/KURE-v1,W52,True,1200,True,,[],[]
+A_fixed/KURE-v1,W53,True,1222,True,,[],[]
+A_fixed/KURE-v1,W54,True,1224,True,,[],[]
+A_fixed/KURE-v1,W55,True,1222,True,,[],[]
+A_fixed/KURE-v1,W56,True,1219,True,,[],[]
+A_fixed/KURE-v1,W57,True,1221,True,,[],[]
+A_fixed/KURE-v1,W58,True,1220,True,,[],[]
+A_fixed/KURE-v1,W59,True,1223,True,,[],[]
+A_fixed/KURE-v1,W60,True,1223,True,,[],[]
+A_fixed/KURE-v1,W61,True,1217,True,,[],[]
+A_fixed/KURE-v1,W62,True,1200,True,,[],[]
+A_fixed/KURE-v1,W63,True,1194,True,,[],[]
+A_fixed/KURE-v1,W64,True,1198,True,,[],[]
+A_fixed/KURE-v1,W65,True,1222,True,,[],[]
+A_fixed/KURE-v1,W66,True,1220,True,,[],[]
+A_fixed/KURE-v1,W67,True,1200,True,,[],[]
+A_fixed/KURE-v1,W68,True,1194,True,,[],[]
+A_fixed/KURE-v1,V37,True,1224,True,,[],[]
+A_fixed/KURE-v1,W69,True,1196,True,,[],[]
+A_fixed/KURE-v1,W70,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,T01,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,T02,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,T03,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,T04,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,T05,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,T06,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,T07,True,1224,True,,[],[]
+B_structure/qwen3-embedding:0.6b,T08,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,T09,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V01,True,1223,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V02,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V03,True,1223,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V04,True,1220,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V05,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V06,True,1225,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V07,True,1219,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V08,True,1218,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V09,True,1225,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V10,True,1225,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V11,True,1218,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V12,True,1217,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V13,True,1196,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V14,True,1199,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V15,True,1196,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V16,True,1199,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V17,True,1198,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V18,True,1194,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V19,True,1221,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V20,True,1194,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V21,True,1221,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V22,True,1200,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V23,True,1220,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V24,True,1223,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V25,True,1223,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V26,True,1224,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V27,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V28,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V29,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V30,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V31,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V32,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V33,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V34,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V35,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,V36,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W01,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W02,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W03,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W04,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W05,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W06,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W07,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W08,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W09,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W10,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W11,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W12,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W13,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W14,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W15,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W16,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W17,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W18,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W19,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W20,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W21,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W22,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W23,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W24,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W25,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W26,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W27,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W28,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W29,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W30,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W31,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W32,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W33,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W34,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W35,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W36,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W37,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W38,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W39,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W40,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/qwen3-embedding:0.6b,W41,True,1220,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W42,True,1223,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W43,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W44,True,1224,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W45,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W46,True,1218,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W47,True,1220,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W48,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W49,True,1194,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W50,True,1200,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W51,True,1200,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W52,True,1200,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W53,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W54,True,1224,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W55,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W56,True,1219,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W57,True,1221,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W58,True,1220,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W59,True,1223,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W60,True,1223,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W61,True,1217,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W62,True,1200,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W63,True,1194,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W64,True,1198,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W65,True,1222,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W66,True,1220,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W67,True,1200,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W68,True,1194,True,,[],[]
+B_structure/qwen3-embedding:0.6b,V37,True,1224,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W69,True,1196,True,,[],[]
+B_structure/qwen3-embedding:0.6b,W70,True,1222,True,,[],[]
+B_structure/KURE-v1,T01,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,T02,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,T03,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,T04,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,T05,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,T06,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,T07,True,1224,True,,[],[]
+B_structure/KURE-v1,T08,True,1222,True,,[],[]
+B_structure/KURE-v1,T09,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V01,True,1223,True,,[],[]
+B_structure/KURE-v1,V02,True,1222,True,,[],[]
+B_structure/KURE-v1,V03,True,1223,True,,[],[]
+B_structure/KURE-v1,V04,True,1220,True,,[],[]
+B_structure/KURE-v1,V05,True,1222,True,,[],[]
+B_structure/KURE-v1,V06,True,1225,True,,[],[]
+B_structure/KURE-v1,V07,True,1219,True,,[],[]
+B_structure/KURE-v1,V08,True,1218,True,,[],[]
+B_structure/KURE-v1,V09,True,1225,True,,[],[]
+B_structure/KURE-v1,V10,True,1225,True,,[],[]
+B_structure/KURE-v1,V11,True,1218,True,,[],[]
+B_structure/KURE-v1,V12,True,1217,True,,[],[]
+B_structure/KURE-v1,V13,True,1196,True,,[],[]
+B_structure/KURE-v1,V14,True,1199,True,,[],[]
+B_structure/KURE-v1,V15,True,1196,True,,[],[]
+B_structure/KURE-v1,V16,True,1199,True,,[],[]
+B_structure/KURE-v1,V17,True,1198,True,,[],[]
+B_structure/KURE-v1,V18,True,1194,True,,[],[]
+B_structure/KURE-v1,V19,True,1221,True,,[],[]
+B_structure/KURE-v1,V20,True,1194,True,,[],[]
+B_structure/KURE-v1,V21,True,1221,True,,[],[]
+B_structure/KURE-v1,V22,True,1200,True,,[],[]
+B_structure/KURE-v1,V23,True,1220,True,,[],[]
+B_structure/KURE-v1,V24,True,1223,True,,[],[]
+B_structure/KURE-v1,V25,True,1223,True,,[],[]
+B_structure/KURE-v1,V26,True,1224,True,,[],[]
+B_structure/KURE-v1,V27,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V28,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V29,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V30,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V31,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V32,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V33,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V34,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V35,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,V36,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W01,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W02,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W03,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W04,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W05,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W06,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W07,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W08,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W09,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W10,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W11,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W12,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W13,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W14,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W15,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W16,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W17,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W18,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W19,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W20,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W21,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W22,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W23,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W24,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W25,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W26,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W27,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W28,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W29,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W30,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W31,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W32,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W33,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W34,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W35,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W36,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W37,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W38,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W39,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W40,False,1763,,"지역 지정 없음 → 전체 통과, 검증 제외",,
+B_structure/KURE-v1,W41,True,1220,True,,[],[]
+B_structure/KURE-v1,W42,True,1223,True,,[],[]
+B_structure/KURE-v1,W43,True,1222,True,,[],[]
+B_structure/KURE-v1,W44,True,1224,True,,[],[]
+B_structure/KURE-v1,W45,True,1222,True,,[],[]
+B_structure/KURE-v1,W46,True,1218,True,,[],[]
+B_structure/KURE-v1,W47,True,1220,True,,[],[]
+B_structure/KURE-v1,W48,True,1222,True,,[],[]
+B_structure/KURE-v1,W49,True,1194,True,,[],[]
+B_structure/KURE-v1,W50,True,1200,True,,[],[]
+B_structure/KURE-v1,W51,True,1200,True,,[],[]
+B_structure/KURE-v1,W52,True,1200,True,,[],[]
+B_structure/KURE-v1,W53,True,1222,True,,[],[]
+B_structure/KURE-v1,W54,True,1224,True,,[],[]
+B_structure/KURE-v1,W55,True,1222,True,,[],[]
+B_structure/KURE-v1,W56,True,1219,True,,[],[]
+B_structure/KURE-v1,W57,True,1221,True,,[],[]
+B_structure/KURE-v1,W58,True,1220,True,,[],[]
+B_structure/KURE-v1,W59,True,1223,True,,[],[]
+B_structure/KURE-v1,W60,True,1223,True,,[],[]
+B_structure/KURE-v1,W61,True,1217,True,,[],[]
+B_structure/KURE-v1,W62,True,1200,True,,[],[]
+B_structure/KURE-v1,W63,True,1194,True,,[],[]
+B_structure/KURE-v1,W64,True,1198,True,,[],[]
+B_structure/KURE-v1,W65,True,1222,True,,[],[]
+B_structure/KURE-v1,W66,True,1220,True,,[],[]
+B_structure/KURE-v1,W67,True,1200,True,,[],[]
+B_structure/KURE-v1,W68,True,1194,True,,[],[]
+B_structure/KURE-v1,V37,True,1224,True,,[],[]
+B_structure/KURE-v1,W69,True,1196,True,,[],[]
+B_structure/KURE-v1,W70,True,1222,True,,[],[]
