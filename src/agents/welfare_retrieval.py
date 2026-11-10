@@ -32,18 +32,76 @@ def mock_retrieve(question: str, **_: Any) -> dict[str, Any]:
     return result
 
 
-def make_retrieval_node(retriever: Callable[..., dict[str, Any]], *, mode: str = "hybrid", k: int = 5):
+
+def build_search_question(state: WelfareState) -> str:
+    """짧은 후속 질문에 한해 이전 사용자 질문을 검색 맥락으로 사용."""
+    question = state["question"].strip()
+    history = state.get("history") or []
+
+    followup_words = (
+        "그건", "그거", "그 정책", "그 서비스",
+        "거기", "그곳", "그럼", "그러면",
+        "신청은", "대상은", "조건은",
+    )
+
+    is_followup = (
+        len(question) <= 80
+        and any(word in question for word in followup_words)
+    )
+
+    if not is_followup:
+        return question
+
+    previous_questions = [
+        item.get("content", "").strip()
+        for item in history
+        if isinstance(item, dict)
+        and item.get("role") == "user"
+        and isinstance(item.get("content"), str)
+        and item.get("content", "").strip()
+    ]
+
+    if not previous_questions:
+        return question
+
+    previous = previous_questions[-1][:300]
+    return f"이전 질문: {previous}\n현재 질문: {question}"
+
+
+def make_retrieval_node(
+    retriever: Callable[..., dict[str, Any]],
+    *,
+    mode: str = "hybrid",
+    k: int = 5,
+):
     def node(state: WelfareState) -> WelfareState:
-        result = retriever(state["question"], mode=mode, k=k)
+        search_question = build_search_question(state)
+
+        result = retriever(
+            search_question,
+            mode=mode,
+            k=k,
+        )
+
         if not isinstance(result, dict):
             raise TypeError("retriever 반환값은 dict여야 합니다.")
+
         docs = result.get("documents", [])
-        graphs = result.get("graph_results", []) or result.get("graph_only_results", [])
+        graphs = (
+            result.get("graph_results", [])
+            or result.get("graph_only_results", [])
+        )
+
         if not isinstance(docs, list) or not isinstance(graphs, list):
-            raise TypeError("검색 결과의 documents/graph_results는 list여야 합니다.")
+            raise TypeError(
+                "검색 결과의 documents/graph_results는 list여야 합니다."
+            )
+
         return {
             "retrieved_docs": docs,
             "graph_results": graphs,
             "retrieval_result": result,
         }
+
     return node
+
