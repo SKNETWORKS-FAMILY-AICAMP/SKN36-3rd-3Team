@@ -1,0 +1,65 @@
+{
+  "status": "structural_validation_passed_semantic_review_pending",
+  "source_counts": {
+    "central_policies": 461,
+    "local_policies": 1485,
+    "total_policies": 1946,
+    "local_detail_missing": 485,
+    "facilities": 164,
+    "pdf_sections": 1189,
+    "pdf_documents": 4
+  },
+  "source_pdf_categories": {
+    "2026_기초연금_사업안내": 186,
+    "2026_나에게_힘이_되는_복지서비스": 530,
+    "2026_노인보건복지사업안내_1권": 209,
+    "2026_노인보건복지사업안내_2권": 264
+  },
+  "target_databases": [
+    "Qdrant",
+    "Neo4j"
+  ],
+  "elderly_pdf_mode": "missing",
+  "policy_chunk_count": 6448,
+  "pdf_chunk_count": 3908,
+  "facility_chunk_count": 164,
+  "total_chunk_count": 10520,
+  "embedding_candidate_count": 10337,
+  "neo4j_nodes": 13823,
+  "neo4j_relationships": 11709,
+  "pending_region_policy_count": 1946,
+  "local_list_only_policy_count": 485,
+  "pdf_sections_with_review_flags": 777,
+  "empty_pdf_sections": 0,
+  "max_text_chars": 841,
+  "max_body_chars": 700,
+  "duplicate_chunk_ids": 0,
+  "duplicate_point_ids": 0,
+  "tokenizer_status": "not_checked_model_not_selected",
+  "page_alignment": {
+    "raw_pdfs_checked": 0,
+    "single_page_text_anchor_matches": 0,
+    "multi_page_unresolved": 2314
+  },
+  "policy_pdf_link_candidates": 564,
+  "fifth_pdf_duplicate_candidates": 0,
+  "pdf_table_chunk_count": 1042,
+  "pdf_table_rows_referenced": 1024,
+  "pdf_multi_page_chunk_count": 2314,
+  "pre_embedding_readiness": "TECHNICALLY_PREPARED_WITH_MANUAL_AND_SOURCE_BLOCKERS",
+  "limitations": {
+    "fifth_pdf_missing": true,
+    "local_detail_unavailable": 485,
+    "region_policy_approvals": 0,
+    "tokenizer_verified": false,
+    "pdf_page_specific_citations_approved": false,
+    "policy_pdf_links_approved": false
+  },
+  "warnings": [
+    "5번째 PDF(노령층 분권) 원본/전처리 파일이 없어 4종 PDF 섹션만 처리합니다.",
+    "지역/자격/금액의 공식 검증 없음",
+    "정책-PDF 자동 연결 승인 없음",
+    "모델 미지정 시 토큰 제한 적합성 미확인",
+    "DB 실제 적재·임베딩 미실행"
+  ]
+}

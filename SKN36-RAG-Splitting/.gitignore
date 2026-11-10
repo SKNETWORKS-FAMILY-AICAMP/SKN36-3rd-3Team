@@ -1,0 +1,9 @@
+.venv/
+.env
+.env.*
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+*.pyc
+splitting_output/
+splitting_output_v3/
