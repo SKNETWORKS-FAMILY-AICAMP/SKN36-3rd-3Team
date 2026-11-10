@@ -192,3 +192,41 @@ services:
     
     # 재시작 정책
     restart: unless-stopped
+
+  ############################################################
+  # PostgreSQL — PR #25 / #26 정형 정책·PDF·청크 저장
+  ############################################################
+  postgres:
+    image: postgres:16
+    container_name: welfare-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dev_password_change_me}
+      POSTGRES_DB: ${POSTGRES_DB:-welfare_db}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ############################################################
+  # Qdrant — PR #24 docker/qdrant/docker-compose.yml 그대로 통합
+  ############################################################
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: always
+
+volumes:
+  postgres_data:
+  qdrant_storage:
