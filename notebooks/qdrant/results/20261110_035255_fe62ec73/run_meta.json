@@ -1,0 +1,389 @@
+{
+ "run_id": "20261110_035255_fe62ec73",
+ "mode": "full",
+ "k": 5,
+ "use_region_filter": true,
+ "num_ctx": 2048,
+ "instruction_prefix": null,
+ "python": "3.12.3",
+ "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+ "cpu": "x86_64",
+ "packages": {
+  "langchain-ollama": "1.1.0",
+  "langchain-huggingface": "1.2.3",
+  "langchain-qdrant": "1.1.0",
+  "sentence-transformers": "6.2.0",
+  "torch": "2.8.0+cu128",
+  "transformers": "5.22.2",
+  "qdrant-client": "1.20.0",
+  "ollama": "0.6.3"
+ },
+ "torch_cuda_build": "12.8",
+ "torch_cuda_available": true,
+ "gpu_name": "NVIDIA GeForce RTX 4090",
+ "ollama": {
+  "server_version": "0.40.16",
+  "model": "qwen3-embedding:0.6b",
+  "digest": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+  "quantization_level": "Q8_0",
+  "parameter_size": "595.78M",
+  "ps_after_warmup": [
+   {
+    "name": "qwen3-embedding:0.6b",
+    "size_vram": 985588039
+   }
+  ]
+ },
+ "kure": {
+  "revision": "8b418a58414668e75532ed045c22d9ca018ae2b2",
+  "device": "cuda:0",
+  "dtype": "torch.float32",
+  "max_seq_length": 8192
+ },
+ "qwen_tokenizer_revision": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+ "dims": {
+  "qwen3-embedding:0.6b": 1024,
+  "KURE-v1": 1024
+ },
+ "input_files": {
+  "./chunks/A_fixed/policy_chunks.jsonl": "672c923f73fc0251ea89ce5914ed85a0a20ad9834b1b8176505013e07d43f7a0",
+  "./chunks/A_fixed/guideline_chunks.jsonl": "8908e447aa652acd69a93d6fba5db7316348dd602df1de2708ad333fc7e4057a",
+  "./chunks/B_structure/policy_chunks.jsonl": "5f2d151b0ff461c3d272da12ed1e0be8d2998d76af177d277cd73559a22e8f77",
+  "./chunks/B_structure/guideline_chunks.jsonl": "9815f5a59281799ff038a585f1c2b4de9ed85c953f23aeec1e71108befe8bfb7",
+  "./data/test_questions_v2.jsonl": "cc17b69b131787b46dc53ecba91519bb5754841e193fd8dc05d41e9a411231d4"
+ },
+ "chunk_counts": {
+  "A_fixed": 3400,
+  "B_structure": 3865
+ },
+ "scoring_qids": [
+  "V01",
+  "V02",
+  "V03",
+  "V04",
+  "V05",
+  "V06",
+  "V07",
+  "V08",
+  "V09",
+  "V10",
+  "V11",
+  "V12",
+  "V13",
+  "V14",
+  "V15",
+  "V16",
+  "V17",
+  "V18",
+  "V19",
+  "V20",
+  "V21",
+  "V22",
+  "V23",
+  "V24",
+  "V25",
+  "V26",
+  "V27",
+  "V28",
+  "V29",
+  "V30",
+  "V31",
+  "V32",
+  "V33",
+  "V34",
+  "V35",
+  "V36"
+ ],
+ "trap_qids": [
+  "V37",
+  "V38",
+  "V39",
+  "V40"
+ ],
+ "question_truncate_check": {
+  "n_questions": 40,
+  "ollama_truncate_false_passed": true,
+  "ollama_prompt_eval_count": 853,
+  "qwen_max_tokens": 31,
+  "kure_max_tokens": 26,
+  "sec": 0.2
+ },
+ "truncation_check": {
+  "A_fixed": {
+   "n_chunks": 3400,
+   "ollama_prompt_eval_count": 1482257,
+   "qwen_doc_embed_sec": 34.3,
+   "ollama_truncate_false_passed": true,
+   "qwen_max_tokens": 731,
+   "kure_max_tokens": 606,
+   "from_cache": true
+  },
+  "B_structure": {
+   "n_chunks": 3865,
+   "ollama_prompt_eval_count": 1388316,
+   "qwen_doc_embed_sec": 36.9,
+   "ollama_truncate_false_passed": true,
+   "qwen_max_tokens": 727,
+   "kure_max_tokens": 545,
+   "from_cache": true
+  }
+ },
+ "path_equivalence": {
+  "A_fixed": {
+   "n": 20,
+   "min_cos": 1.0,
+   "mean_cos": 1.0
+  },
+  "B_structure": {
+   "n": 20,
+   "min_cos": 1.0,
+   "mean_cos": 1.0
+  }
+ },
+ "smoke_chunk_ids": {},
+ "filter_rules": {
+  "V01": {
+   "allow": [
+    "local:WLF00000696"
+   ],
+   "block": [
+    "local:WLF00002700"
+   ]
+  },
+  "V02": {
+   "allow": [
+    "local:WLF00002700"
+   ],
+   "block": []
+  },
+  "V03": {
+   "allow": [
+    "local:WLF00002209"
+   ],
+   "block": []
+  },
+  "V04": {
+   "allow": [
+    "local:WLF00006488"
+   ],
+   "block": []
+  },
+  "V05": {
+   "allow": [
+    "local:WLF00005928"
+   ],
+   "block": []
+  },
+  "V06": {
+   "allow": [
+    "local:WLF00005874"
+   ],
+   "block": []
+  },
+  "V07": {
+   "allow": [
+    "local:WLF00005113",
+    "local:WLF00005491"
+   ],
+   "block": []
+  },
+  "V08": {
+   "allow": [
+    "local:WLF00005951"
+   ],
+   "block": []
+  },
+  "V09": {
+   "allow": [
+    "local:WLF00005079"
+   ],
+   "block": []
+  },
+  "V10": {
+   "allow": [
+    "local:WLF00003401"
+   ],
+   "block": []
+  },
+  "V11": {
+   "allow": [
+    "local:WLF00003150"
+   ],
+   "block": []
+  },
+  "V12": {
+   "allow": [
+    "local:WLF00001334"
+   ],
+   "block": []
+  },
+  "V13": {
+   "allow": [
+    "local:WLF00003571"
+   ],
+   "block": [
+    "local:WLF00005113",
+    "local:WLF00005491"
+   ]
+  },
+  "V14": {
+   "allow": [
+    "local:WLF00006088"
+   ],
+   "block": []
+  },
+  "V15": {
+   "allow": [
+    "local:WLF00003144"
+   ],
+   "block": []
+  },
+  "V16": {
+   "allow": [
+    "local:WLF00006480"
+   ],
+   "block": []
+  },
+  "V17": {
+   "allow": [
+    "local:WLF00000603"
+   ],
+   "block": []
+  },
+  "V18": {
+   "allow": [
+    "local:WLF00004132"
+   ],
+   "block": []
+  },
+  "V19": {
+   "allow": [
+    "local:WLF00005912"
+   ],
+   "block": [
+    "local:WLF00006344"
+   ]
+  },
+  "V20": {
+   "allow": [
+    "local:WLF00006344"
+   ],
+   "block": [
+    "local:WLF00005912"
+   ]
+  },
+  "V21": {
+   "allow": [
+    "local:WLF00006429"
+   ],
+   "block": [
+    "local:WLF00003744"
+   ]
+  },
+  "V22": {
+   "allow": [
+    "local:WLF00003744"
+   ],
+   "block": [
+    "local:WLF00006429"
+   ]
+  },
+  "V23": {
+   "allow": [
+    "local:WLF00005959"
+   ],
+   "block": [
+    "local:WLF00006327"
+   ]
+  },
+  "V24": {
+   "allow": [
+    "local:WLF00006327"
+   ],
+   "block": [
+    "local:WLF00005959"
+   ]
+  },
+  "V25": {
+   "allow": [
+    "local:WLF00002231"
+   ],
+   "block": []
+  },
+  "V26": {
+   "allow": [
+    "local:WLF00005924"
+   ],
+   "block": []
+  },
+  "V27": {
+   "allow": [
+    "basic_pension_2026_p0021_03"
+   ],
+   "block": []
+  },
+  "V28": {
+   "allow": [
+    "basic_pension_2026_p0024_01"
+   ],
+   "block": []
+  },
+  "V29": {
+   "allow": [
+    "basic_pension_2026_p0039_01"
+   ],
+   "block": []
+  },
+  "V30": {
+   "allow": [
+    "elderly_welfare_2026_vol1_p0139_01",
+    "elderly_welfare_2026_vol1_p0140_01"
+   ],
+   "block": []
+  },
+  "V31": {
+   "allow": [
+    "elderly_welfare_2026_vol1_p0131_03"
+   ],
+   "block": []
+  },
+  "V32": {
+   "allow": [
+    "elderly_welfare_2026_vol2_p0043_02",
+    "elderly_welfare_2026_vol2_p0044_01"
+   ],
+   "block": []
+  },
+  "V33": {
+   "allow": [
+    "welfare_services_2026_p0204_02"
+   ],
+   "block": []
+  },
+  "V34": {
+   "allow": [
+    "welfare_services_2026_p0208_01"
+   ],
+   "block": []
+  },
+  "V35": {
+   "allow": [
+    "welfare_services_2026_p0206_03"
+   ],
+   "block": []
+  },
+  "V36": {
+   "allow": [
+    "welfare_services_2026_p0042_01"
+   ],
+   "block": []
+  },
+  "V37": {
+   "allow": [],
+   "block": [
+    "local:WLF00005912",
+    "local:WLF00006344"
+   ]
+  }
+ }
+}

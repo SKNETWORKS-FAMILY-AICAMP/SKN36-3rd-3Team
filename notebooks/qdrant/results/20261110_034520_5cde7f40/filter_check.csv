@@ -1,0 +1,25 @@
+﻿label,qid,checked,passed_count,ok,allow_missing,block_leaked,note
+A_fixed/qwen3-embedding:0.6b,V01,True,139,True,[],[],
+A_fixed/qwen3-embedding:0.6b,V13,True,138,True,[],[],
+A_fixed/qwen3-embedding:0.6b,V19,True,139,True,[],[],
+A_fixed/qwen3-embedding:0.6b,V25,True,139,True,[],[],
+A_fixed/qwen3-embedding:0.6b,V27,False,181,,,,"지역 지정 없음 → 전체 통과, 검증 제외"
+A_fixed/qwen3-embedding:0.6b,V37,True,137,True,[],[],
+A_fixed/KURE-v1,V01,True,139,True,[],[],
+A_fixed/KURE-v1,V13,True,138,True,[],[],
+A_fixed/KURE-v1,V19,True,139,True,[],[],
+A_fixed/KURE-v1,V25,True,139,True,[],[],
+A_fixed/KURE-v1,V27,False,181,,,,"지역 지정 없음 → 전체 통과, 검증 제외"
+A_fixed/KURE-v1,V37,True,137,True,[],[],
+B_structure/qwen3-embedding:0.6b,V01,True,145,True,[],[],
+B_structure/qwen3-embedding:0.6b,V13,True,142,True,[],[],
+B_structure/qwen3-embedding:0.6b,V19,True,146,True,[],[],
+B_structure/qwen3-embedding:0.6b,V25,True,143,True,[],[],
+B_structure/qwen3-embedding:0.6b,V27,False,185,,,,"지역 지정 없음 → 전체 통과, 검증 제외"
+B_structure/qwen3-embedding:0.6b,V37,True,143,True,[],[],
+B_structure/KURE-v1,V01,True,145,True,[],[],
+B_structure/KURE-v1,V13,True,142,True,[],[],
+B_structure/KURE-v1,V19,True,146,True,[],[],
+B_structure/KURE-v1,V25,True,143,True,[],[],
+B_structure/KURE-v1,V27,False,185,,,,"지역 지정 없음 → 전체 통과, 검증 제외"
+B_structure/KURE-v1,V37,True,143,True,[],[],
