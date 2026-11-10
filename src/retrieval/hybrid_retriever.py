@@ -111,4 +111,30 @@ def retrieve_welfare(
             from .neo4j_retriever import search_neo4j_only
             neo4j_question_search = search_neo4j_only
         graph_only_results = neo4j_question_search(question.strip(), limit=k)
+
+    checked = validate_evidence(documents, graph_results)
+    warnings = list(checked["warnings"])
+
+    if mode == "graph":
+        warnings.append(
+            "Neo4j 단독 검색은 키워드 기반 초기 베이스라인이며, "
+            "관계 근거·출처는 별도 확인 필요"
+        )
+
+    return {
+        "question": question.strip(),
+        "mode": mode,
+        "documents": checked["documents"],
+        "graph_results": checked["graph_results"],
+        "guideline_results": guideline_results,
+        "graph_only_results": graph_only_results,
+        "has_evidence": (
+            checked["has_evidence"]
+            or bool(graph_only_results)
+            or bool(guideline_results)
+        ),
+        "verification_level": checked["verification_level"],
+        "warnings": warnings,
+    }
+
         
