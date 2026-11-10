@@ -1,9 +1,7 @@
-# 실행할 서비스(컨테이너) 정의
-# 참고: 최신 Docker Compose는 version 속성이 필요 없습니다
+# 팀 공통 로컬 개발용 Docker Compose
+# 기존 PostgreSQL/Qdrant named volume 및 Neo4j bind mount 경로 유지 (데이터 보호)
+# Elasticsearch/Kibana/setup은 현재 3차 프로젝트에서 사용하지 않아 제외
 services:
-  ############################################################
-  # Neo4j 
-  ############################################################
   neo4j:
     # 사용할 Docker 이미지 (neo4j의 최신 버전)
     image: neo4j:latest
@@ -46,156 +44,6 @@ services:
       timeout: 5s      # 5초 내에 응답이 없으면 타임아웃
       retries: 5       # 5번 실패하면 비정상으로 판단
 
-  ############################################################
-  # Elasticsearch (Single Node for Development)
-  ############################################################
-  elasticsearch:
-    # Elasticsearch 공식 이미지 사용
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.1
-    
-    # 컨테이너 이름 지정
-    container_name: elasticsearch
-    
-    # 환경 변수 설정
-    environment:
-      # Single-node 클러스터 설정 (개발용)
-      - discovery.type=single-node
-      
-      # 보안 설정 활성화
-      - xpack.security.enabled=true
-      # SSL은 개발 환경에서 비활성화 (운영에서는 활성화 필요)
-      - xpack.security.http.ssl.enabled=false
-      - xpack.security.transport.ssl.enabled=false
-      
-      # 기본 사용자 비밀번호 설정
-      - ELASTIC_PASSWORD=changeme123!           # elastic 슈퍼유저
-      - KIBANA_PASSWORD=changeme123!            # kibana_system 사용자
-      
-      # 메모리 설정 (JVM Heap Size)
-      # 운영 환경에서는 시스템 메모리의 50% 권장 (최대 31GB)
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-      
-      # 네트워크 설정
-      - network.host=0.0.0.0
-      
-      # 클러스터 이름
-      - cluster.name=elasticsearch-cluster
-      
-      # 노드 이름
-      - node.name=elasticsearch-node-1
-      
-    # 포트 매핑
-    ports:
-      - "9200:9200"  # REST API 포트 (HTTP)
-      - "9300:9300"  # 노드 간 통신 포트 (TCP)
-    
-    # 데이터 영속성을 위한 볼륨 마운트
-    # 컨테이너 재시작 시에도 데이터가 유지됩니다
-    volumes:
-      - ./database/elasticsearch:/usr/share/elasticsearch/data
-    
-    # 헬스체크 설정 (인증 정보 포함)
-    healthcheck:
-      test: ["CMD-SHELL", "curl -u elastic:changeme123! -f http://localhost:9200/_cluster/health || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
-    
-    # 재시작 정책
-    restart: unless-stopped
-    
-    # 리소스 제한 (선택사항)
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 2G
-    #     reservations:
-    #       memory: 1G
-
-  ############################################################
-  # Setup Container (kibana_system 비밀번호 자동 설정)
-  ############################################################
-  setup:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.1
-    container_name: elasticsearch-setup
-    
-    # Elasticsearch가 healthy 상태가 된 후 실행
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-    
-    # kibana_system 사용자 비밀번호 설정
-    command: >
-      bash -c '
-        echo "Waiting for Elasticsearch to be ready...";
-        until curl -s -u elastic:changeme123! http://elasticsearch:9200/_cluster/health | grep -q "yellow\|green"; do
-          sleep 5;
-        done;
-        echo "Setting kibana_system password...";
-        curl -X POST -u elastic:changeme123! \
-          "http://elasticsearch:9200/_security/user/kibana_system/_password" \
-          -H "Content-Type: application/json" \
-          -d "{\"password\":\"changeme123!\"}";
-        echo "";
-        echo "kibana_system password has been set successfully!";
-      '
-    
-    # 한 번만 실행하고 종료
-    restart: "no"
-
-  ############################################################
-  # Kibana (Elasticsearch Web UI)
-  ############################################################
-  kibana:
-    # Kibana 공식 이미지 (Elasticsearch와 동일한 버전 사용)
-    image: docker.elastic.co/kibana/kibana:8.12.1
-    
-    # 컨테이너 이름 지정
-    container_name: kibana
-    
-    # 환경 변수 설정
-    environment:
-      # Elasticsearch 연결 설정
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      
-      # Elasticsearch 인증 정보 (kibana_system 전용 계정 사용)
-      # elastic 슈퍼유저는 사용 불가 - kibana_system 사용 필수
-      - ELASTICSEARCH_USERNAME=kibana_system
-      - ELASTICSEARCH_PASSWORD=changeme123!
-      
-      # Kibana 서버 설정
-      - SERVER_NAME=kibana
-      - SERVER_HOST=0.0.0.0
-      
-      # 다국어 설정 (한국어)
-      - I18N_LOCALE=ko-KR
-      
-    # 포트 매핑
-    ports:
-      - "5601:5601"  # Kibana Web UI
-    
-    # Setup 컨테이너가 kibana_system 비밀번호 설정 완료 후 실행
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-      setup:
-        condition: service_completed_successfully
-    
-    # 헬스체크 설정
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5601/api/status || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
-    
-    # 재시작 정책
-    restart: unless-stopped
-
-  ############################################################
-  # PostgreSQL — PR #25 / #26 정형 정책·PDF·청크 저장
-  ############################################################
   postgres:
     image: postgres:16
     container_name: welfare-postgres
@@ -215,7 +63,7 @@ services:
       retries: 5
 
   ############################################################
-  # Qdrant — PR #24 docker/qdrant/docker-compose.yml 그대로 통합
+  # Qdrant
   ############################################################
   qdrant:
     image: qdrant/qdrant:latest
