@@ -1,0 +1,5 @@
+﻿chunk_set,model,mode,n_chunks,n_questions,dim,Hit@1,Hit@3,Hit@5,Recall@5,MRR@5,문서임베딩(초),적재(초),검색(초/질문),벡터출처
+A_fixed,KURE-v1,full,3400,36,1024,0.694,0.806,0.889,0.861,0.765,24.2,0.3,0.09,본 실행에서 LangChain embed_documents로 생성
+A_fixed,qwen3-embedding:0.6b,full,3400,36,1024,0.472,0.722,0.75,0.736,0.59,34.3,0.3,0.12,"디스크 캐시(qwen3-embedding_0.6b__A_fixed__e2210d508ab3baea.npz, 2026-11-10 03:47:38) ← 4-2 잘림검증에서 생성(truncate=False)"
+B_structure,KURE-v1,full,3865,36,1024,0.667,0.833,0.889,0.861,0.759,23.1,0.7,0.1,본 실행에서 LangChain embed_documents로 생성
+B_structure,qwen3-embedding:0.6b,full,3865,36,1024,0.444,0.667,0.75,0.736,0.566,36.9,0.3,0.13,"디스크 캐시(qwen3-embedding_0.6b__B_structure__a3d7c996e1721ee8.npz, 2026-11-10 03:48:16) ← 4-2 잘림검증에서 생성(truncate=False)"

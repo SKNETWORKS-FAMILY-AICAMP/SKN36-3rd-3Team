@@ -1,0 +1,17 @@
+﻿chunk_set,model,qid,q_type,question,n_returned,record_types,sido_values,must_not_hits,local_policy_hits,top1_score,top1_title,empty
+A_fixed,qwen3-embedding:0.6b,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.48,2026년 노인보건복지사업안내 2권,False
+A_fixed,qwen3-embedding:0.6b,V38,함정_데이터없는지역,부산 사는데 노인이 받을 수 있는 혜택 뭐 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.528,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,qwen3-embedding:0.6b,V39,함정_데이터없는지역,전주 사는데 어르신 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.51,2026년 노인보건복지사업안내 2권,False
+A_fixed,qwen3-embedding:0.6b,V40,함정_범위밖,요즘 주식 뭐 사면 좋아?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.306,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,KURE-v1,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.571,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,KURE-v1,V38,함정_데이터없는지역,부산 사는데 노인이 받을 수 있는 혜택 뭐 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.555,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,KURE-v1,V39,함정_데이터없는지역,전주 사는데 어르신 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.61,2026년 노인보건복지사업안내 2권,False
+A_fixed,KURE-v1,V40,함정_범위밖,요즘 주식 뭐 사면 좋아?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.412,2026 나에게 힘이 되는 복지서비스,False
+B_structure,qwen3-embedding:0.6b,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.485,2026년 노인보건복지사업안내 2권,False
+B_structure,qwen3-embedding:0.6b,V38,함정_데이터없는지역,부산 사는데 노인이 받을 수 있는 혜택 뭐 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.529,2026 나에게 힘이 되는 복지서비스,False
+B_structure,qwen3-embedding:0.6b,V39,함정_데이터없는지역,전주 사는데 어르신 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.51,2026 나에게 힘이 되는 복지서비스,False
+B_structure,qwen3-embedding:0.6b,V40,함정_범위밖,요즘 주식 뭐 사면 좋아?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.319,2026 나에게 힘이 되는 복지서비스,False
+B_structure,KURE-v1,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.625,2026년 노인보건복지사업안내 2권,False
+B_structure,KURE-v1,V38,함정_데이터없는지역,부산 사는데 노인이 받을 수 있는 혜택 뭐 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.6,2026 나에게 힘이 되는 복지서비스,False
+B_structure,KURE-v1,V39,함정_데이터없는지역,전주 사는데 어르신 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.61,2026년 노인보건복지사업안내 2권,False
+B_structure,KURE-v1,V40,함정_범위밖,요즘 주식 뭐 사면 좋아?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.422,2026년 노인보건복지사업안내 2권,False

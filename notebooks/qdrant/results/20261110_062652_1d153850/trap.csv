@@ -1,0 +1,37 @@
+﻿chunk_set,model,qid,q_type,question,n_returned,record_types,sido_values,must_not_hits,local_policy_hits,top1_score,top1_title,empty
+A_fixed,qwen3-embedding:0.6b,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.48,2026년 노인보건복지사업안내 2권,False
+A_fixed,qwen3-embedding:0.6b,V38,함정_데이터없는지역,부산 사는데 노인이 받을 수 있는 혜택 뭐 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.528,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,qwen3-embedding:0.6b,V39,함정_데이터없는지역,전주 사는데 어르신 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.51,2026년 노인보건복지사업안내 2권,False
+A_fixed,qwen3-embedding:0.6b,V40,함정_범위밖,요즘 주식 뭐 사면 좋아?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.306,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,qwen3-embedding:0.6b,W69,함정_지역오추천,목포 사는데 귀가 어두워서 보청기 사는 거 지원돼?,5,"{'guideline': 4, 'policy': 1}","[None, None, None, '전라남도', None]",0,1,0.46,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,qwen3-embedding:0.6b,W70,함정_지역오추천,강남구 사는데 틀니 하는 비용 구에서 지원해 줘?,5,"{'policy': 4, 'guideline': 1}","['서울특별시', None, '서울특별시', '서울특별시', '서울특별시']",0,4,0.576,장애인 휠체어 보장구 수리비 지원,False
+A_fixed,qwen3-embedding:0.6b,W71,함정_데이터없는지역,대구 수성구 사는데 노인 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.52,2026년 노인보건복지사업안내 1권,False
+A_fixed,qwen3-embedding:0.6b,W72,함정_범위밖,아파트 재건축 들어간다는데 지금 사 두면 돈 돼?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.443,2026년 노인보건복지사업안내 1권,False
+A_fixed,qwen3-embedding:0.6b,T10,함정_시설데이터,순천시에 엄마가 낮에 다닐 만한 노인복지관이 어디 있어요?,5,"{'policy': 3, 'guideline': 2}","['전라남도', '전라남도', None, '전라남도', None]",0,3,0.519,골목호랑이 어르신단 운영,False
+A_fixed,KURE-v1,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.571,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,KURE-v1,V38,함정_데이터없는지역,부산 사는데 노인이 받을 수 있는 혜택 뭐 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.555,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,KURE-v1,V39,함정_데이터없는지역,전주 사는데 어르신 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.61,2026년 노인보건복지사업안내 2권,False
+A_fixed,KURE-v1,V40,함정_범위밖,요즘 주식 뭐 사면 좋아?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.412,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,KURE-v1,W69,함정_지역오추천,목포 사는데 귀가 어두워서 보청기 사는 거 지원돼?,5,{'policy': 5},"['전라남도', '전라남도', '전라남도', '전라남도', '전라남도']",0,5,0.571,암환자 가발구입비 지원사업,False
+A_fixed,KURE-v1,W70,함정_지역오추천,강남구 사는데 틀니 하는 비용 구에서 지원해 줘?,5,{'policy': 5},"['서울특별시', '서울특별시', '서울특별시', '서울특별시', '서울특별시']",0,5,0.598,강남구 신혼부부 청년 전월세 대출이자 지원사업,False
+A_fixed,KURE-v1,W71,함정_데이터없는지역,대구 수성구 사는데 노인 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.582,2026 나에게 힘이 되는 복지서비스,False
+A_fixed,KURE-v1,W72,함정_범위밖,아파트 재건축 들어간다는데 지금 사 두면 돈 돼?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.512,2026년 노인보건복지사업안내 2권,False
+A_fixed,KURE-v1,T10,함정_시설데이터,순천시에 엄마가 낮에 다닐 만한 노인복지관이 어디 있어요?,5,"{'policy': 4, 'guideline': 1}","['전라남도', '전라남도', '전라남도', '전라남도', None]",0,4,0.588,골목호랑이 어르신단 운영,False
+B_structure,qwen3-embedding:0.6b,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.485,2026년 노인보건복지사업안내 2권,False
+B_structure,qwen3-embedding:0.6b,V38,함정_데이터없는지역,부산 사는데 노인이 받을 수 있는 혜택 뭐 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.529,2026 나에게 힘이 되는 복지서비스,False
+B_structure,qwen3-embedding:0.6b,V39,함정_데이터없는지역,전주 사는데 어르신 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.51,2026 나에게 힘이 되는 복지서비스,False
+B_structure,qwen3-embedding:0.6b,V40,함정_범위밖,요즘 주식 뭐 사면 좋아?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.319,2026 나에게 힘이 되는 복지서비스,False
+B_structure,qwen3-embedding:0.6b,W69,함정_지역오추천,목포 사는데 귀가 어두워서 보청기 사는 거 지원돼?,5,"{'guideline': 4, 'policy': 1}","[None, None, '전라남도', None, None]",0,1,0.456,2026 나에게 힘이 되는 복지서비스,False
+B_structure,qwen3-embedding:0.6b,W70,함정_지역오추천,강남구 사는데 틀니 하는 비용 구에서 지원해 줘?,5,"{'policy': 4, 'guideline': 1}","['서울특별시', '서울특별시', None, '서울특별시', '서울특별시']",0,4,0.579,산후건강관리비용 지원,False
+B_structure,qwen3-embedding:0.6b,W71,함정_데이터없는지역,대구 수성구 사는데 노인 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.523,2026년 노인보건복지사업안내 2권,False
+B_structure,qwen3-embedding:0.6b,W72,함정_범위밖,아파트 재건축 들어간다는데 지금 사 두면 돈 돼?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.411,2026 나에게 힘이 되는 복지서비스,False
+B_structure,qwen3-embedding:0.6b,T10,함정_시설데이터,순천시에 엄마가 낮에 다닐 만한 노인복지관이 어디 있어요?,5,"{'policy': 3, 'guideline': 2}","['전라남도', '전라남도', None, None, '전라남도']",0,3,0.519,골목호랑이 어르신단 운영,False
+B_structure,KURE-v1,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.625,2026년 노인보건복지사업안내 2권,False
+B_structure,KURE-v1,V38,함정_데이터없는지역,부산 사는데 노인이 받을 수 있는 혜택 뭐 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.6,2026 나에게 힘이 되는 복지서비스,False
+B_structure,KURE-v1,V39,함정_데이터없는지역,전주 사는데 어르신 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.61,2026년 노인보건복지사업안내 2권,False
+B_structure,KURE-v1,V40,함정_범위밖,요즘 주식 뭐 사면 좋아?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.422,2026년 노인보건복지사업안내 2권,False
+B_structure,KURE-v1,W69,함정_지역오추천,목포 사는데 귀가 어두워서 보청기 사는 거 지원돼?,5,{'policy': 5},"['전라남도', '전라남도', '전라남도', '전라남도', '전라남도']",0,5,0.571,암환자 가발구입비 지원사업,False
+B_structure,KURE-v1,W70,함정_지역오추천,강남구 사는데 틀니 하는 비용 구에서 지원해 줘?,5,"{'policy': 3, 'guideline': 2}","['서울특별시', '서울특별시', None, '서울특별시', None]",0,3,0.598,강남구 신혼부부 청년 전월세 대출이자 지원사업,False
+B_structure,KURE-v1,W71,함정_데이터없는지역,대구 수성구 사는데 노인 목욕비 지원 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.566,2026 나에게 힘이 되는 복지서비스,False
+B_structure,KURE-v1,W72,함정_범위밖,아파트 재건축 들어간다는데 지금 사 두면 돈 돼?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.514,2026년 노인보건복지사업안내 2권,False
+B_structure,KURE-v1,T10,함정_시설데이터,순천시에 엄마가 낮에 다닐 만한 노인복지관이 어디 있어요?,5,{'policy': 5},"['전라남도', '전라남도', '전라남도', '전라남도', '전라남도']",0,5,0.588,골목호랑이 어르신단 운영,False
