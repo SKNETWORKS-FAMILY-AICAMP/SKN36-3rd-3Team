@@ -26,3 +26,10 @@ class WelfareState(TypedDict, total=False):
     sources: list[dict[str, Any]]
     answer: str
     answer_status: AnswerStatus
+
+    intent: str
+    search_query: str
+    clarification_question: str
+
+    evidence_verdict: str
+    evidence_reason: str

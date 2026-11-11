@@ -75,7 +75,10 @@ def make_retrieval_node(
     k: int = 5,
 ):
     def node(state: WelfareState) -> WelfareState:
-        search_question = build_search_question(state)
+        search_question = (
+    state.get("search_query")
+    or build_search_question(state)
+)
 
         result = retriever(
             search_question,
