@@ -272,15 +272,13 @@ def ask_welfare(
     )
 
     return {
-        "answer": result["answer"],
-        "sources": result.get("sources", []),
-        "safety_status": result.get(
-            "safety_status",
-            "normal",
-        ),
-        "answer_status": result["answer_status"],
-        "session_id": session_id,
-    }
+    "answer": result["answer"],
+    "sources": result.get("sources", []),
+    "safety_status": result.get("safety_status", "normal"),
+    "answer_status": result["answer_status"],
+    "session_id": session_id,
+    "choices": result.get("choices", []),
+}
 
 
 if __name__ == "__main__":

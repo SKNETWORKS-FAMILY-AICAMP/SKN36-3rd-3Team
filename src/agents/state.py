@@ -33,3 +33,5 @@ class WelfareState(TypedDict, total=False):
 
     evidence_verdict: str
     evidence_reason: str
+
+    choices: list[dict[str, str]]
