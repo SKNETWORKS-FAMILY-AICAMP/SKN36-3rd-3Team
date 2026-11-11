@@ -8,7 +8,7 @@
    `data/rag/embedding_by_KUREv1/chunk_vectors.jsonl`의 벡터와 `data/rag/chunks/A_fixed/`의 정책·지침 청크를 `chunk_id`로 연결합니다. 원본 청크에서는 본문과 전체 메타데이터를 가져옵니다. `chunk_vectors.npz`, `chunk_map.csv`, `embedding_info.json`을 사용해 벡터 값, ID, 출처, 파일 해시를 전수 확인합니다.
 
 2. **Neo4j 연결과 그래프 적재**  
-   루트 `docker-compose.yml`의 Neo4j를 실행하고, 루트 `.env`의 `NEO4J_URI`, `NEO4J_ID`, `NEO4J_PW`로 접속합니다. `NEO4J_DATABASE`를 생략하면 `neo4j`를 사용합니다. 원본 UUID와 Qdrant의 `point_id`를 보존하고, 청크를 정책 또는 지침 섹션에 연결합니다. 섹션은 원본 PDF와 연결합니다. `MERGE`로 재실행 시 같은 ID를 재사용합니다.
+   루트 `docker-compose.yml`의 Neo4j를 실행하고, 루트 `.env`의 `NEO4J_URI`, `NEO4J_USER`, `NEO4J_PASSWORD`로 접속합니다. `NEO4J_DATABASE`를 생략하면 `neo4j`를 사용합니다. 원본 UUID와 Qdrant의 `point_id`를 보존하고, 청크를 정책 또는 지침 섹션에 연결합니다. 섹션은 원본 PDF와 연결합니다. `MERGE`로 재실행 시 같은 ID를 재사용합니다.
 
 3. **적재와 검색 검수**  
    정책 청크 662개와 PDF 지침 청크 2,738개의 본문·메타데이터·벡터·관계를 저장 후 다시 읽어 원본과 대조합니다. Qdrant와 같은 `point_id`와 `parent_id`로 출처 경로를 조회하고, 1,024차원 코사인 인덱스에서 정책·지침 벡터의 Top-5 검색을 점검합니다.
