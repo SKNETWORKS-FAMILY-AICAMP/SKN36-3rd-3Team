@@ -2,7 +2,7 @@
 
 From project root, with PYTHONPATH=src:
     python -m rag.pdf_processing.run_step06
-    python -m rag.pdf_processing.run_step06 --input data/preprocessed/guideline_sections_filtered.jsonl
+    python -m rag.pdf_processing.run_step06 --input data/preprocessed/pdf/guideline_sections_filtered.jsonl
 """
 from __future__ import annotations
 
@@ -17,9 +17,9 @@ from .section_validator import validate_sections, write_jsonl
 
 def discover_input(root: Path) -> Path:
     candidates = [
+        root / "data" / "preprocessed" / "pdf" / "guideline_sections_filtered.jsonl",
         root / "data" / "preprocessed" / "guideline_sections_filtered.jsonl",
         root / "data" / "processed" / "guideline_sections_filtered.jsonl",
-        root / "data" / "preprocessed" / "pdf" / "guideline_sections_filtered.jsonl",
     ]
     for p in candidates:
         if p.is_file():
