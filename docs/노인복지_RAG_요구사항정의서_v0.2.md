@@ -271,12 +271,12 @@ Neo4j는 모든 질의에 억지로 사용하지 않고 **관계 탐색에 유�
 | PR #26 정책·PDF RAG 문서와 A/B 청킹 | **Merged (`dev`)**; 574/1,189 문서 및 3,400/3,865 청크 | 검색 성능 실험, 공통 ID로 DB 연결 |
 | PR #27 PDF 전처리 노트북 개선 | **Merged (`dev`)**; 설명/표본 노트북 존재 | 재전처리 시 기존 섹션 ID 및 청크 버전 영향 확인 |
 | PR #24 Qdrant 연습용 적재 | **Open, 미머지**; 더미 데이터 기반 | 실제 PR #26 JSONL 연동, 모델 A/B와 검색 테스트 |
-| PostgreSQL | `notebooks/PostgreSQL.ipynb` 등 초안 존재; 실제 서비스 DB 적재 완료 확인 안 됨 | PR #25 + #26 정형 적재, UUID 조회 테스트 |
+| PostgreSQL | `notebooks/postgres/PostgreSQL.ipynb` 등 초안 존재; 실제 서비스 DB 적재 완료 확인 안 됨 | PR #25 + #26 정형 적재, UUID 조회 테스트 |
 | Neo4j | 계획 및 과거 자료 존재; 현재 기준의 검증된 그래프 실제 적재 확인 안 됨 | 최소 관계 스키마 확정, 적재 및 Graph 비교 |
 | 복지시설 | 기존 자료 유지; 담당자가 API 최신성·서울 건수 부족 지적 | 현재 범위·한계 고지; 새 API/지도는 4차로 이관 |
 | FastAPI·React 및 전체 RAG | 실제 통합 작동 확인 안 됨 | 질문→검색→근거 보강→답변·출처 화면 시연 |
 
-**주의:** 기존 `data/rag/v3/` 경로는 현재 PR #25·#26의 확정 청킹 산출물과 **별개**다. 이번 적재·평가 기준 입력은 **`data/rag/documents/`, `data/rag/chunks/A_fixed/`, `data/rag/chunks/B_structure/`**로 통일한다.
+**주의:** 기존 `data/rag/archive/v3/` 경로는 현재 PR #25·#26의 확정 청킹 산출물과 **별개**다. 이번 적재·평가 기준 입력은 **`data/rag/documents/`, `data/rag/chunks/A_fixed/`, `data/rag/chunks/B_structure/`**로 통일한다.
 
 ## 12. 다음 실행 순서와 담당자 협업
 

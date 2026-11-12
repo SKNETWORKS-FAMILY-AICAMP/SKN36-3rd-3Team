@@ -1,25 +1,19 @@
 
 # ============================================================
 # SKN36-3rd-3Team | 노인복지 Hybrid RAG AI Chatbot
-# Python 권장: 3.11 또는 3.12
+# Python 권장: 3.12.13
 # 버전 고정은 설치 및 통합 테스트 후 진행
 # ============================================================
 
 # 1. 환경변수 및 기본 유틸리티
 python-dotenv
-requests
-httpx
-pydantic
+jupyter
 
 # 2. LangChain / LangGraph / LLM
 langchain
-langchain-core
 langchain-community
 langchain-openai
-langchain-text-splitters
 langgraph
-openai
-tiktoken
 
 # 3. Vector DB - Qdrant
 qdrant-client
@@ -29,13 +23,9 @@ neo4j
 
 # 5. Embedding - KURE-v1
 sentence-transformers
-torch
-transformers
-numpy
 
 # 6. PostgreSQL - 대화 기억
 psycopg[binary]
-sqlalchemy
 
 # 7. FastAPI - Backend
 fastapi
@@ -50,12 +40,10 @@ lxml
 openpyxl
 
 # 9. 데이터 분석 및 평가
-scikit-learn
 matplotlib
 
 # 10. 기존 프로젝트 호환성
 langchain-chroma
-chromadb
 
 # 11. 테스트
 pytest

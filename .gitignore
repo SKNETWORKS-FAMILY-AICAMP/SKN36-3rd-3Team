@@ -1,5 +1,7 @@
 # Python 가상환경
 .venv/
+pyproject.toml
+uv.lock
 
 # 환경변수 및 API Key
 .env
