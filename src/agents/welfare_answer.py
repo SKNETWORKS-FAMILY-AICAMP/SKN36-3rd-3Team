@@ -8,6 +8,8 @@ from typing import Any, Callable
 
 from .state import WelfareState
 from src.generation.prompts import SYSTEM_PROMPT
+from .region_context import selected_region, region_guidance
+from .welfare_retrieval import select_context_docs
 
 
 def source_from_doc(doc: dict[str, Any]) -> dict[str, Any] | None:
@@ -68,7 +70,9 @@ def make_answer_node(
             return {
                 "answer": (
                     "확인할 수 있는 복지정책 근거를 찾지 못했습니다. "
-                    "지역이나 필요한 지원 종류를 조금 더 알려주시겠어요?"
+                    + ("필요한 지원 종류를 조금 더 알려주시겠어요?"
+                     if selected_region(state.get("region"))
+                     else "지역이나 필요한 지원 종류를 조금 더 알려주시겠어요?")
                 ),
                 "answer_status": "no_evidence",
                 "sources": [],
@@ -87,19 +91,36 @@ def make_answer_node(
             }
 
         # 5. Qdrant에서 검색한 정책 및 PDF 본문
+        context_docs = select_context_docs(docs, limit=8)
         pieces = [
             {
-                "text": str(doc.get("text", ""))[:2400],
+                "text": str(doc.get("text", ""))[:2000],
                 "title": doc.get("title"),
+                "record_type": doc.get("record_type"),
                 "parent_id": doc.get("parent_id"),
                 "source_url": doc.get("source_url"),
+                "section": (doc.get("metadata") or {}).get("section"),
+                "page_start": (doc.get("metadata") or {}).get("page_start"),
+                "page_end": (doc.get("metadata") or {}).get("page_end"),
             }
-            for doc in docs[:5]
+            for doc in context_docs
         ]
 
         # 6. Neo4j 정책 관계 정보
         # 신청 자격이 검증된 사실로 취급하지 않는다.
-        graph_facts = graph[:5]
+        # Neo4j raw results contain 1024-dim embeddings and full adjacent nodes.
+        # Never pass those giant objects to the LLM: only compact identifiers.
+        graph_facts = [
+            {
+                "policy_id": item.get("policy_id"),
+                "found": item.get("found"),
+                "policy_title": (
+                    (item.get("policy") or {}).get("properties") or {}
+                ).get("title"),
+            }
+            for item in graph[:5]
+            if isinstance(item, dict)
+        ]
 
         # 7. Neo4j PDF 청크 -> 섹션 -> 원본 문서 관계
         guideline_facts = []
@@ -145,6 +166,9 @@ def make_answer_node(
         # 정책 사실은 Qdrant 검색 본문을 근거로 사용한다.
         prompt_data = {
             "question": state["question"],
+            "evidence_verdict": state.get("evidence_verdict"),
+            "selected_region": selected_region(state.get("region")),
+            "region_instructions": region_guidance(state.get("region")),
 
             # PostgreSQL에서 불러온 최근 대화
             "recent_history": state.get("history", [])[-4:],
@@ -163,7 +187,10 @@ def make_answer_node(
             "related_policy_candidates_for_review": expansion_candidates,
 
             # 검증 경고
-            "verification_notes": result.get("warnings", []),
+            "verification_notes": [
+                str(note) for note in (result.get("warnings") or [])
+                if "공식 출처 URL 미확인" not in str(note)
+            ][:5],
         }
 
         prompt = json.dumps(
@@ -171,6 +198,14 @@ def make_answer_node(
             ensure_ascii=False,
             default=str,
         )
+
+        if state.get("evidence_verdict") == "partial":
+            prompt += (
+                "\n이 질문은 일부 항목에만 직접 근거가 있습니다. "
+                "자료에서 확인되는 내용은 먼저 안내하되, "
+                "확인되지 않는 지원 조건/금액/신청 방법은 추측하지 말고 "
+                "해당 항목은 확인할 수 없다고 명확히 알려 주세요."
+            )
 
         # 10. 확장 정책의 잘못된 사용 방지
         if expansion_candidates:
@@ -214,7 +249,7 @@ def make_answer_node(
         # 실제 Qdrant 검색 문서만 출처로 사용한다.
         sources = [
             source
-            for doc in docs
+            for doc in context_docs
             if (source := source_from_doc(doc)) is not None
         ]
 

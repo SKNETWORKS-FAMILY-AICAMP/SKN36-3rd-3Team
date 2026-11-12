@@ -15,6 +15,7 @@ class WelfareState(TypedDict, total=False):
     question: str
     session_id: str | None
     history: list[dict[str, str]]
+    region: dict[str, Any] | None
 
     safety_status: SafetyStatus
     safety_reason: str
