@@ -179,6 +179,22 @@ class Neo4jRetriever:
             "relationships": relations,
         }
 
+    def get_chunk_evidence(self, chunk_ids: list[str]) -> list[dict]:
+        """Look up the exact parent and source document of each A_fixed chunk."""
+        if not chunk_ids:
+            return []
+        return self._query(
+            """
+            UNWIND $chunk_ids AS chunk_id
+            MATCH (c:RagABFixedChunk {chunk_id: chunk_id})-[:CHUNK_OF]->(p)
+            OPTIONAL MATCH (p:RagABSection)<-[:HAS_SECTION]-(d:RagABDocument)
+            RETURN c.chunk_id AS chunk_id, coalesce(p.policy_id, p.section_id) AS parent_id,
+                   d.document_id AS document_id, coalesce(p.source_url, d.source_url) AS source_url,
+                   p.page_start AS page_start, p.page_end AS page_end
+            """,
+            chunk_ids=chunk_ids,
+        )
+
     def get_guideline_relationships(
         self, chunk_id: str, limit: int = 5
     ) -> dict:
