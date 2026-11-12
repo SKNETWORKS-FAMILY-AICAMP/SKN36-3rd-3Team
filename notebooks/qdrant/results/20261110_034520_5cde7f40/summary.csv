@@ -1,0 +1,5 @@
+﻿chunk_set,model,mode,n_chunks,n_questions,dim,Hit@1,Hit@3,Hit@5,Recall@5,MRR@5,문서임베딩(초),적재(초),검색(초/질문),벡터출처
+A_fixed,KURE-v1,smoke,212,5,1024,0.8,1.0,1.0,1.0,0.9,1.6,0.0,0.01,서브셋 212개 LangChain embed_documents로 생성(미보관)
+A_fixed,qwen3-embedding:0.6b,smoke,212,5,1024,0.8,1.0,1.0,1.0,0.867,34.3,0.0,0.01,4-2 잘림검증에서 생성(truncate=False)
+B_structure,KURE-v1,smoke,212,5,1024,1.0,1.0,1.0,1.0,1.0,1.3,0.0,0.01,서브셋 212개 LangChain embed_documents로 생성(미보관)
+B_structure,qwen3-embedding:0.6b,smoke,212,5,1024,0.4,0.6,1.0,1.0,0.58,36.9,0.0,0.01,4-2 잘림검증에서 생성(truncate=False)

@@ -194,7 +194,50 @@ class Neo4jRetriever:
             """,
             chunk_ids=chunk_ids,
         )
+    
+    def get_guideline_relationships(
+        self, chunk_id: str, limit: int = 5
+    ) -> dict:
+        """PDF 청크에서 섹션 및 원본 문서를 조회한다."""
+        cid = _normalize_id(chunk_id)
+        if not cid:
+            raise ValueError("chunk_id는 비어 있을 수 없습니다.")
 
+        rows = self._query(
+            """
+            MATCH (c:RagABFixedChunk {chunk_id: $chunk_id})
+                  -[:CHUNK_OF]->(s:RagABSection)
+            OPTIONAL MATCH (d:RagABDocument)
+                  -[:HAS_SECTION]->(s)
+            RETURN
+                c.chunk_id AS chunk_id,
+                s.section_id AS section_id,
+                properties(s) AS section,
+                properties(d) AS document
+            LIMIT $limit
+            """,
+            chunk_id=cid,
+            limit=max(1, min(20, int(limit))),
+        )
+
+        if not rows:
+            return {
+                "chunk_id": cid,
+                "found": False,
+                "section_id": None,
+                "section": None,
+                "document": None,
+            }
+
+        row = rows[0]
+        return {
+            "chunk_id": row["chunk_id"],
+            "found": True,
+            "section_id": row["section_id"],
+            "section": _jsonable(row["section"]),
+            "document": _jsonable(row["document"]),
+        }
+    
     def search_by_question(self, question: str, limit: int = 5) -> list[dict]:
         """Independent Graph-only baseline, no Qdrant embedding required.
 
@@ -256,5 +299,16 @@ def main():
         parser.exit(1, f"Neo4j 조회 실패: {exc}\n")
 
 
+def search_neo4j_guideline(chunk_id: str, limit: int = 5) -> dict:
+    """Qdrant에서 검색한 PDF 청크의 Neo4j 관계를 조회한다."""
+    with Neo4jRetriever() as retriever:
+        return retriever.get_guideline_relationships(
+            chunk_id, limit=limit
+        )
+
+
 if __name__ == "__main__":
     main()
+
+
+

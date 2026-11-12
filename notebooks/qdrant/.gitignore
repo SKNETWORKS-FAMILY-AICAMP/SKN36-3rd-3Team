@@ -1,0 +1,4 @@
+data/*_embeddings.jsonl
+results/cache/
+results/*.zip
+

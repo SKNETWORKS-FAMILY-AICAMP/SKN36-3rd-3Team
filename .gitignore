@@ -9,3 +9,12 @@ __pycache__/
 
 # Jupyter Notebook 임시 파일
 .ipynb_checkpoints/
+
+# 임베딩 A/B 테스트 캐시와 중간 결과 (기존 로컬 규칙 보존)
+notebooks/qdrant/results/cache/
+notebooks/qdrant/results/*/partial_*.csv
+notebooks/qdrant/results/failures_*.json
+
+# 로컬 전용 Docker Compose override (PC마다 다름)
+compose.override.yml
+docker-compose.override.yml

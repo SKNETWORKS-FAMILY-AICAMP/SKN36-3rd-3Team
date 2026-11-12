@@ -1,0 +1,5 @@
+﻿chunk_set,model,qid,q_type,question,n_returned,record_types,sido_values,must_not_hits,local_policy_hits,top1_score,top1_title,empty
+A_fixed,qwen3-embedding:0.6b,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.409,2026년 노인보건복지사업안내 2권,False
+A_fixed,KURE-v1,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.549,2026 나에게 힘이 되는 복지서비스,False
+B_structure,qwen3-embedding:0.6b,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.463,2026년 노인보건복지사업안내 2권,False
+B_structure,KURE-v1,V37,함정_지역오추천,병원 갈 때 같이 가 주는 서비스 있어?,5,{'guideline': 5},"[None, None, None, None, None]",0,0,0.56,2026 나에게 힘이 되는 복지서비스,False
