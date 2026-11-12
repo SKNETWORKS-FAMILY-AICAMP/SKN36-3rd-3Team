@@ -4,7 +4,6 @@ The actual LangGraph contains Safety -> Retrieval -> Answer nodes.
 This wrapper performs: history read -> LangGraph invoke -> conditional save.
 """
 from __future__ import annotations
-
 from typing import Any, Callable
 from uuid import uuid4
 
@@ -45,4 +44,5 @@ def run_chat_session(
         "safety_status": status,
         "answer_status": answer_status,
         "session_id": sid,
+        "choices": result.get("choices", []),
     }
