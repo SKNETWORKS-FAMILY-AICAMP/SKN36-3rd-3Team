@@ -93,13 +93,66 @@ def _is_known_national_guide(doc: dict[str, Any], md: dict[str, Any]) -> bool:
 
 
 def fallback_search_query(question: str) -> str | None:
-    """One evidence-only retry for explicit meal/preparation difficulties."""
-    q = question.replace(" ", "")
-    meal = any(x in q for x in ("밥", "식사", "끼니", "반찬", "도시락", "음식"))
-    difficulty = any(x in q for x in ("힘들", "어렵", "못", "부족", "없", "챙기", "준비", "배달"))
-    if meal and difficulty:
-        return "노인 식사 지원 식사배달 밑반찬 지원 경로식당 노인맞춤돌봄서비스 식사지원"
+    """Return a focused query for meal support even if the person does not say 'difficult'.
+
+    E.g. '밥이나 도시락을 지원받고 싶어요' is a concrete welfare request,
+    not a vague statement of hunger. Only query; no policy eligibility claim.
+    """
+    q = "".join(str(question).split())
+    meal = any(x in q for x in ("밥", "식사", "끼니", "반찬", "도시락", "식료품", "급식"))
+    need = any(x in q for x in (
+        "힘들", "어렵", "못", "부족", "없", "챙기", "준비", "배달",
+        "지원", "도움", "받고싶", "필요", "해결", "구해",
+    ))
+    if meal and need:
+        return "노인 식사 지원 도시락 배달 밑반찬 경로식당 무료급식 노인맞춤돌봄서비스 신청 대상"
     return None
+
+
+def _merge_evidence_results(
+    primary: dict[str, Any], secondary: dict[str, Any], *, limit: int,
+) -> dict[str, Any]:
+    """Merge region-approved retrieval results without creating synthetic evidence.
+
+    `primary` is more targeted, so its documents come first. Keep original
+    metadata, graph relationships and IDs; never upgrade verification verdicts.
+    """
+    merged_docs: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for doc in list(primary.get("documents") or []) + list(secondary.get("documents") or []):
+        if not isinstance(doc, dict):
+            continue
+        key = str(doc.get("chunk_id") or doc.get("id") or "")
+        if not key:
+            key = f"{doc.get('record_type')}:{doc.get('parent_id')}:{doc.get('text')}"
+        if key in seen:
+            continue
+        seen.add(key)
+        merged_docs.append(doc)
+        if len(merged_docs) >= limit:
+            break
+
+    policy_ids = {d.get("policy_id") for d in merged_docs if d.get("policy_id")}
+    chunk_ids = {d.get("chunk_id") for d in merged_docs if d.get("chunk_id")}
+    graph_results = [
+        g for g in list(primary.get("graph_results") or []) + list(secondary.get("graph_results") or [])
+        if isinstance(g, dict) and g.get("policy_id") in policy_ids
+    ]
+    guideline_results = [
+        g for g in list(primary.get("guideline_results") or []) + list(secondary.get("guideline_results") or [])
+        if isinstance(g, dict) and g.get("chunk_id") in chunk_ids
+    ]
+    return {
+        **secondary,
+        "documents": merged_docs,
+        "graph_results": graph_results,
+        "guideline_results": guideline_results,
+        "graph_expansion_results": [],
+        "has_evidence": bool(merged_docs),
+        "warnings": list(dict.fromkeys(
+            list(primary.get("warnings") or []) + list(secondary.get("warnings") or [])
+        )),
+    }
 
 
 def _region_matches(doc: dict[str, Any], region: dict[str, Any] | None) -> bool:
@@ -185,23 +238,31 @@ def make_retrieval_node(
         result = filter_retrieval_region(result, state.get("region"))
         docs = result.get("documents", [])
 
-        # If no applicable evidence remains, run ONE alternative semantic query.
-        # Do not bypass geographic filtering or treat a search hit as proof.
-        retry_query = fallback_search_query(state["question"]) if not docs else None
+        # Concrete requests for meal/food support benefit from a separate,
+        # policy-oriented search even when the first search returned unrelated
+        # documents. The previous `if not docs` condition skipped this case.
+        retry_query = fallback_search_query(state["question"])
+        retry_used = False
+        retry_count = 0
         if retry_query and retry_query != search_question:
             retry_result = retriever(retry_query, mode=mode, k=k)
             if not isinstance(retry_result, dict):
                 raise TypeError("retriever 재검색 반환값은 dict여야 합니다.")
             retry_result = filter_retrieval_region(retry_result, state.get("region"))
-            if retry_result.get("documents"):
-                result = retry_result
+            retry_count = len(retry_result.get("documents") or [])
+            retry_used = True
+            if retry_count:
+                # Prefer matching meal-policy evidence, but retain other
+                # region-approved candidates and their traceable citations.
+                result = _merge_evidence_results(retry_result, result, limit=k)
                 docs = result["documents"]
                 result["retry_query_used"] = retry_query
 
         result["diagnostics"] = {
             "initial_qdrant_hits": raw_count,
             "region_accepted_hits": len(docs),
-            "retry_used": bool(result.get("retry_query_used")),
+            "retry_used": retry_used,
+            "retry_accepted_hits": retry_count,
         }
         graphs = (
             result.get("graph_results", [])
