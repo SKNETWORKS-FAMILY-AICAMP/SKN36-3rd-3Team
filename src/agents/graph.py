@@ -224,6 +224,7 @@ def ask_welfare(
     *,
     mock: bool = False,
     memory_enabled: bool | None = None,
+    region: dict[str, Any] | None = None,
 ) -> dict:
     """FastAPI에서 호출하는 노인복지 챗봇 함수."""
 
@@ -260,7 +261,7 @@ def ask_welfare(
         return run_chat_session(
             question,
             session_id,
-            _default_graph(mock).invoke,
+            lambda state: _default_graph(mock).invoke({**state, "region": region}),
         )
 
     # 일반 실행 및 Mock 실행
@@ -268,6 +269,7 @@ def ask_welfare(
         {
             "question": question,
             "session_id": session_id,
+            "region": region,
         }
     )
 
