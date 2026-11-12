@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/*
+  디자인 토큰 (피그마 "어르신 복지 안내 UI" 색 3개를 기준으로 파생)
+  - 피그마 지정색: 배경 #F7F8E7 · 초록 #019A38 · 주황 #E67E22
+  - Tailwind 4는 @theme 안의 변수를 자동으로 클래스로 만들어 줍니다.
+    예) --color-primary → bg-primary, text-primary, border-primary
+
+  대비(WCAG) 메모
+  - 피그마 시안대로 초록·주황 버튼은 흰 글자를 씁니다(초록 3.7:1, 주황 2.9:1).
+    그래서 버튼 글자는 항상 굵고 크게(1.125rem 이상) 둡니다. 더 높은 대비가 필요하면
+    --color-on-primary / --color-on-accent 를 #111827 로 바꾸면 됩니다.
+  - 밝은 배경 위의 초록/주황 "글자"는 지정색 그대로 쓰면 3.4:1 / 2.7:1이라
+    글자용 진한 파생색(primary-dark 5.1:1, accent-dark 5.2:1)을 따로 둡니다.
+*/
+@theme {
+  --color-bg: #f7f8e7;           /* 페이지 배경 (피그마 크림색) */
+  --color-surface: #ffffff;      /* 카드 */
+  --color-surface-2: #f1f2e4;    /* 카드 안 연한 구역 */
+  --color-ink: #111827;          /* 본문 글자 */
+  --color-muted: #4b5563;        /* 보조 글자 */
+  --color-line: #8f927f;         /* 카드·입력칸 테두리. 크림 배경 위에서 3:1로 또렷하게 보이는 회녹색 */
+  --color-line-soft: #d6d8c8;    /* 카드 안쪽 구분선처럼 약하게 보여도 되는 선 */
+
+  --color-primary: #019a38;      /* 헤더·행동 버튼 채움 (피그마 초록) */
+  --color-on-primary: #ffffff;   /* 초록 위 글자 (피그마 시안: 흰색) */
+  --color-primary-dark: #027a2d; /* 밝은 배경 위 초록 글자·링크, hover */
+  --color-primary-soft: #e3f3e7; /* 초록 연한 배경 (답변 카드, 선택된 지역 바, 확인 안내) */
+
+  --color-accent: #e67e22;       /* 전화 버튼·129 카드·핵심 숫자 (피그마 주황) */
+  --color-on-accent: #ffffff;    /* 주황 위 글자 (피그마 시안: 흰색) */
+  --color-accent-dark: #a35308;  /* 밝은 배경 위 주황 글자 (주의 문구, 큰 숫자) */
+  --color-accent-soft: #fdebd9;  /* 주황 연한 배경 (준비 중 배지, 범위 안내 배너) */
+
+  --color-info: #374151;
+  --color-info-soft: #e5e7eb;
+  --color-danger: #b91c1c;
+  --color-danger-soft: #fee2e2;
+
+  --radius-card: 1rem;
+  --radius-button: 0.875rem;
+
+  --font-sans: system-ui, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+}
+
+/*
+  글씨 크기 기준점.
+  헤더의 가−/가＋ 버튼은 <html>의 font-size(%)만 바꾸고 (lib/fontScale.ts),
+  모든 글자·여백·버튼은 rem 단위라서 함께 커집니다.
+  기본은 브라우저 기본값(100%)을 그대로 둬서 휴대폰 글씨 설정을 존중합니다.
+*/
+:root {
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+
+/* 키보드로 이동할 때 어디에 있는지 분명히 보이게 */
+:focus-visible {
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: 2px;
+}
+
+/* 바텀시트(dialog) 뒷배경 */
+dialog::backdrop {
+  background: rgba(17, 24, 39, 0.55);
+}
+
+/* <details>의 ▶ 표시를 글자 크기에 맞춰 키우기 */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
