@@ -14,15 +14,15 @@
 
 ### 실행 조건과 순서
 
-- **예약 실행** · `10 9 1 * *`와 `timezone: Asia/Seoul`을 사용해 매월 1일 09:10 KST에 예약합니다. 예약 실행은 기본 브랜치 `main`의 워크플로를 사용합니다.
-- **수동 실행** · GitHub의 **Actions → 보건복지부 PDF 월간 점검 → Run workflow**에서 `main`을 선택합니다. 첫 배포에서는 수동 실행으로 결과 브랜치에 기록되는지 확인합니다.
+- **예약 실행** · `10 9 1 * *`와 `timezone: Asia/Seoul`을 사용해 매월 1일 09:10 KST에 예약합니다. 예약 실행은 저장소의 기본 브랜치인 `dev`의 워크플로를 사용합니다.
+- **수동 실행** · GitHub의 **Actions → 보건복지부 PDF 월간 점검 → Run workflow**에서 `dev`를 선택합니다. 첫 배포에서는 수동 실행으로 결과 브랜치에 기록되는지 확인합니다.
 - 실행 환경은 `ubuntu-latest`이며 작업 제한 시간은 30분입니다. 코드를 가져온 뒤, 두 번째 체크아웃으로 `pdf-check-results` 브랜치를 작업 폴더의 `pdf-check-results/`에 가져옵니다. `.python-version`에 지정된 Python으로 패키지를 설치하고 점검 스크립트를 실행합니다.
 
 ### 입출력과 브랜치 배치
 
 | 구분 | 위치 | 설명 |
 | --- | --- | --- |
-| 입력 | `main` | 점검 파일 4개와 이미 등록된 `.python-version`, `data/raw/pdf/`의 기준 PDF 4개를 읽습니다. |
+| 입력 | `dev` | 점검 파일 4개와 이미 등록된 `.python-version`, `data/raw/pdf/`의 기준 PDF 4개를 읽습니다. |
 | 입력 | `pdf-check-results` 브랜치 루트의 `state.json` | 첫 실행은 초기 상태를 읽고, 이후 실행은 직전 점검이 저장한 상태를 읽습니다. |
 | 중간 출력 | 러너의 `pdf-check-output/state.json`, `pdf-check-output/report.json` | 다음 상태와 이번 보고서를 생성하고 두 JSON의 문법을 확인합니다. |
 | 브랜치 출력 | `pdf-check-results` 브랜치의 `state.json`, `runs/<실행 ID>-<재실행 번호>.json` | 상태 파일을 갱신하고 실행별 보고서를 추가해 커밋과 푸시를 합니다. 워크플로는 이 작업에 `contents: write` 권한을 사용합니다. |
@@ -56,7 +56,7 @@
 }
 ```
 
-그다음 네 점검 파일을 PR로 `main`에 반영하고 수동 실행합니다. 예를 들어 실행 ID가 `123456789`이고 첫 시도라면, 결과 브랜치에 `runs/123456789-1.json`이 추가됩니다. 같은 실행을 재실행하면 `runs/123456789-2.json`으로 구분됩니다. 스크립트가 출처별 실패를 담은 보고서와 상태를 생성하면, 워크플로는 두 파일을 저장하고 보고서를 업로드한 뒤 실행을 실패로 표시합니다.
+그다음 `pdf-check-files`에서 `dev`를 대상으로 PR을 열고, 머지한 뒤 수동 실행합니다. 예를 들어 실행 ID가 `123456789`이고 첫 시도라면, 결과 브랜치에 `runs/123456789-1.json`이 추가됩니다. 같은 실행을 재실행하면 `runs/123456789-2.json`으로 구분됩니다. 스크립트가 출처별 실패를 담은 보고서와 상태를 생성하면, 워크플로는 두 파일을 저장하고 보고서를 업로드한 뒤 실행을 실패로 표시합니다.
 
 ## 2. `scripts/check_pdfs.py`
 
@@ -202,7 +202,7 @@ $testRun = 'data/staging/pdf-check/runs/basic-pension-test'
    └─ PDF 갱신 방법에 대한 설명.md
 ```
 
-`.python-version`과 `data/raw/pdf/`의 기준 PDF 네 파일은 `main`에 이미 있습니다. 위의 점검 파일 네 개와 설명 문서 두 개를 코드 PR에 포함합니다.
+`.python-version`과 `data/raw/pdf/`의 기준 PDF 네 파일은 `dev`에 이미 있습니다. 위의 점검 파일 네 개와 설명 문서 두 개를 코드 PR에 포함합니다.
 
 ### 로컬 작업 공간
 
