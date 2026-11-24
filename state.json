@@ -1,0 +1,63 @@
+{
+  "sources": [
+    {
+      "source_id": "elderly_health_welfare",
+      "last_success_at": null,
+      "documents": [
+        {
+          "document_id": "elderly_health_welfare_vol1",
+          "applied_version": {
+            "post_url": "https://www.mohw.go.kr/board.es?mid=a10411010100&bid=0019&act=view&list_no=1488990",
+            "published_at": "2026-02-04T17:39:00+09:00",
+            "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0019&list_no=1488990&seq=1",
+            "sha256": "ff26b3f53e818c39f0938ac0c0610c1ad492141bc328c6ec4488fbfc3047d2a3"
+          },
+          "latest_observed_version": null
+        },
+        {
+          "document_id": "elderly_health_welfare_vol2",
+          "applied_version": {
+            "post_url": "https://www.mohw.go.kr/board.es?mid=a10411010100&bid=0019&act=view&list_no=1488990",
+            "published_at": "2026-02-04T17:39:00+09:00",
+            "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0019&list_no=1488990&seq=2",
+            "sha256": "6f1e1e96188729fc5b6f7f41b80969629064c00c455bc5b0637da5f6f957cad8"
+          },
+          "latest_observed_version": null
+        }
+      ]
+    },
+    {
+      "source_id": "basic_pension",
+      "last_success_at": null,
+      "documents": [
+        {
+          "document_id": "basic_pension",
+          "applied_version": {
+            "post_url": "https://www.mohw.go.kr/board.es?mid=a10409020000&bid=0026&act=view&list_no=1488765",
+            "published_at": "2026-01-21T11:02:00+09:00",
+            "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1488765&seq=1",
+            "sha256": "cff68d4384cb49da6202c66e3c5a24912730aed177366413955405eba8052ca9"
+          },
+          "latest_observed_version": null
+        }
+      ]
+    },
+    {
+      "source_id": "welfare_services_guide",
+      "last_success_at": null,
+      "documents": [
+        {
+          "document_id": "welfare_services_guide",
+          "applied_version": {
+            "post_url": "https://www.mohw.go.kr/board.es?mid=a10411010300&bid=0019&act=view&list_no=1491341",
+            "published_at": "2026-07-19T16:10:00+09:00",
+            "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0019&list_no=1491341&seq=1",
+            "sha256": "d3d523eff8677261d45a72f5accc92feec83e3af555c0d4551fa4bac774767e5"
+          },
+          "latest_observed_version": null
+        }
+      ]
+    }
+  ],
+  "known_candidate_ids": []
+}
