@@ -80,7 +80,8 @@ def _region_matches(
         return False
 
     if region.sigungu_name:
-        return sigungu == region.sigungu_name or not sigungu
+        # Missing district is not proof that this policy covers the province.
+        return sigungu == region.sigungu_name or (scope in ("sido", "province") and not sigungu)
 
     return True
 
@@ -120,7 +121,7 @@ def _guideline_item(doc: dict) -> GuidelineItem | None:
         page_start=start,
         page_end=end,
         page_exact=start == end,
-        approval="approved",
+        approval="approved" if doc.get("approval_status") == "approved" else "pending",
         snippet=_text(doc)[:240],
         badges=[Badge(label="참고자료", tone="info")],
         source_url=_valid_url(doc.get("source_url")),

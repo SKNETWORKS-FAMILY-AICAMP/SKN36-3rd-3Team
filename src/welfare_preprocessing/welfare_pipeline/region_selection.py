@@ -17,6 +17,26 @@ ALIASES = {**PROVINCES, **{v:v for v in PROVINCES.values()},
     '전국':'national', '전국공통':'national', '전국 공통':'national', 'national':'national',
     '판단불가':'unknown', '판단 불가':'unknown', '미확정':'unknown', 'unknown':'unknown'}
 
+ALIASES.update({
+    '서울시': 'seoul',
+    '전라북도': 'jeonbuk',
+    '강원도': 'gangwon',
+    '제주도': 'jeju',
+    '부산': 'busan',
+    '대구': 'daegu',
+    '인천': 'incheon',
+    '대전': 'daejeon',
+    '울산': 'ulsan',
+    '세종': 'sejong',
+    '강원': 'gangwon',
+    '충북': 'chungbuk',
+    '충남': 'chungnam',
+    '전북': 'jeonbuk',
+    '경북': 'gyeongbuk',
+    '경남': 'gyeongnam',
+    '제주': 'jeju'
+})
+
 def as_value(x):
     if x is None: return None
     s = str(x).strip()
@@ -28,6 +48,13 @@ def candidate_label(x):
     label = ALIASES.get(s, ALIASES.get(s.lower()))
     if label is None: raise ValueError(f'지원하지 않는 지역 분류 값: {x!r}')
     return label
+
+def candidate_label_or_none(raw):
+    try:
+        return candidate_label(raw)
+    except ValueError:
+        return None
+
 
 def classify_region(p, candidate_by_id, include_unreviewed_candidates=True):
     pid = str(p['policy_id']).strip()
@@ -56,12 +83,17 @@ def classify_region(p, candidate_by_id, include_unreviewed_candidates=True):
         else:
             label, source = 'unknown', 'unclassified_combined_region'
     else:
-        label = PROVINCES.get(sido or requested, 'unknown')
+        label = (
+            candidate_label_or_none(sido)
+            or candidate_label_or_none(requested)
+            or 'unknown'
+        )
         source = 'original_region_metadata' if label != 'unknown' else 'unexpected_original_region'
     scope_verified = p.get('region_scope_verified') is True
     # A known administrative label is not proof of eligibility. An unverified
     # national candidate must never be treated as a nationwide entitlement.
     needs_review = (label in {'unknown','gwangju_jeonnam'} or
+                    (label == 'national' and not scope_verified) or
                     source == 'automatic_candidate_unverified' or
                     (conflict and not verified) or
                     (not district and not (label == 'national' and verified)))
@@ -92,7 +124,28 @@ def run(input_path, candidate_csv, output_base, include_unreviewed_candidates=Tr
     ensure_unique(classified)
     if len(classified) != len(policies): raise ValueError('지역 분류 과정에서 레코드 손실')
     review = [p for p in classified if p['region_search_status'] != 'scope_verified']
+    search_candidates = [
+        p for p in classified
+        if p['region_search_status']
+        in {'scope_verified', 'region_candidate'}
+    ]
+
+    quarantined = [
+        p for p in classified
+        if p['region_search_status'] == 'review_required'
+    ]
+
     output = new_run_dir(output_base)
+
+    write_jsonl(
+        output / 'policies_region_search_candidates.jsonl',
+        search_candidates
+    )
+
+    write_jsonl(
+        output / 'policies_region_quarantined.jsonl',
+        quarantined
+    )
     for name, rows in [('policies_selected.jsonl', classified),
                        ('policies_all_with_selection.jsonl', classified),
                        ('policies_region_review.jsonl', review)]:

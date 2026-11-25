@@ -6,7 +6,7 @@ from pathlib import Path
 from .io_utils import read_jsonl,write_jsonl,ensure_unique,new_run_dir
 
 DIRECT_RULES = {
-    '노인·고령자 명시': r'노인|고령자|고령층|어르신|시니어|노년층|노령층|독거노인',
+    '노인·고령자 명시': r'노인|고령자|고령층|어르신|시니어|노년|노령층|독거노인',
     '65세 이상 명시': r'(?:만\s*)?65\s*세\s*(?:이상|부터|이후)|65\s*세\s*이상',
     '노인 전용 제도': r'기초연금|노인맞춤돌봄|노인일자리|장기요양|경로당|치매안심센터|경로우대',
 }

@@ -154,7 +154,8 @@ def normalize_policy(row):
 
     region = get_region(row)
     contacts = normalize_contacts(row)
-    sources['contact'] = 'detail_inqplCtadrList' if contacts['contact'] else None
+    if contacts['contact']:
+        sources['contact'] = 'detail_inqplCtadrList'
     fetched = row.get('detail_fetched')
     detail_fetched = fetched is True or str(fetched).strip().lower() in ('true','1')
     item = {
@@ -181,6 +182,9 @@ def normalize_policy(row):
         'support_cycle': as_text(selected['support_cycle']),
         'provider_type': as_text(selected['provider_type']),
         'source_type': 'local_welfare_api',
+        'data_version': as_text(row.get('data_version')),
+        'source_snapshot_file': as_text(row.get('source_snapshot_file')),
+        'detail_source_file': as_text(row.get('detail_source_file')),
         'source_url': normalize_url(row.get('servDtlLink')),
         'source_url_raw': as_text(row.get('servDtlLink')),
         'detail_fetched': detail_fetched,

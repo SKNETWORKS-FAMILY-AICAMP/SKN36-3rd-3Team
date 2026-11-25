@@ -38,7 +38,7 @@ def read_jsonl(path: Path) -> list[dict]:
     return data
 
 
-def input_paths(root: Path, policy_path: Path | None = None) -> dict[str, Path]:
+def input_paths(root: Path, policy_path: Path | None = None, rag_root: Path | None = None) -> dict[str, Path]:
     if policy_path:
         policy = policy_path if policy_path.is_absolute() else root / policy_path
     else:
@@ -46,7 +46,7 @@ def input_paths(root: Path, policy_path: Path | None = None) -> dict[str, Path]:
         if not matches:
             raise FileNotFoundError('PR #25 노인복지 정책 JSONL을 찾지 못했습니다.')
         policy = matches[-1]
-    base = root / 'data/rag'
+    base = (rag_root if rag_root.is_absolute() else root / rag_root) if rag_root else root / 'data/rag'
     return {
         'policies': policy,
         'policy_docs': base / 'documents/policy_documents.jsonl',
@@ -74,9 +74,13 @@ def policy_join_key(raw: str) -> str:
     return raw if raw.startswith('local:') else f'local:{raw}'
 
 
-def load_and_validate(root: Path, policy_path: Path | None = None) -> tuple[dict, dict]:
-    paths = input_paths(root, policy_path)
+def load_and_validate(root: Path, policy_path: Path | None = None, rag_root: Path | None = None) -> tuple[dict, dict]:
+    paths = input_paths(root, policy_path, rag_root)
     rows = {k: read_jsonl(path) for k, path in paths.items()}
+    for row in rows['policies']:
+        source = (row.get('field_sources') or {}).get('contact')
+        if source in {'inqNum', 'detail_inqNum'} or (row.get('contact') and not row.get('contact_verified')):
+            raise ValueError(f"문의처 출처 미검증: {row.get('policy_id')}; inqNum은 조회수입니다. 새 후보를 생성하세요.")
     unique(rows['policies'], 'policy_id', 'PR25 정책')
     source_policy = {policy_join_key(r['policy_id']): r for r in rows['policies']}
     if len(source_policy) != len(rows['policies']):
@@ -86,6 +90,10 @@ def load_and_validate(root: Path, policy_path: Path | None = None) -> tuple[dict
         a = sorted(set(source_policy) - doc_keys)[:5]
         b = sorted(doc_keys - set(source_policy))[:5]
         raise ValueError(f'PR25 ↔ PR26 정책 ID 불일치 (PR25에만: {a}, PR26에만: {b})')
+    for doc in rows['policy_docs']:
+        pre = source_policy[doc['policy_id']]
+        if (doc.get('metadata') or {}).get('contact') != pre.get('contact'):
+            raise ValueError(f"정책 문서 문의처와 원본 불일치: {doc['policy_id']}")
     unique(rows['sources'], 'document_id', '출처 문서')
     unique(rows['guidelines'], 'section_id', 'PDF 섹션')
     source_ids = {r['document_id'] for r in rows['sources']}
@@ -130,7 +138,8 @@ def load_and_validate(root: Path, policy_path: Path | None = None) -> tuple[dict
         if not isinstance(r.get('text'), str) or not r['text'].strip():
             raise ValueError(f"정책 문서 {r['policy_id']} 본문 비어 있음")
     counts = {k: len(v) for k, v in rows.items()}
-    warnings = [f'{k}: 예상 {expected}건, 실제 {counts[k]}건 (파일 버전 확인)' for k, expected in EXPECTED.items() if counts[k] != expected]
+    warnings = ([] if rag_root else [f'{k}: 예상 {expected}건, 실제 {counts[k]}건 (파일 버전 확인)'
+                                    for k, expected in EXPECTED.items() if counts[k] != expected])
     report = {'files': {k: str(v) for k, v in paths.items()},
               'counts': counts, 'rag_chunks_total': len(all_uuids), 'warnings': warnings,
               'id_rule': 'uuid.uuid5(uuid.NAMESPACE_URL, chunk_id)',
@@ -181,6 +190,18 @@ def apply_to_postgres(root: Path, rows: dict, report: dict, database_url: str) -
     with psycopg.connect(database_url) as conn:
         with conn.cursor() as cur:
             cur.execute(schema)
+            # Upsert alone leaves deleted policies/chunks from an earlier release.
+            # Reject mixed generations; publish via reviewed snapshot migration instead.
+            cur.execute('SELECT policy_id FROM welfare_policies')
+            existing_policies = {r[0] for r in cur.fetchall()}
+            incoming_policies = set(policy_docs)
+            if existing_policies and existing_policies != incoming_policies:
+                raise ValueError('기존 정책 ID 집합과 후보가 다릅니다. 이전 정책 정리/롤백 계획 없이 UPSERT할 수 없습니다.')
+            cur.execute('SELECT chunk_id FROM rag_chunks')
+            existing_chunks = {r[0] for r in cur.fetchall()}
+            incoming_chunks = {r['chunk_id'] for key in ('fixed_policy','fixed_guideline','structure_policy','structure_guideline') for r in rows[key]}
+            if existing_chunks and existing_chunks != incoming_chunks:
+                raise ValueError('기존 검색 청크와 후보의 ID 집합이 다릅니다. 인덱스 교체 계획을 먼저 검토하세요.')
             stmt = '''INSERT INTO welfare_policies (
               policy_id,source_serv_id,title,summary,target_text,selection_criteria_text,
               benefit_text,application_text,application_method_name,department,contact,
@@ -268,12 +289,13 @@ def main():
     ap=argparse.ArgumentParser()
     ap.add_argument('--root',type=Path,default=Path.cwd())
     ap.add_argument('--policy-path',type=Path,default=None)
+    ap.add_argument('--rag-root',type=Path,default=None,help='해당 후보 실행의 documents/chunks 루트')
     mode=ap.add_mutually_exclusive_group(required=True)
     mode.add_argument('--check',action='store_true',help='DB 없이 파일 검증만')
     mode.add_argument('--apply',action='store_true',help='DB에 테이블 생성 및 UPSERT')
     args=ap.parse_args()
     root=args.root.resolve()
-    rows,report=load_and_validate(root,args.policy_path)
+    rows,report=load_and_validate(root,args.policy_path,args.rag_root)
     print(json.dumps(report,ensure_ascii=False,indent=2))
     if args.apply:
         from dotenv import load_dotenv

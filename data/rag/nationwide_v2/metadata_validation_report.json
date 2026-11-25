@@ -1,0 +1,56 @@
+{
+  "data_version": "nationwide_2026_11_25_84d46d570a5b",
+  "input": {
+    "total_policies": 4427,
+    "elderly_candidates": 2157,
+    "complete_nationwide_coverage": false
+  },
+  "documents": {
+    "policy": 2157,
+    "guideline": 1189
+  },
+  "chunks": {
+    "strategy": "A_fixed",
+    "chunk_size": 800,
+    "overlap": 150,
+    "policy": 2436,
+    "guideline": 2738,
+    "total": 5174
+  },
+  "neo4j": {
+    "policy_graph_entities": 2157
+  },
+  "validation": {
+    "metadata_errors": 0,
+    "duplicate_chunk_ids": 0,
+    "duplicate_point_ids": 0,
+    "policy_graph_ids_match": true,
+    "policy_chunk_validation": {
+      "strategy": "fixed",
+      "input_documents": 2157,
+      "chunks": 2436,
+      "unique_parent_documents": 2157,
+      "errors": [],
+      "min_chunk_chars": 139,
+      "avg_chunk_chars": 463.58,
+      "max_chunk_chars": 800
+    },
+    "guideline_chunk_validation": {
+      "strategy": "fixed",
+      "input_documents": 1189,
+      "chunks": 2738,
+      "unique_parent_documents": 1189,
+      "errors": [],
+      "min_chunk_chars": 76,
+      "avg_chunk_chars": 626.21,
+      "max_chunk_chars": 800
+    }
+  },
+  "limitations": [
+    "광주 및 신규 전남 전체 원본 미포함",
+    "연령 및 Need 태그는 자동 추출 후보",
+    "지역 적용 범위 및 신청 자격 미확정",
+    "관리자 승인 전 검토용 데이터",
+    "임베딩 및 실제 DB 적재 미진행"
+  ]
+}
