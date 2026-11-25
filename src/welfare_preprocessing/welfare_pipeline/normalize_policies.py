@@ -4,6 +4,7 @@
 import json,re
 from datetime import datetime
 from .io_utils import read_jsonl,write_jsonl,ensure_unique
+from .contact_fields import normalize_contacts,parse_view_count,read_contact_overlays,apply_contact_overlays
 
 def value_or_none(v):
     if v is None: return None
@@ -21,7 +22,7 @@ FIELD_MAPPING = {
     'application_text': ('detail_aplyMtdCn', 'aplyMtdCn'),
     'application_method_name': ('detail_aplyMtdNm', 'aplyMtdNm'),
     'department': ('detail_bizChrDeptNm', 'bizChrDeptNm'),
-    'contact': ('detail_inqNum', 'inqNum'),
+    'view_count': ('detail_inqNum', 'inqNum'),
     'start_date_raw': ('detail_enfcBgngYmd', 'enfcBgngYmd'),
     'end_date_raw': ('detail_enfcEndYmd', 'enfcEndYmd'),
     'updated_at_source_raw': ('detail_lastModYmd', 'lastModYmd'),
@@ -84,6 +85,13 @@ REGION_ALIASES = {
     '서울': '서울특별시', '서울시': '서울특별시', '서울특별시': '서울특별시',
     '경기': '경기도', '경기도': '경기도',
     '전남광주통합특별시': '전남광주통합특별시',
+    '부산':'부산광역시','대구':'대구광역시','인천':'인천광역시',
+    '대전':'대전광역시','울산':'울산광역시','세종':'세종특별자치시',
+    '강원':'강원특별자치도','강원도':'강원특별자치도',
+    '충북':'충청북도','충남':'충청남도','전북':'전북특별자치도',
+    '전라북도':'전북특별자치도','경북':'경상북도','경남':'경상남도',
+    '제주':'제주특별자치도','제주도':'제주특별자치도',
+    '전남':'전라남도','광주':'광주광역시',
 }
 
 def normalized_region(raw):
@@ -145,6 +153,9 @@ def normalize_policy(row):
         sources[new_name] = used
 
     region = get_region(row)
+    contacts = normalize_contacts(row)
+    if contacts['contact']:
+        sources['contact'] = 'detail_inqplCtadrList'
     fetched = row.get('detail_fetched')
     detail_fetched = fetched is True or str(fetched).strip().lower() in ('true','1')
     item = {
@@ -157,7 +168,8 @@ def normalize_policy(row):
         'application_text': as_text(selected['application_text']),
         'application_method_name': as_text(selected['application_method_name']),
         'department': as_text(selected['department']),
-        'contact': as_text(selected['contact']),
+        'view_count': parse_view_count(selected['view_count']),
+        **contacts,
         'start_date': parse_date(selected['start_date_raw']),
         'end_date': parse_date(selected['end_date_raw']),
         'updated_at_source': parse_date(selected['updated_at_source_raw']),
@@ -170,6 +182,9 @@ def normalize_policy(row):
         'support_cycle': as_text(selected['support_cycle']),
         'provider_type': as_text(selected['provider_type']),
         'source_type': 'local_welfare_api',
+        'data_version': as_text(row.get('data_version')),
+        'source_snapshot_file': as_text(row.get('source_snapshot_file')),
+        'detail_source_file': as_text(row.get('detail_source_file')),
         'source_url': normalize_url(row.get('servDtlLink')),
         'source_url_raw': as_text(row.get('servDtlLink')),
         'detail_fetched': detail_fetched,
@@ -186,7 +201,14 @@ def normalize_rows(rows):
     ensure_unique(result)
     return result
 
-def run(input_path, output_path):
-    rows=normalize_rows(read_jsonl(input_path))
+def run(input_path, output_path, contact_xml_zips=()):
+    raw_rows=read_jsonl(input_path)
+    overlays=read_contact_overlays(contact_xml_zips)
+    matched=apply_contact_overlays(raw_rows, overlays)
+    rows=normalize_rows(raw_rows)
     write_jsonl(output_path,rows)
-    return {'normalized':len(rows),'output':str(output_path)}
+    return {'normalized':len(rows),'contact_xml_matched':matched,
+            'contact_xml_available':len(overlays),
+            'contact_status_counts':{status:sum(r['contact_status']==status for r in rows)
+                for status in ('source_group_confirmed','legacy_candidate_review','unknown')},
+            'output':str(output_path)}

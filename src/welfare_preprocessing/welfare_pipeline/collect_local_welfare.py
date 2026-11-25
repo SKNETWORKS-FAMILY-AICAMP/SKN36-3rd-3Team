@@ -6,6 +6,7 @@ from collections import defaultdict
 from pathlib import Path
 import requests
 from .io_utils import write_jsonl
+from .contact_fields import xml_related_groups
 
 BASE='https://apis.data.go.kr/B554287/LocalGovernmentWelfareInformations'
 LIST_URL=BASE+'/LcgvWelfarelist'
@@ -47,7 +48,9 @@ class WelfareCollector:
             path=self.page_dir/f'{slug}_page_{n:05d}.json'
             if path.exists():rows+=json.loads(path.read_text(encoding='utf8'))['rows']
         byid={str(r['servId']):{**r,'requested_region':region} for r in rows if r.get('servId')}
-        return list(byid.values()), {'expected':total,'saved':len(byid),'complete':len(byid)==total}
+        if len(byid)!=total or len(rows)!=total:
+            raise CollectionPaused(f'{region}: 목록 불완전/ID 중복: expected={total}, rows={len(rows)}, unique={len(byid)}')
+        return list(byid.values()), {'expected':total,'saved':len(byid),'complete':True}
     def _fetch_page(self,region,n):
         root=self.get(LIST_URL,{'callTp':'L','ctpvNm':region,'pageNo':n,'numOfRows':self.page_size},f'{region} 페이지 {n}')
         rows=[{e.tag:e.text for e in node} for node in root.findall('servList')]
@@ -56,12 +59,15 @@ class WelfareCollector:
         return {'region':region,'page':n,'page_size':self.page_size,'total':total,'rows':rows}
     def detail(self,sid):
         root=self.get(DETAIL_URL,{'callTp':'D','servId':sid},f'상세 {sid}')
+        if root.findtext('.//servId') != sid:
+            raise CollectionPaused(f'{sid}: 상세 응답 ID 불일치')
         vals=defaultdict(list)
         for node in root.iter():
             if len(node)==0 and (node.text or '').strip() and node.tag not in ('resultCode','resultMessage'):
                 vals[node.tag].append(node.text.strip())
         result={k:v[0] if len(v)==1 else json.dumps(v,ensure_ascii=False) for k,v in vals.items()};result['servId']=sid
         if len(result)<=1:raise CollectionPaused(f'{sid}: 상세내용 없음')
+        result.update(xml_related_groups(root))
         return result
     def collect_details(self,rows):
         cache_path=self.detail_dir/'welfare_detail_cache.jsonl';cache={}
@@ -73,7 +79,9 @@ class WelfareCollector:
         for sid in dict.fromkeys(str(row['servId']) for row in rows if row.get('servId')):
             if sid in cache:continue
             try:result=self.detail(sid)
-            except CollectionPaused:break
+            except CollectionPaused:
+                # Successful details are already cached for resume. Never publish a partial snapshot.
+                raise
             cache[sid]=result
             with cache_path.open('a',encoding='utf8') as f:f.write(json.dumps(result,ensure_ascii=False)+'\n')
         return cache

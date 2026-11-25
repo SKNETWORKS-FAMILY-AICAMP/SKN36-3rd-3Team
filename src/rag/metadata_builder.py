@@ -8,6 +8,7 @@ import json
 import re
 from datetime import datetime
 from typing import Any
+from .metadata_extractors import extract_age, extract_needs
 
 
 def clean_string(value: Any) -> str | None:
@@ -97,7 +98,10 @@ def build_metadata(policy: dict) -> dict[str, Any]:
     Region-scope / region-review status remain *provisional* when unverified.
     For central policies, use a separate adapter with semantic value mappings.
     """
-    _, serv_id = make_policy_id(policy)
+    policy_id, serv_id = make_policy_id(policy)
+    source = (policy.get('field_sources') or {}).get('contact')
+    if source in {'inqNum', 'detail_inqNum'} or (policy.get('contact') and not (policy.get('contact_status') == 'source_group_confirmed')):
+        raise ValueError(f'{policy_id}: contact 출처 미검증 (inqNum은 조회수)')
     category = clean_string(first_present(policy, "elderly_category", "elderly_candidate_category"))
     if category not in {"direct", "indirect"}:
         raise ValueError(f"STEP5 accepts only selected direct/indirect records (got {category!r})")
@@ -122,6 +126,10 @@ def build_metadata(policy: dict) -> dict[str, Any]:
 
     return {
         "record_type": "policy",
+        "source_id": policy_id,
+        "source_title": clean_string(policy.get("title")),
+        "data_version": clean_string(policy.get("data_version")),
+        "approval_status": clean_string(policy.get("approval_status")) or "pending",
         "serv_id": serv_id,
         "title": clean_string(policy.get("title")),
         "source_type": "local_welfare_api",
@@ -131,9 +139,22 @@ def build_metadata(policy: dict) -> dict[str, Any]:
         "region_scope": normalize_scope(policy.get("region_scope")),
         "region_code": clean_string(policy.get("region_code")),
         "region_review_status": normalize_status(policy.get("region_review_status")),
+        "region_status": (
+            "confirmed"
+            if policy.get("region_scope_verified") is True
+            and policy.get("region_selection_verified") is True
+            else "needs_review"
+        ),
         "region_selection_label": region_label,
         "region_selection_verified": policy.get("region_selection_verified") is True,
         "elderly_category": category,
+        "elderly_relevance": category,
+        **extract_age(policy),
+        **extract_needs(policy),
+        "contact_status": policy.get("contact_status"),
+        "region_search_status": policy.get("region_search_status"),
+        "region_scope_verified": policy.get("region_scope_verified") is True,
+        "source_snapshot_file": clean_string(policy.get("source_snapshot_file")),
         "themes": as_list(first_present(policy, "themes", "interest_tags", "themes_raw")),
         "target_groups": as_list(first_present(policy, "target_groups", "target_group_tags")),
         "life_stages": as_list(first_present(policy, "life_stages", "life_stage_tags")),

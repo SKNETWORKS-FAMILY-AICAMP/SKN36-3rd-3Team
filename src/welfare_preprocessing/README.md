@@ -12,7 +12,8 @@
 | `quality_checks.py` | 건수·중복·결측 요약 |
 | `normalize_policies.py` | 목록/상세 필드 통합, 날짜/태그/지역 표준화 |
 | `region_candidates.py` | 미확정 전남광주통합특별시 정책의 지역 후보 생성 |
-| `region_selection.py` | 서울·경기·전남·전국 후보 포함, 광주/unknown 제외 |
+| `region_selection.py` | 출처 지역 17개 시도 분류, 충돌/미확정 제외; 지역 신청 자격은 미확정 |
+| `scripts/build_local_welfare_candidate.py` | PR #36의 통합 원본 검증 후 검색 후보를 별도 폴더에 생성 |
 | `elderly_filter.py` | 노인 direct/indirect/review/exclude_candidate 1차 분류 |
 | `run_pipeline.py` | 기능별 CLI 실행 |
 
@@ -42,6 +43,12 @@ python run_pipeline.py elderly --input data/processed/local_welfare/region_filte
 최종 노인 데이터는 실행별 폴더의 `policies_elderly_selected.jsonl`입니다. `direct + indirect`를 선택하고, `review`와 `exclude_candidate`는 별도 보존합니다.
 
 ## 유의 사항
+
+### 새 수집본 검증 후보 생성
+
+프로젝트 루트에서 `python -m scripts.build_local_welfare_candidate --output-dir /tmp/welfare-candidates`를 실행하세요. 입력은 PR #36의 `data/staging/local_welfare/2026-11-25/merged_policies_raw.jsonl`이며, 별도 보존한 전남 149건은 검색 후보에 자동 합산하지 않습니다. 실행별 폴더에 원본 해시가 있는 `manifest.json`, 지역·노인 검토표, 정책 문서, A/B 청크, `candidate_report.json`이 생성됩니다. 이는 DB·Qdrant·Neo4j를 수정하지 않습니다. 기존 574건과 그 문서/청크는 **옛 실험 결과**이며 새 후보와 섞어 적재하면 안 됩니다. 후보의 적재 전 점검은 `python -m scripts.load_postgres --policy-path <후보의 policies_elderly_selected.jsonl> --rag-root <후보의 rag 폴더> --check`로 수행합니다.
+
+`inqNum`은 조회수입니다. 문의처가 검증되지 않으면 `contact=null`이고 검색 문서에도 문의처가 들어가지 않습니다. 후보에 `source_id`, `data_version`, `approval_status=pending`을 담되 연령·지원 자격은 자동 확정하지 않습니다. 광주·전남 독립 원본은 별도 수집과 검증이 필요합니다. 주기적 새 수집은 매번 **새 work-dir**을 사용하세요. 재시도할 때만 같은 캐시 폴더를 이어 쓰며, 상세 수집 중단 시 부분 스냅샷을 게시하지 않습니다.
 
 - `region_classification_candidates.csv`의 `confirmed_region`은 사람이 확인할 때만 기입합니다. 자동 후보만으로 포함한 레코드는 `region_selection_verified=False`가 됩니다.
 - **`elderly_classification_review.csv`는 review 전용이 아니라 전체 분류 검토표**입니다. `review`만 보려면 `elderly_candidate_category == 'review'`로 필터링하세요.

@@ -156,7 +156,7 @@ export async function ask(
       documentTitle: s.title, sectionTitle: null,
       pageStart: s.pageStart ?? 0, pageEnd: s.pageEnd ?? s.pageStart ?? 0,
       pageExact: s.pageStart !== null && s.pageEnd !== null && s.pageStart === s.pageEnd,
-      approval: 'approved', snippet: '챗봇 답변에서 인용한 안내서 자료입니다.',
+      approval: 'pending', snippet: '챗봇 답변에서 인용한 안내서 자료입니다.',
       badges: [{ label: '검색 근거', tone: 'info' }], sourceUrl: s.sourceUrl,
     })
   }

@@ -1,0 +1,60 @@
+name: Policy data candidate check
+
+on:
+  pull_request:
+    branches: [dev]
+    paths:
+      - 'data/raw/local_welfare/**'
+      - 'data/staging/local_welfare/**'
+      - 'src/welfare_preprocessing/**'
+      - 'src/rag/**'
+      - 'scripts/**'
+      - 'backend/src/services/policy_service.py'
+      - 'tests/test_data_integrity.py'
+      - '.github/workflows/policy-data-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version-file: .python-version
+      - name: Install validation dependencies
+        run: python -m pip install pytest 'pydantic>=2,<3'
+      - name: Run cross-stage checks
+        run: python -m pytest tests/test_data_integrity.py tests/test_pg_loader.py -q
+      - name: Generate and validate isolated candidate
+        run: python -m scripts.build_local_welfare_candidate --output-dir "$RUNNER_TEMP/welfare-candidate"
+      - name: Show review numbers on the PR check
+        run: |
+          python - <<'PY'
+          import glob, json, os
+          path = glob.glob(os.path.join(os.environ['RUNNER_TEMP'], 'welfare-candidate', 'run_*', 'candidate_report.json'))
+          report = json.load(open(path[0], encoding='utf-8'))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
+              out.write('## 정책 데이터 검토 후보\n\n')
+              out.write(f"- 통합 원본: {report['snapshot']['rows']}건 (PR #36)\n")
+              out.write(f"- 노인 관련 검색 후보: {report['elderly']['selected']}건\n")
+              out.write(f"- 추가 검토: {report['elderly']['review']}건\n")
+              out.write(f"- 검색 청크 A/B: {report['chunk_totals']['A_fixed']}/{report['chunk_totals']['B_structure']}개\n")
+              out.write('- 운영 DB 및 검색 인덱스는 수정하지 않았습니다.\n')
+          PY
+      - name: Upload review reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: policy-review-reports
+          path: |
+            ${{ runner.temp }}/welfare-candidate/run_*/manifest.json
+            ${{ runner.temp }}/welfare-candidate/run_*/candidate_report.json
+            ${{ runner.temp }}/welfare-candidate/run_*/region/run_*/region_selection_review.csv
+            ${{ runner.temp }}/welfare-candidate/run_*/elderly/run_*/elderly_classification_review.csv
+          if-no-files-found: ignore
