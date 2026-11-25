@@ -82,6 +82,54 @@ def classify_elderly(p):
     else:
         category='review'
         reason='노인 관련성 또는 제외 근거가 불충분함'
+
+    life_tags = {
+        str(tag).strip()
+        for tag in (p.get("life_stage_tags") or [])
+    }
+
+    elderly_tags = {
+        "노년", "노년층", "노인",
+        "고령층", "노령층", "고령자"
+    }
+
+    has_elderly_tag = bool(life_tags & elderly_tags)
+
+    elderly_only = (
+        has_elderly_tag
+        and life_tags.issubset(elderly_tags)
+    )
+
+    if has_elderly_tag:
+
+        if negative_age:
+            category = "review"
+            reason = "노년 태그와 연령 제한이 혼재"
+
+        elif exclusive_focus and direct:
+            category = "review"
+            reason = "노인 관련 근거와 다른 대상 제한 단서 혼재"
+
+        elif elderly_only and exclusive_focus:
+            category = "review"
+            reason = "노년 단독 태그와 대상 단서 충돌"
+
+        elif elderly_only:
+            category = "direct"
+            reason = "API 생애주기 노년 단독 태그"
+
+        elif category in ("review", "exclude_candidate"):
+            category = "indirect"
+            reason = "노년을 포함한 복수 생애주기 정책"
+
+        direct_focus.append({
+            "field": "life_stage_tags",
+            "rule": "API 생애주기 노년 태그",
+            "keyword": "노년",
+            "context": ", ".join(sorted(life_tags))
+        })
+
+
     hits=(direct_focus+direct_context+indirect_focus+indirect_context+exclusive_focus+negative_age)
     # 동일 근거 중복 제거, 크기 제한
     seen=set(); unique=[]
@@ -95,7 +143,7 @@ def classify_elderly(p):
         'elderly_classification_reason':reason,
         'elderly_evidence':unique[:30],
         'elderly_review_status':'pending',
-        'elderly_classification_method':'keyword_rules_v1',
+        'elderly_classification_method':'keyword_rules_v2',
         'elderly_eligibility_verified':False,
     }
 

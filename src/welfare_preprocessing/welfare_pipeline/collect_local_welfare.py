@@ -6,6 +6,7 @@ from collections import defaultdict
 from pathlib import Path
 import requests
 from .io_utils import write_jsonl
+from .contact_fields import xml_related_groups
 
 BASE='https://apis.data.go.kr/B554287/LocalGovernmentWelfareInformations'
 LIST_URL=BASE+'/LcgvWelfarelist'
@@ -56,12 +57,15 @@ class WelfareCollector:
         return {'region':region,'page':n,'page_size':self.page_size,'total':total,'rows':rows}
     def detail(self,sid):
         root=self.get(DETAIL_URL,{'callTp':'D','servId':sid},f'상세 {sid}')
+        if root.findtext('.//servId') != sid:
+            raise CollectionPaused(f'{sid}: 상세 응답 ID 불일치')
         vals=defaultdict(list)
         for node in root.iter():
             if len(node)==0 and (node.text or '').strip() and node.tag not in ('resultCode','resultMessage'):
                 vals[node.tag].append(node.text.strip())
         result={k:v[0] if len(v)==1 else json.dumps(v,ensure_ascii=False) for k,v in vals.items()};result['servId']=sid
         if len(result)<=1:raise CollectionPaused(f'{sid}: 상세내용 없음')
+        result.update(xml_related_groups(root))
         return result
     def collect_details(self,rows):
         cache_path=self.detail_dir/'welfare_detail_cache.jsonl';cache={}
