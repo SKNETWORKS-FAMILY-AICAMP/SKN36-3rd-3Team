@@ -10,9 +10,11 @@
  *
  * - 제목(h2)에 tabIndex=-1 을 둬서 새 답변이 오면 부모가 여기로 포커스를 옮깁니다.
  * - 참고 자료 링크는 http/https 만 링크로 만들고, 그 밖은 글자로만 보여 줍니다.
+ * - "소리로 듣기" 버튼: success·no_evidence·safety_response 답변 본문만 읽습니다(출처 목록·error 는 읽지 않음).
  */
 import type { ChatReply, ChatSource } from '../types/view'
 import PhoneButton from './PhoneButton'
+import SpeakButton from './SpeakButton'
 
 type Props = {
   reply: ChatReply
@@ -46,14 +48,26 @@ function SourceItem({ source }: { source: ChatSource }) {
   )
 }
 
+/** 개발용 가짜 답변(mock)이면 실제 정책 답변으로 오해하지 않게 눈에 띄게 표시 */
+function ExampleNotice({ show }: { show: boolean }) {
+  if (!show) return null
+  return (
+    <p className="mb-3 rounded-button border-2 border-dashed border-accent bg-surface px-3 py-2 text-sm font-bold text-accent-dark">
+      🧪 개발용 가상 답변이에요. 실제 정책 안내가 아니에요.
+    </p>
+  )
+}
+
 export default function AssistantCard({ reply, headingRef }: Props) {
   if (reply.answerStatus === 'safety_response') {
     return (
       <section className="rounded-card border-[3px] border-danger bg-surface p-5 shadow-sm">
+        <ExampleNotice show={reply.isExample} />
         <h2 ref={headingRef} tabIndex={-1} className="text-xl font-bold text-danger outline-none">
           🚨 먼저 안전이 중요해요
         </h2>
         <p className="mt-2 text-lg font-semibold leading-relaxed">{reply.answer}</p>
+        <SpeakButton text={reply.answer} />
         <div className="mt-4 flex flex-col gap-2">
           <PhoneButton contact={{ label: '긴급 구조', tel: '119' }} />
           <PhoneButton contact={{ label: '경찰', tel: '112' }} />
@@ -71,6 +85,7 @@ export default function AssistantCard({ reply, headingRef }: Props) {
 
   return (
     <section className={`rounded-card border ${tone} p-5`}>
+      <ExampleNotice show={reply.isExample} />
       {reply.safetyStatus === 'distress' && (
         <p className="mb-3 rounded-button bg-surface px-3 py-2 text-base font-semibold leading-snug text-ink">
           🤝 많이 힘드셨겠어요. 혼자 애쓰지 않으셔도 돼요. 아래 안내와 함께 129 상담도 받으실 수 있어요.
@@ -80,6 +95,7 @@ export default function AssistantCard({ reply, headingRef }: Props) {
         {label}
       </h2>
       <p className="mt-2 whitespace-pre-line text-lg leading-relaxed">{reply.answer}</p>
+      {!isError && <SpeakButton text={reply.answer} />}
 
       {reply.sources.length > 0 && (
         <div className="mt-4">

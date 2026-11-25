@@ -20,10 +20,13 @@ import AssistantCard from '../components/AssistantCard'
 import BigButton from '../components/BigButton'
 import ErrorBox from '../components/ErrorBox'
 import Header from '../components/Header'
+import MicButton, { SpeechStatus } from '../components/MicButton'
 import PhoneButton from '../components/PhoneButton'
 import SituationChips from '../components/SituationChips'
 import { clearSessionId, loadSessionId, saveSessionId } from '../lib/chatSession'
 import { loadRegion } from '../lib/regionStorage'
+import { appendTranscript, stopSpeaking } from '../lib/speech'
+import { useSpeechInput } from '../lib/useSpeechInput'
 import { ApiError, QUESTION_MAX_LENGTH, type ChatReply } from '../types/view'
 
 const TIMEOUT_MS = 120_000
@@ -69,6 +72,23 @@ export default function Chat() {
   const [draftError, setDraftError] = useState<string | null>(null)
   const [confirmReset, setConfirmReset] = useState(false)
   const [focusId, setFocusId] = useState<number | null>(null)
+
+  // 음성 인식 결과는 "지금 입력칸에 있는 글" 뒤에 붙입니다. 듣는 중에 직접 고친 내용도 지킵니다
+  const draftRef = useRef(draft)
+  useEffect(() => {
+    draftRef.current = draft
+  }, [draft])
+  const speech = useSpeechInput((text) => {
+    const next = appendTranscript(draftRef.current, text, QUESTION_MAX_LENGTH)
+    if (next === null) {
+      setDraftError(`${QUESTION_MAX_LENGTH}자를 넘어서 방금 말씀은 넣지 못했어요. 글을 조금 줄이고 다시 말씀해 주세요.`)
+      return
+    }
+    draftRef.current = next
+    setDraft(next)
+    setDraftError(null)
+  })
+  const listening = speech.status !== 'idle'
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const headingRefs = useRef(new Map<number, HTMLHeadingElement>())
@@ -145,6 +165,9 @@ export default function Chat() {
       return
     }
     if (sending) return
+    // 새 질문을 보내면 듣기·읽기를 정리합니다 (늦게 온 인식 결과가 빈 입력칸에 들어가지 않게)
+    speech.abort()
+    stopSpeaking()
     setDraftError(null)
     setDraft('')
     setMessages((prev) => [...prev, { id: nextId.current++, role: 'user', text: trimmed }])
@@ -154,6 +177,7 @@ export default function Chat() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    if (listening) return
     submitText(draft)
   }
 
@@ -166,6 +190,8 @@ export default function Chat() {
   }
 
   function resetConversation() {
+    speech.abort()
+    stopSpeaking()
     sessionRef.current = null
     clearSessionId()
     setMessages([])
@@ -258,8 +284,9 @@ export default function Chat() {
             이어서 말씀해 주세요
           </label>
           <p id="chat-help" className="mt-1 text-sm text-muted">
-            앞에서 하신 말씀에 이어서 답해 드려요. 이름·전화번호·주민번호는 적지 마세요.
+            앞에서 하신 말씀에 이어서 답해 드려요. 🎤를 누르면 말로 하실 수 있어요. 이름·전화번호·주민번호는 적거나 말하지 마세요.
           </p>
+          <div className="mt-2 flex items-stretch gap-2">
           <textarea
             id="chat-input"
             ref={textareaRef}
@@ -273,8 +300,11 @@ export default function Chat() {
             aria-describedby={describedBy}
             aria-invalid={draftError ? true : undefined}
             placeholder="예: 돈이 없어서요"
-            className="mt-2 w-full rounded-button border-2 border-line bg-surface p-3 text-lg leading-relaxed focus:border-primary disabled:bg-surface-2"
+            className="min-w-0 flex-1 rounded-button border-2 border-line bg-surface p-3 text-lg leading-relaxed focus:border-primary disabled:bg-surface-2"
           />
+          <MicButton speech={speech} disabled={sending} />
+          </div>
+          <SpeechStatus speech={speech} />
           <div className="mt-1 flex items-center justify-between text-sm text-muted">
             <span>
               {draftLength}/{QUESTION_MAX_LENGTH}자
@@ -285,7 +315,7 @@ export default function Chat() {
               {draftError}
             </p>
           )}
-          <BigButton type="submit" disabled={sending} className="mt-3 min-h-16! text-xl">
+          <BigButton type="submit" disabled={sending || listening} className="mt-3 min-h-16! text-xl">
             이어서 보내기
           </BigButton>
           {memoryOff && (

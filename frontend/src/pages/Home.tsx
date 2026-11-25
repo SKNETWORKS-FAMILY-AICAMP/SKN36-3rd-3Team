@@ -3,7 +3,7 @@
  * 위에서부터: 헤더 → 인사말 → 지역 바 → 질문 입력 카드 → "이렇게 물어보세요"(피그마 안내 예시 토글 카드)
  *            → 자주 찾는 복지 4개 → 129 전화 카드
  * - 지역을 고르기 전에는 "질문하기" 버튼이 비활성화되고 이유를 알려 줍니다.
- * - 🎤 버튼은 자리만 있습니다(음성 입력은 다음 단계).
+ * - 🎤 버튼: 말씀을 글자로 바꿔 입력칸 뒤에 이어 붙입니다. 자동으로 보내지 않고, 듣는 동안에는 "질문하기"를 막습니다.
  * - "현재 위치로 찾기": 누를 때만 브라우저 위치를 묻고(자동 요청·추적 없음) 좌표를 서버에 보내 지역으로 바꿉니다.
  *   서버(카카오 로컬 API, Codex 담당)가 아직 없어서 지금은 "준비 중" 안내가 나옵니다. ?dev=locate_ok 로 확인 흐름만 볼 수 있습니다.
  *   변환된 지역은 "사시는 곳과 같나요?" 확인을 거쳐야 적용되고, 실패해도 이미 고른 지역은 지우지 않습니다.
@@ -18,6 +18,7 @@ import { keepDevParam } from '../api/devScenario'
 import { isServiceSido, QUICK_POLICIES } from '../api/fixtures'
 import BigButton from '../components/BigButton'
 import Header from '../components/Header'
+import MicButton, { SpeechStatus } from '../components/MicButton'
 import PhoneButton from '../components/PhoneButton'
 import RegionSheet from '../components/RegionSheet'
 import { GeoError, getCurrentCoords } from '../lib/geolocation'
@@ -25,6 +26,8 @@ import { loadRegion, saveRegion } from '../lib/regionStorage'
 import { clearSessionId } from '../lib/chatSession'
 import { HOME_EXAMPLES } from '../lib/examples'
 import { formatRegion } from '../lib/searchParams'
+import { appendTranscript } from '../lib/speech'
+import { useSpeechInput } from '../lib/useSpeechInput'
 import { ApiError, QUESTION_MAX_LENGTH, type LocatedRegion, type RegionSelection } from '../types/view'
 
 /** 자주 찾는 복지: 정책 상세 페이지 대신 RAG 챗봇에 보낼 첫 질문. 실제 안내는 LLM이 생성한다. */
@@ -67,11 +70,28 @@ export default function Home() {
   const locateAbort = useRef<AbortController | null>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
+  // 음성 인식 결과는 "지금 입력칸에 있는 글" 뒤에 붙입니다. 듣는 중에 직접 고친 내용도 지킵니다
+  const questionRef = useRef(question)
+  useEffect(() => {
+    questionRef.current = question
+  }, [question])
+  const speech = useSpeechInput((text) => {
+    const next = appendTranscript(questionRef.current, text, QUESTION_MAX_LENGTH)
+    if (next === null) {
+      setHint(`${QUESTION_MAX_LENGTH}자를 넘어서 방금 말씀은 넣지 못했어요. 글을 조금 줄이고 다시 말씀해 주세요.`)
+      return
+    }
+    questionRef.current = next
+    setQuestion(next)
+    setHint(null)
+  })
+  const listening = speech.status !== 'idle'
+
   // 페이지를 떠나면 진행 중인 위치 조회·변환을 취소
   useEffect(() => () => locateAbort.current?.abort(), [])
 
   const trimmed = question.trim()
-  const canSubmit = Boolean(region) && trimmed.length > 0 && trimmed.length <= QUESTION_MAX_LENGTH
+  const canSubmit = Boolean(region) && trimmed.length > 0 && trimmed.length <= QUESTION_MAX_LENGTH && !listening
   const locateBusy = locate.status === 'locating' || locate.status === 'converting'
 
   /** 새 주제로 안내를 시작할 때는 이전 챗 세션을 물려받지 않는다. */
@@ -137,6 +157,7 @@ export default function Home() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    if (listening) return
     if (!region) {
       setHint('먼저 사시는 지역을 선택해 주세요.')
       setSheetOpen(true)
@@ -227,7 +248,7 @@ export default function Home() {
           <label htmlFor="question" className="block text-lg font-bold leading-snug">
             궁금한 것을 적어 주세요
           </label>
-          <p className="mt-1 text-sm text-muted">음성으로 묻기(🎤)는 준비 중이에요</p>
+          <p className="mt-1 text-sm text-muted">🎤를 누르고 말씀하시면 글자로 바꿔 드려요. 이름·전화번호·주민번호는 말하지 마세요.</p>
           <div className="mt-3 flex items-stretch gap-2">
             <textarea
               id="question"
@@ -239,16 +260,9 @@ export default function Home() {
               placeholder="예) 72세인데 받을 수 있는 복지 알려줘"
               className="min-h-24 flex-1 resize-none rounded-button border border-line bg-surface p-3 text-lg leading-relaxed placeholder:text-muted/70"
             />
-            <button
-              type="button"
-              disabled
-              aria-label="음성으로 질문하기 (준비 중)"
-              title="음성 입력은 준비 중이에요"
-              className="flex w-16 shrink-0 items-center justify-center rounded-button border-2 border-primary bg-surface text-3xl opacity-60"
-            >
-              🎤
-            </button>
+            <MicButton speech={speech} />
           </div>
+          <SpeechStatus speech={speech} />
           <p className="mt-1 text-right text-sm text-muted">
             {trimmed.length} / {QUESTION_MAX_LENGTH}
           </p>
