@@ -1,4 +1,4 @@
-"""STEP 3-B: 서울/경기 + 구 전남권/전국 후보 포함, 광주/미확정 분리.
+"""STEP 3-B: Keep explicitly sourced regions; quarantine conflicts and unknowns.
 자동 후보는 검증된 신청 지역이 아님. 수동 confirmed_region이 있으면 우선 적용.
 """
 import csv
@@ -14,11 +14,27 @@ FORMER_JEONNAM = {
 FORMER_GWANGJU = {'동구','서구','남구','북구','광산구'}
 
 ALIASES = {
+    '서울':'seoul','서울시':'seoul','서울특별시':'seoul','seoul':'seoul',
+    '경기':'gyeonggi','경기도':'gyeonggi','gyeonggi':'gyeonggi',
+    '부산광역시':'busan','busan':'busan',
+    '대구광역시':'daegu','daegu':'daegu',
+    '인천광역시':'incheon','incheon':'incheon',
+    '대전광역시':'daejeon','daejeon':'daejeon',
+    '울산광역시':'ulsan','ulsan':'ulsan',
+    '세종특별자치시':'sejong','sejong':'sejong',
+    '강원특별자치도':'gangwon','gangwon':'gangwon',
+    '충청북도':'chungbuk','chungbuk':'chungbuk',
+    '충청남도':'chungnam','chungnam':'chungnam',
+    '전북특별자치도':'jeonbuk','전라북도':'jeonbuk','jeonbuk':'jeonbuk',
+    '경상북도':'gyeongbuk','gyeongbuk':'gyeongbuk',
+    '경상남도':'gyeongnam','gyeongnam':'gyeongnam',
+    '제주특별자치도':'jeju','jeju':'jeju',
     '전남':'jeonnam','전라남도':'jeonnam','jeonnam':'jeonnam',
     '광주':'gwangju','광주광역시':'gwangju','gwangju':'gwangju',
     '전국':'national','전국공통':'national','전국 공통':'national','national':'national',
     '판단불가':'unknown','판단 불가':'unknown','미확정':'unknown','unknown':'unknown',
 }
+INCLUDED_REGIONS = set(ALIASES.values()) - {'unknown'}
 
 def as_value(x):
     if x is None: return None
@@ -58,8 +74,8 @@ def classify_region(p, candidate_by_id, include_unreviewed_candidates=True):
     else:
         if conflicting:
             label, origin, verified = 'unknown', 'region_conflict', False
-        elif requested in {'서울특별시','경기도'}:
-            label, origin, verified = 'seoul' if requested=='서울특별시' else 'gyeonggi', 'original_requested_region', False
+        elif requested and requested != '전남광주통합특별시' and candidate_label_or_none(requested):
+            label, origin, verified = candidate_label(requested), 'original_requested_region', False
         elif requested == '전남광주통합특별시':
             if sido=='광주광역시' or raw_sido=='광주광역시' or legacy=='former_gwangju' or sigungu in FORMER_GWANGJU:
                 label, origin, verified = 'gwangju','original_region_metadata',False
@@ -67,15 +83,15 @@ def classify_region(p, candidate_by_id, include_unreviewed_candidates=True):
                 label, origin, verified = 'jeonnam','original_sigungu_metadata',False
             else:
                 label, origin, verified = 'unknown','unclassified_combined_region',False
-        elif requested=='광주광역시':
-            label, origin, verified = 'gwangju','original_requested_region',False
+        elif sido and sido != '전남광주통합특별시' and candidate_label_or_none(sido):
+            label, origin, verified = candidate_label(sido), 'original_sido_metadata', False
         else:
             label, origin, verified = 'unknown','unexpected_original_region',False
 
     # 수동 확정을 제외하고 원본 충돌이 있으면 안전하게 보류
     if conflicting and origin != 'manual_confirmed':
         label, origin, verified = 'unknown', 'region_conflict', False
-    status = 'included' if label in {'seoul','gyeonggi','jeonnam','national'} else ('excluded_gwangju' if label=='gwangju' else 'excluded_unknown')
+    status = 'included' if label in INCLUDED_REGIONS else 'excluded_unknown'
     return {
         **p,
         'region_selection_status': status,
@@ -93,6 +109,12 @@ def load_candidates(path):
     if len(ids)!=len(set(ids)) or not all(ids):raise ValueError('후보 CSV ID 중복/누락')
     return dict(zip(ids,rows))
 
+def candidate_label_or_none(raw):
+    try:
+        return candidate_label(raw)
+    except ValueError:
+        return None
+
 def run(input_path,candidate_csv,output_base,include_unreviewed_candidates=True):
     policies=read_jsonl(input_path);ensure_unique(policies)
     candidate_by_id=load_candidates(candidate_csv)
@@ -101,7 +123,7 @@ def run(input_path,candidate_csv,output_base,include_unreviewed_candidates=True)
     if expected!=set(candidate_by_id):raise ValueError(f'후보 CSV 정책 ID 불일치. 누락={len(expected-set(candidate_by_id))}, 불필요={len(set(candidate_by_id)-expected)}')
     classified=[classify_region(p,candidate_by_id,include_unreviewed_candidates) for p in policies]
     included=[p for p in classified if p['region_selection_status']=='included']
-    gwangju=[p for p in classified if p['region_selection_status']=='excluded_gwangju']
+    gwangju=[]  # Retained for historical output compatibility; explicit Gwangju is included.
     unknown=[p for p in classified if p['region_selection_status']=='excluded_unknown']
     assert len(included)+len(gwangju)+len(unknown)==len(policies)
     output=new_run_dir(output_base)

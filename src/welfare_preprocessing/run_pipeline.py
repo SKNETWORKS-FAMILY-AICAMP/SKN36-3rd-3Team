@@ -27,7 +27,11 @@ def main():
         c=WelfareCollector(os.environ.get('DATA_GO_KR_API_KEY'),args.work_dir,max_calls=args.max_calls)
         try: rows,stat=c.list_region(args.region,args.slug)
         except CollectionPaused as e:raise SystemExit(f'API 요청 중단: {e}')
-        cache=c.collect_details(rows); merged=merge_list_detail(rows,cache)
+        try: cache=c.collect_details(rows)
+        except CollectionPaused as e:raise SystemExit(f'상세조회 중단; 캐시를 보존했습니다. 신규 스냅샷은 생성하지 않았습니다: {e}')
+        merged=merge_list_detail(rows,cache)
+        if not all(x['detail_fetched'] for x in merged):
+            raise SystemExit('상세조회 누락이 있어 스냅샷을 생성하지 않았습니다.')
         write_jsonl(args.output,merged)
         result={'rows':len(merged),'detail_success':sum(x['detail_fetched'] for x in merged),'calls_this_run':c.calls,'list_status':stat}
     print(json.dumps(result,ensure_ascii=False,indent=2))

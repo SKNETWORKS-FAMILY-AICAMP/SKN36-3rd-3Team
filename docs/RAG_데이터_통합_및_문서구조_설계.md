@@ -59,7 +59,7 @@
 | `application_text` | `detail_aplyMtdCn` | 원문 유지 |
 | `start_date`, `end_date` | `detail_enfcBgngYmd`, `detail_enfcEndYmd` | 날짜 파싱, 불확실 시 null |
 | `department` | `detail_bizChrDeptNm` / `bizChrDeptNm` | 원문 보존 |
-| `contact` | `detail_inqNum` / `inqNum` | 문자열 보존 |
+| `contact` | 공식 문의처를 별도 검증한 경우에만 기록 | API의 `inqNum`은 조회수이므로 문의처로 사용 금지 |
 | `source_url` | `servDtlLink` | 가능한 한 완전한 URL 보존·유효성 검사 |
 | `updated_at_source` | `detail_lastModYmd` / `lastModYmd` | 원본 수정일 |
 | `detail_fetched` | `detail_fetched` | 상세 수집 성공 여부; `False`면 불완전 레코드로 표시 |

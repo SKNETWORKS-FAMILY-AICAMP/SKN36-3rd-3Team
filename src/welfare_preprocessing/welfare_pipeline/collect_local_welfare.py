@@ -47,7 +47,9 @@ class WelfareCollector:
             path=self.page_dir/f'{slug}_page_{n:05d}.json'
             if path.exists():rows+=json.loads(path.read_text(encoding='utf8'))['rows']
         byid={str(r['servId']):{**r,'requested_region':region} for r in rows if r.get('servId')}
-        return list(byid.values()), {'expected':total,'saved':len(byid),'complete':len(byid)==total}
+        if len(byid)!=total or len(rows)!=total:
+            raise CollectionPaused(f'{region}: 목록 불완전/ID 중복: expected={total}, rows={len(rows)}, unique={len(byid)}')
+        return list(byid.values()), {'expected':total,'saved':len(byid),'complete':True}
     def _fetch_page(self,region,n):
         root=self.get(LIST_URL,{'callTp':'L','ctpvNm':region,'pageNo':n,'numOfRows':self.page_size},f'{region} 페이지 {n}')
         rows=[{e.tag:e.text for e in node} for node in root.findall('servList')]
@@ -73,7 +75,9 @@ class WelfareCollector:
         for sid in dict.fromkeys(str(row['servId']) for row in rows if row.get('servId')):
             if sid in cache:continue
             try:result=self.detail(sid)
-            except CollectionPaused:break
+            except CollectionPaused:
+                # Successful details are already cached for resume. Never publish a partial snapshot.
+                raise
             cache[sid]=result
             with cache_path.open('a',encoding='utf8') as f:f.write(json.dumps(result,ensure_ascii=False)+'\n')
         return cache
