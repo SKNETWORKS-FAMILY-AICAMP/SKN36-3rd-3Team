@@ -2,7 +2,7 @@
   "sources": [
     {
       "source_id": "elderly_health_welfare",
-      "last_success_at": null,
+      "last_success_at": "2026-11-25T18:04:12.695094+09:00",
       "documents": [
         {
           "document_id": "elderly_health_welfare_vol1",
@@ -24,11 +24,35 @@
           },
           "latest_observed_version": null
         }
-      ]
+      ],
+      "checked_attachments": {
+        "0019:1488990:guide:elderly_health_welfare_vol1": {
+          "fingerprint": {
+            "kind": "guide",
+            "url": "https://www.mohw.go.kr/boardDownload.es?bid=0019&list_no=1488990&seq=1",
+            "name": "2026_노인보건복지사업안내(1권).pdf",
+            "size_label": "9.11MB",
+            "baseline_sha256": "ff26b3f53e818c39f0938ac0c0610c1ad492141bc328c6ec4488fbfc3047d2a3"
+          },
+          "sha256": "ff26b3f53e818c39f0938ac0c0610c1ad492141bc328c6ec4488fbfc3047d2a3",
+          "comparison": null
+        },
+        "0019:1488990:guide:elderly_health_welfare_vol2": {
+          "fingerprint": {
+            "kind": "guide",
+            "url": "https://www.mohw.go.kr/boardDownload.es?bid=0019&list_no=1488990&seq=2",
+            "name": "2026_노인보건복지사업안내(2권).pdf",
+            "size_label": "12.88MB",
+            "baseline_sha256": "6f1e1e96188729fc5b6f7f41b80969629064c00c455bc5b0637da5f6f957cad8"
+          },
+          "sha256": "6f1e1e96188729fc5b6f7f41b80969629064c00c455bc5b0637da5f6f957cad8",
+          "comparison": null
+        }
+      }
     },
     {
       "source_id": "basic_pension",
-      "last_success_at": null,
+      "last_success_at": "2026-11-25T18:04:12.695094+09:00",
       "documents": [
         {
           "document_id": "basic_pension",
@@ -38,13 +62,338 @@
             "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1488765&seq=1",
             "sha256": "cff68d4384cb49da6202c66e3c5a24912730aed177366413955405eba8052ca9"
           },
-          "latest_observed_version": null
+          "latest_observed_version": {
+            "document_id": "basic_pension",
+            "board_id": "0026",
+            "post_id": "1491527",
+            "post_url": "https://www.mohw.go.kr/board.es?mid=a10409020000&bid=0026&act=view&list_no=1491527&tag=&nPage=1",
+            "published_at": "2026-08-05T16:42:00+09:00",
+            "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1491527&seq=2",
+            "sha256": "45ddef1f98769182cf8f208ab4934610488974ad7a98c8c0a21d397e8a21447b"
+          }
         }
-      ]
+      ],
+      "checked_attachments": {
+        "0026:1488765:guide:basic_pension": {
+          "fingerprint": {
+            "kind": "guide",
+            "url": "https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1488765&seq=1",
+            "name": "★2026년 기초연금 사업안내.pdf",
+            "size_label": "3.24MB",
+            "baseline_sha256": "cff68d4384cb49da6202c66e3c5a24912730aed177366413955405eba8052ca9"
+          },
+          "sha256": "cff68d4384cb49da6202c66e3c5a24912730aed177366413955405eba8052ca9",
+          "comparison": null
+        },
+        "0026:1491451:notice:https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1491451&seq=1": {
+          "fingerprint": {
+            "kind": "notice",
+            "url": "https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1491451&seq=1",
+            "name": "(개정전문) 「기초연금 지급대상자 선정기준액， 기준연금액 및 소득인정액 산정 세부기준에 관한 고시」.pdf",
+            "size_label": "191.1KB",
+            "baseline_sha256": null
+          },
+          "details": {
+            "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1491451&seq=1",
+            "sha256": "3d8e7fca761c7bac30fc1efe95d7ea3dcfb3cddc91c4d8efb87cf49d514ca110",
+            "effective_date": "2026-07-30",
+            "article_hint": "제2조",
+            "review_reason": "기초연금 수급희망 이력관리와 신청 안내 관련 답변 확인",
+            "download_path": "downloads/20261125T180412695094/1491451-3d8e7fca761c.pdf"
+          }
+        },
+        "0026:1491451:notice:https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1491451&seq=2": {
+          "fingerprint": {
+            "kind": "notice",
+            "url": "https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1491451&seq=2",
+            "name": "(개정안) 기초연금 지급대상자 선정기준액, 기준연금액 및 소득인정액 산정 세부기준에 관한 고시.pdf",
+            "size_label": "126.54KB",
+            "baseline_sha256": null
+          },
+          "details": {
+            "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1491451&seq=2",
+            "sha256": "544a1a6f9e3273765a6c002f3bd0cda2429a7eb2fc82e30793bfa561f03bdd87",
+            "effective_date": "2026-07-30",
+            "article_hint": "제13조",
+            "review_reason": "기초연금 수급희망 이력관리와 신청 안내 관련 답변 확인",
+            "download_path": "downloads/20261125T180412695094/1491451-544a1a6f9e32.pdf"
+          }
+        },
+        "0026:1491527:guide:basic_pension": {
+          "fingerprint": {
+            "kind": "guide",
+            "url": "https://www.mohw.go.kr/boardDownload.es?bid=0026&list_no=1491527&seq=2",
+            "name": "2026년 기초연금 사업안내_개정본.pdf",
+            "size_label": "3.43MB",
+            "baseline_sha256": "cff68d4384cb49da6202c66e3c5a24912730aed177366413955405eba8052ca9"
+          },
+          "sha256": "45ddef1f98769182cf8f208ab4934610488974ad7a98c8c0a21d397e8a21447b",
+          "comparison": {
+            "method": "page_text_alignment",
+            "old_page_count": 316,
+            "new_page_count": 317,
+            "changed_sections": [
+              {
+                "section_title": null,
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  1
+                ],
+                "new_pdf_pages": [
+                  1
+                ]
+              },
+              {
+                "section_title": null,
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  9
+                ],
+                "new_pdf_pages": [
+                  9
+                ]
+              },
+              {
+                "section_title": "주요 개정 사항",
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  13
+                ],
+                "new_pdf_pages": [
+                  13
+                ]
+              },
+              {
+                "section_title": "가. 금융기관 대출금",
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  17,
+                  18
+                ],
+                "new_pdf_pages": [
+                  17,
+                  18,
+                  19,
+                  20
+                ]
+              },
+              {
+                "section_title": null,
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  37,
+                  38
+                ],
+                "new_pdf_pages": [
+                  39,
+                  40
+                ]
+              },
+              {
+                "section_title": "가. 금융정보 등 제공사실 통보요구서(서식4호)",
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  43
+                ],
+                "new_pdf_pages": [
+                  45
+                ]
+              },
+              {
+                "section_title": "가. 처리기한",
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  46
+                ],
+                "new_pdf_pages": [
+                  48
+                ]
+              },
+              {
+                "section_title": "다. 중점관리수급자 확인조사",
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  72
+                ],
+                "new_pdf_pages": [
+                  74
+                ]
+              },
+              {
+                "section_title": "라. 수급희망 이력관리 조사",
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  75,
+                  76
+                ],
+                "new_pdf_pages": [
+                  77,
+                  78
+                ]
+              },
+              {
+                "section_title": "라. 처리방법",
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  201,
+                  202,
+                  203,
+                  204,
+                  205,
+                  206,
+                  207,
+                  208,
+                  209,
+                  210,
+                  211,
+                  212,
+                  213,
+                  214,
+                  215
+                ],
+                "new_pdf_pages": [
+                  203,
+                  204,
+                  205,
+                  206,
+                  207,
+                  208,
+                  209,
+                  210,
+                  211,
+                  212,
+                  213,
+                  214,
+                  215,
+                  216,
+                  217
+                ]
+              },
+              {
+                "section_title": null,
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  243
+                ],
+                "new_pdf_pages": [
+                  245
+                ]
+              },
+              {
+                "section_title": "1. 아래 유의사항을 듣고 확인한 경우에는 오른쪽 [ ] 란에 √ 표시와 서명 또는 날인을 해주시기 바랍니다.",
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  276,
+                  277,
+                  278,
+                  279,
+                  280,
+                  281,
+                  282,
+                  283,
+                  284,
+                  285,
+                  286,
+                  287,
+                  288,
+                  289,
+                  290,
+                  291,
+                  292
+                ],
+                "new_pdf_pages": [
+                  278,
+                  279,
+                  280,
+                  281,
+                  282,
+                  283,
+                  284,
+                  285,
+                  286,
+                  287,
+                  288,
+                  289,
+                  290,
+                  291,
+                  292,
+                  293,
+                  294
+                ]
+              },
+              {
+                "section_title": null,
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  315,
+                  316
+                ],
+                "new_pdf_pages": [
+                  317
+                ]
+              }
+            ],
+            "old_pages_without_text": [
+              2,
+              12,
+              18,
+              20,
+              32,
+              34,
+              58,
+              128,
+              160,
+              162,
+              174,
+              176,
+              184,
+              186,
+              216,
+              218,
+              232,
+              234,
+              240,
+              242,
+              292,
+              294,
+              314
+            ],
+            "new_pages_without_text": [
+              1,
+              2,
+              12,
+              22,
+              34,
+              36,
+              60,
+              130,
+              162,
+              164,
+              176,
+              178,
+              186,
+              188,
+              218,
+              220,
+              234,
+              236,
+              242,
+              244,
+              296,
+              316
+            ],
+            "review_required": true,
+            "baseline_sha256": "cff68d4384cb49da6202c66e3c5a24912730aed177366413955405eba8052ca9",
+            "candidate_sha256": "45ddef1f98769182cf8f208ab4934610488974ad7a98c8c0a21d397e8a21447b",
+            "download_path": "downloads/20261125T180412695094/1491527-45ddef1f9876.pdf",
+            "comparison_path": "comparisons/basic_pension-239a4230c5fad4e1a1b3d140/comparison.json"
+          }
+        }
+      }
     },
     {
       "source_id": "welfare_services_guide",
-      "last_success_at": null,
+      "last_success_at": "2026-11-25T18:04:12.695094+09:00",
       "documents": [
         {
           "document_id": "welfare_services_guide",
@@ -54,10 +403,100 @@
             "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0019&list_no=1491341&seq=1",
             "sha256": "d3d523eff8677261d45a72f5accc92feec83e3af555c0d4551fa4bac774767e5"
           },
-          "latest_observed_version": null
+          "latest_observed_version": {
+            "document_id": "welfare_services_guide",
+            "board_id": "0019",
+            "post_id": "1491341",
+            "post_url": "https://www.mohw.go.kr/board.es?mid=a10411010300&bid=0019&act=view&list_no=1491341",
+            "published_at": "2026-07-19T16:10:00+09:00",
+            "attachment_url": "https://www.mohw.go.kr/boardDownload.es?bid=0019&list_no=1491341&seq=1",
+            "sha256": "d6f00080dd32ff970c18467a2e63293d3171b3c065533edc0598ac0f37ca543b"
+          }
         }
-      ]
+      ],
+      "checked_attachments": {
+        "0019:1491341:guide:welfare_services_guide": {
+          "fingerprint": {
+            "kind": "guide",
+            "url": "https://www.mohw.go.kr/boardDownload.es?bid=0019&list_no=1491341&seq=1",
+            "name": "2026 나에게 힘이 되는 복지서비스.pdf",
+            "size_label": "14.09MB",
+            "baseline_sha256": "d3d523eff8677261d45a72f5accc92feec83e3af555c0d4551fa4bac774767e5"
+          },
+          "sha256": "d6f00080dd32ff970c18467a2e63293d3171b3c065533edc0598ac0f37ca543b",
+          "comparison": {
+            "method": "page_text_alignment",
+            "old_page_count": 383,
+            "new_page_count": 383,
+            "changed_sections": [
+              {
+                "section_title": null,
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  1
+                ],
+                "new_pdf_pages": [
+                  1
+                ]
+              },
+              {
+                "section_title": null,
+                "change_type": "modified",
+                "old_pdf_pages": [
+                  382,
+                  383
+                ],
+                "new_pdf_pages": [
+                  382,
+                  383
+                ]
+              }
+            ],
+            "old_pages_without_text": [
+              2,
+              14,
+              18,
+              60,
+              88,
+              128,
+              174,
+              196,
+              214,
+              268,
+              288,
+              314,
+              366
+            ],
+            "new_pages_without_text": [
+              1,
+              2,
+              14,
+              18,
+              60,
+              88,
+              128,
+              174,
+              196,
+              214,
+              268,
+              288,
+              314,
+              366,
+              383
+            ],
+            "review_required": true,
+            "baseline_sha256": "d3d523eff8677261d45a72f5accc92feec83e3af555c0d4551fa4bac774767e5",
+            "candidate_sha256": "d6f00080dd32ff970c18467a2e63293d3171b3c065533edc0598ac0f37ca543b",
+            "download_path": "downloads/20261125T180412695094/1491341-d6f00080dd32.pdf",
+            "comparison_path": "comparisons/welfare_services_guide-0cf1a34bb164dbde09ff965a/comparison.json"
+          }
+        }
+      }
     }
   ],
-  "known_candidate_ids": []
+  "known_candidate_ids": [
+    "basic_pension-45ddef1f98769182cf8f208ab4934610488974ad7a98c8c0a21d397e8a21447b",
+    "notice-0026-1491451-e3baa4dedc30b86d6e0729a65e13d2ef711d0357e4d23d29f8f63588fda922ac",
+    "welfare_services_guide-d6f00080dd32ff970c18467a2e63293d3171b3c065533edc0598ac0f37ca543b"
+  ]
 }
