@@ -1,0 +1,77 @@
+{
+  "sources": [
+    {
+      "source_id": "elderly_health_welfare",
+      "title": "노인보건복지 사업안내",
+      "title_aliases": ["노인보건복지"],
+      "board_url": "https://www.mohw.go.kr/board.es?mid=a10411010100&bid=0019&act=list",
+      "search_terms": [
+        "노인보건복지"
+      ],
+      "related_searches": [
+        {
+          "board_url": "https://www.mohw.go.kr/board.es?mid=a10409020000&bid=0026&act=list",
+          "search_terms": ["노인보건복지", "노인복지법"],
+          "title_terms": ["노인보건복지", "노인복지법"]
+        }
+      ],
+      "documents": [
+        {
+          "document_id": "elderly_health_welfare_vol1",
+          "label": "1권",
+          "volume": 1,
+          "baseline_path": "data/raw/pdf/2026_노인보건복지사업안내(1권).pdf",
+          "baseline_post_url": "https://www.mohw.go.kr/board.es?mid=a10411010100&bid=0019&act=view&list_no=1488990"
+        },
+        {
+          "document_id": "elderly_health_welfare_vol2",
+          "label": "2권",
+          "volume": 2,
+          "baseline_path": "data/raw/pdf/2026_노인보건복지사업안내(2권).pdf",
+          "baseline_post_url": "https://www.mohw.go.kr/board.es?mid=a10411010100&bid=0019&act=view&list_no=1488990"
+        }
+      ]
+    },
+    {
+      "source_id": "basic_pension",
+      "title": "기초연금 사업안내",
+      "title_aliases": ["기초연금"],
+      "board_url": "https://www.mohw.go.kr/board.es?mid=a10409020000&bid=0026&act=list",
+      "search_terms": [
+        "기초연금 사업안내",
+        "기초연금"
+      ],
+      "documents": [
+        {
+          "document_id": "basic_pension",
+          "label": "사업안내",
+          "baseline_path": "data/raw/pdf/2026년 기초연금 사업안내.pdf",
+          "baseline_post_url": "https://www.mohw.go.kr/board.es?mid=a10409020000&bid=0026&act=view&list_no=1488765"
+        }
+      ]
+    },
+    {
+      "source_id": "welfare_services_guide",
+      "title": "나에게 힘이 되는 복지서비스",
+      "title_aliases": ["나에게 힘이 되는 복지"],
+      "board_url": "https://www.mohw.go.kr/board.es?mid=a10411010300&bid=0019&act=list",
+      "search_terms": [
+        "복지서비스",
+        "복지 서비스",
+        "나에게 힘이"
+      ],
+      "related_title_terms": ["복지서비스 안내책자", "복지서비스 설명서", "복지서비스 가이드북"],
+      "documents": [
+        {
+          "document_id": "welfare_services_guide",
+          "label": "통합본",
+          "preferred_attachment_terms": ["통합", "나에게 힘이 되는 복지서비스"],
+          "exclude_attachment_terms": ["분권", "중장년", "노령층", "임신", "아동", "청년", "장애인"],
+          "baseline_is_local_variant": true,
+          "baseline_path": "data/raw/pdf/2026 나에게 힘이 되는 복지서비스_표지합본 최종.pdf",
+          "baseline_post_url": "https://www.mohw.go.kr/board.es?mid=a10411010300&bid=0019&act=view&list_no=1491341"
+        }
+      ]
+    }
+  ]
+}
