@@ -2,7 +2,7 @@
   "sources": [
     {
       "source_id": "elderly_health_welfare",
-      "last_success_at": "2026-11-25T18:04:12.695094+09:00",
+      "last_success_at": "2026-11-25T18:25:39.691309+09:00",
       "documents": [
         {
           "document_id": "elderly_health_welfare_vol1",
@@ -52,7 +52,7 @@
     },
     {
       "source_id": "basic_pension",
-      "last_success_at": "2026-11-25T18:04:12.695094+09:00",
+      "last_success_at": "2026-11-25T18:25:39.691309+09:00",
       "documents": [
         {
           "document_id": "basic_pension",
@@ -393,7 +393,7 @@
     },
     {
       "source_id": "welfare_services_guide",
-      "last_success_at": "2026-11-25T18:04:12.695094+09:00",
+      "last_success_at": "2026-11-25T18:25:39.691309+09:00",
       "documents": [
         {
           "document_id": "welfare_services_guide",
