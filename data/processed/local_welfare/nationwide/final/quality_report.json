@@ -4,7 +4,7 @@
     "total_policies": 4497,
     "merged_15_regions": 4278,
     "legacy_jeonnam_selected": 149,
-    "region_groups": 17,
+    "region_groups": 16,
     "gwangju_included": true,
     "complete_nationwide_coverage": false,
     "gwangju_added": 70
@@ -22,7 +22,8 @@
     "경기도 정책": 692,
     "전남 정책": 149,
     "노인 관련 검색 후보": 2197,
-    "광주 정책": 70
+    "광주 정책": 70,
+    "전남광주통합특별시 정책": 219
   },
   "elderly_category_counts": {
     "review": 1275,
@@ -116,9 +117,9 @@
     {
       "필드": "sigungu_name",
       "전체": 4497,
-      "정상": 3824,
-      "결측": 673,
-      "결측률(%)": 14.97
+      "정상": 3822,
+      "결측": 675,
+      "결측률(%)": 15.01
     },
     {
       "필드": "source_url",

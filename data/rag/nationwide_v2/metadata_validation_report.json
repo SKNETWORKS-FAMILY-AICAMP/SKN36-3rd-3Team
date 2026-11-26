@@ -13,9 +13,9 @@
     "strategy": "A_fixed",
     "chunk_size": 800,
     "overlap": 150,
-    "policy": 2485,
+    "policy": 2486,
     "guideline": 2738,
-    "total": 5223
+    "total": 5224
   },
   "neo4j": {
     "policy_graph_entities": 2197
@@ -28,11 +28,11 @@
     "policy_chunk_validation": {
       "strategy": "fixed",
       "input_documents": 2197,
-      "chunks": 2485,
+      "chunks": 2486,
       "unique_parent_documents": 2197,
       "errors": [],
       "min_chunk_chars": 139,
-      "avg_chunk_chars": 464.83,
+      "avg_chunk_chars": 465.06,
       "max_chunk_chars": 800
     },
     "guideline_chunk_validation": {
@@ -70,5 +70,12 @@
     "elderly_candidates": 40,
     "chunks": 49,
     "existing_ids_skipped": []
+  },
+  "combined_region": {
+    "label": "gwangju_jeonnam",
+    "sido_name": "전남광주통합특별시",
+    "policies": 219,
+    "policy_documents": 189,
+    "policy_chunks": 222
   }
 }
