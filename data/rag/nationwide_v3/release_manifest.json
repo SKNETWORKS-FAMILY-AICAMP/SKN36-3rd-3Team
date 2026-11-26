@@ -1,8 +1,8 @@
 {
   "data_version": "nationwide_2026_11_26_6efc3b7671b3",
-  "status": "not_approved",
-  "approved_by": null,
-  "approved_at": null,
+  "status": "approved",
+  "approved_by": "lksk789",
+  "approved_at": "2026-11-26",
   "public_fields": {
     "policy": [
       "title",
