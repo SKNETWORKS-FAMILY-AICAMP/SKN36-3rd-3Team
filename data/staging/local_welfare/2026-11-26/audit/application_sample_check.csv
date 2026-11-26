@@ -1,0 +1,21 @@
+﻿policy_id,title,application_required,source_url,quote,result
+local:WLF00002721,저소득주민 국민건강보험료 지원,True,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002721&wlfareInfoReldBztpCd=02,"- 동주민센터에서 신청(신분증, 건강보험료 납입 고지서 또는 건강보험료 납입한 통장 거래내역 지참하여 방문)- 신규 지원신청자의 경우, 15일 이전 신청자는 해당 월부터 지원하며 16일 이후 신청자는 익월부터 지원 개시- 신규 지원대상자로 결정된 때부터 지원 자격 유지 시까지 지원",기준 본문과 반영값 일치
+local:WLF00004044,장애인 양육지원금 지원사업,True,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004044&wlfareInfoReldBztpCd=02,동주민센터 방문신청,기준 본문과 반영값 일치
+local:WLF00002380,장수수당,True,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002380&wlfareInfoReldBztpCd=02,읍/면/동 주민센터로 신청,기준 본문과 반영값 일치
+local:WLF00003835,한부모가족 동절기 생활안정 지원,True,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003835&wlfareInfoReldBztpCd=02,"○ 난방연료비, 월동대책비 : 지원시기(10월중)에 거주지 주민센터에 신청",기준 본문과 반영값 일치
+local:WLF00002055,저소득층 특별생계비 지원,True,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002055&wlfareInfoReldBztpCd=02,읍면동주민센터에서 신청,기준 본문과 반영값 일치
+local:WLF00002528,쓰레기 종량제,True,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002528&wlfareInfoReldBztpCd=02,1) 신청방법 : 동 주민센터로 신청 2) 지급시기 및 지급방법  - 대상자 선정 : 장기입원자 제외 후 대상자 선정  - 지급개시일 : 수급자 선정월부터  - 지급방법 : 매월 계좌입금,기준 본문과 반영값 일치
+local:WLF00001244,사랑의 우유,True,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001244&wlfareInfoReldBztpCd=02,1) 신청방법 : 동주민센터로 신청 2) 지급시기 및 지급방법  - 대상자 선정 : 동 담당자가 적격여부 검토하여 결정  - 지급개시일 : 선정 즉시  - 지급방법 : 우유대리점에서 자택 방문 우유 제공,기준 본문과 반영값 일치
+local:WLF00000890,보훈대상자 위문,True,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000890&wlfareInfoReldBztpCd=02,"1) 신청방법 : 각 보훈단체에 신청 2) 지급시기 및 지급방법  - 지급개시일 : 년 2회(설, 추석)  - 지급방법 : 수급자가 보훈단체 사무실에 방문 전달",기준 본문과 반영값 일치
+local:WLF00005832,국민여가캠핑장 요금 감면,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005832&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00005780,주민자치센터 프로그램 수강료 감면,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005780&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00005790,군산시 공영주차장 요금 감면,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005790&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00005777,군산근대역사박물관 다자녀가정 관람료 지원,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005777&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00005158,어린이집 부모부담금(필요경비) 지원,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005158&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00005792,군산 새만금 시티투어 이용료 감면(50%),False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005792&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00005776,군산시 평생학습관 운영,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005776&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00002069,고창군 경로 목욕 및 이미용비 지원,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002069&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00000592,무료경로식당 (성봉회),False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000592&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00006632,대상포진 예방접종 실시,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006632&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00005831,행복드림 1:1 매칭사업,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005831&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치
+local:WLF00005814,작은목욕탕 관리 및 운영,False,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005814&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),기준 본문과 반영값 일치

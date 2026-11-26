@@ -1,0 +1,4 @@
+﻿policy_id,sido_name,sigungu_name,source_field,quote,reason,base_version,checked_at
+local:WLF00000797,전남광주통합특별시,남구,selection_criteria_text,거주지 제한 없음(단 넷째아 이상인 경우 남구 6개월 이상 거주).,지원 대상에는 남구 거주 조건이 있으나 선정 기준은 넷째아 이상에만 남구 6개월 거주를 요구함. 등록 시군구를 공통 적용 범위로 표시할 수 없음.,jeonnam_gwangju_zip_20261125,2026-11-26
+local:WLF00006096,부산광역시,기장군,target_text,부모·자녀 연제구 주소 등재,기장군 등록 정책의 대상 조건은 연제구 주소 등재를 요구함. 등록 시군구와 원문이 상충함.,nationwide_2026_11_25_84d46d570a5b,2026-11-26
+local:WLF00006458,경기도,광주시,selection_criteria_text,동대문구에 1년 이상 주민등록을 두고 거주한,광주시 등록 및 대상 조건과 선정 기준의 동대문구 1년 이상 거주 조건이 상충함.,nationwide_2026_11_25_84d46d570a5b,2026-11-26

@@ -115,15 +115,6 @@ def build_metadata(policy: dict) -> dict[str, Any]:
     sido = clean_string(policy.get("sido_name"))
     sigungu = clean_string(policy.get("sigungu_name"))
     region_label = clean_string(policy.get("region_selection_label"))
-    # The API queried the combined '전남광주통합특별시' area. Only confirmed
-    # inclusion labels are recorded as selection hints; do not misrepresent
-    # the administrative geography or policy eligibility scope.
-    if region_label == "jeonnam" and sido == "전남광주통합특별시":
-        # For known former Jeonnam administrative areas, map display name.
-        # Other cases keep the API area name, plus region selection label.
-        if clean_string(policy.get("legacy_area_group")) == "former_jeonnam":
-            sido = "전라남도"
-
     return {
         "record_type": "policy",
         "source_id": policy_id,
@@ -136,7 +127,15 @@ def build_metadata(policy: dict) -> dict[str, Any]:
         "source_url": source_url,
         "sido_name": sido,
         "sigungu_name": sigungu,
-        "region_scope": normalize_scope(policy.get("region_scope")),
+        "region_scope": (
+            normalize_scope(policy.get("region_scope"))
+            if policy.get("scope_status") == "confirmed"
+            else "unknown"
+        ),
+        "candidate_scope": policy.get("candidate_scope"),
+        "scope_status": policy.get("scope_status") or "unknown",
+        "applies_to": policy.get("applies_to") or [],
+        "scope_basis": policy.get("scope_basis"),
         "region_code": clean_string(policy.get("region_code")),
         "region_review_status": normalize_status(policy.get("region_review_status")),
         "region_status": (

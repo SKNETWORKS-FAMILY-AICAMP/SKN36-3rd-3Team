@@ -1,0 +1,50 @@
+﻿항목,정책 ID,근거 위치,원문 근거,반영값,정책 청크 수,대조 결과
+신청 방법,local:WLF00002721,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002721&wlfareInfoReldBztpCd=02,"- 동주민센터에서 신청(신분증, 건강보험료 납입 고지서 또는 건강보험료 납입한 통장 거래내역 지참하여 방문)- 신규 지원신청자의 경우, 15일 이전 신청자는 해당 월부터 지원하며 16일 이후 신청자는 익월부터 지원 개시- 신규 지원대상자로 결정된 때부터 지원 자격 유지 시까지 지원",True,1,일치
+신청 방법,local:WLF00004044,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00004044&wlfareInfoReldBztpCd=02,동주민센터 방문신청,True,0,일치
+신청 방법,local:WLF00002380,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002380&wlfareInfoReldBztpCd=02,읍/면/동 주민센터로 신청,True,1,일치
+신청 방법,local:WLF00003835,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00003835&wlfareInfoReldBztpCd=02,"○ 난방연료비, 월동대책비 : 지원시기(10월중)에 거주지 주민센터에 신청",True,1,일치
+신청 방법,local:WLF00002055,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002055&wlfareInfoReldBztpCd=02,읍면동주민센터에서 신청,True,1,일치
+신청 방법,local:WLF00002528,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002528&wlfareInfoReldBztpCd=02,1) 신청방법 : 동 주민센터로 신청 2) 지급시기 및 지급방법  - 대상자 선정 : 장기입원자 제외 후 대상자 선정  - 지급개시일 : 수급자 선정월부터  - 지급방법 : 매월 계좌입금,True,1,일치
+신청 방법,local:WLF00001244,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00001244&wlfareInfoReldBztpCd=02,1) 신청방법 : 동주민센터로 신청 2) 지급시기 및 지급방법  - 대상자 선정 : 동 담당자가 적격여부 검토하여 결정  - 지급개시일 : 선정 즉시  - 지급방법 : 우유대리점에서 자택 방문 우유 제공,True,1,일치
+신청 방법,local:WLF00000890,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000890&wlfareInfoReldBztpCd=02,"1) 신청방법 : 각 보훈단체에 신청 2) 지급시기 및 지급방법  - 지급개시일 : 년 2회(설, 추석)  - 지급방법 : 수급자가 보훈단체 사무실에 방문 전달",True,1,일치
+신청 방법,local:WLF00005832,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005832&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,0,일치
+신청 방법,local:WLF00005780,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005780&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,2,일치
+신청 방법,local:WLF00005790,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005790&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,0,일치
+신청 방법,local:WLF00005777,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005777&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,0,일치
+신청 방법,local:WLF00005158,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005158&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,0,일치
+신청 방법,local:WLF00005792,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005792&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,0,일치
+신청 방법,local:WLF00005776,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005776&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,0,일치
+신청 방법,local:WLF00002069,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00002069&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,1,일치
+신청 방법,local:WLF00000592,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00000592&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,1,일치
+신청 방법,local:WLF00006632,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00006632&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,1,일치
+신청 방법,local:WLF00005831,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005831&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,0,일치
+신청 방법,local:WLF00005814,https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do?wlfareInfoId=WLF00005814&wlfareInfoReldBztpCd=02,직접 지원(별도 신청사항 없음),False,0,일치
+문의처,local:WLF00000006,details/WLF00000006.xml,details/WLF00000006.xml | lastModYmd=20260703 | inqplCtadrList | 부산광역시 여성가족과 051-888-1606,051-888-1606,1,일치
+문의처,local:WLF00000010,details/WLF00000010.xml,details/WLF00000010.xml | lastModYmd=20260703 | inqplCtadrList | 연수구청 사회보장과 032-749-7695,032-749-7695,1,일치
+문의처,local:WLF00000013,details/WLF00000013.xml,details/WLF00000013.xml | lastModYmd=20260730 | inqplCtadrList | 서울특별시 복지정책과 02-2133-7334,02-2133-7334,1,일치
+문의처,local:WLF00000020,details/WLF00000020.xml,details/WLF00000020.xml | lastModYmd=20260618 | inqplCtadrList | 정읍시청 기획예산실 063-539-5683,063-539-5683,1,일치
+문의처,local:WLF00000080,details/WLF00000080.xml,details/WLF00000080.xml | lastModYmd=20260714 | inqplCtadrList | 당진시청 사회복지과 041-350-3682,041-350-3682,1,일치
+문의처,local:WLF00000085,details/WLF00000085.xml,details/WLF00000085.xml | lastModYmd=20260723 | inqplCtadrList | 태안군청 복지증진과 041-670-2135,041-670-2135,1,일치
+문의처,local:WLF00000105,details/WLF00000105.xml,details/WLF00000105.xml | lastModYmd=20260801 | inqplCtadrList | 합천군청 행정복지국 주민복지과 055-930-4712,055-930-4712,1,일치
+문의처,local:WLF00000109,details/WLF00000109.xml,details/WLF00000109.xml | lastModYmd=20260815 | inqplCtadrList | 창원시청 노인장애인과 055-225-3614,055-225-3614,1,일치
+문의처,local:WLF00000115,details/WLF00000115.xml,details/WLF00000115.xml | lastModYmd=20250705 | inqplCtadrList | 평창군 복지정책과 희망복지팀 033-330-2517,033-330-2517,1,일치
+문의처,local:WLF00000116,details/WLF00000116.xml,details/WLF00000116.xml | lastModYmd=20260804 | inqplCtadrList | 평창군청 가족복지과 여성가족팀 033-330-2178,033-330-2178,1,일치
+문의처,local:WLF00000117,details/WLF00000117.xml,details/WLF00000117.xml | lastModYmd=20260821 | inqplCtadrList | 평창군청 복지정책과 복지정책팀 033-330-2358,033-330-2358,1,일치
+문의처,local:WLF00000119,details/WLF00000119.xml,details/WLF00000119.xml | lastModYmd=20260811 | inqplCtadrList | 국민건강보험공단 1577-1000,1577-1000,1,일치
+문의처,local:WLF00000121,details/WLF00000121.xml,details/WLF00000121.xml | lastModYmd=20260806 | inqplCtadrList | 함안군 복지정책과 055-580-2454,055-580-2454,1,일치
+문의처,local:WLF00000125,details/WLF00000125.xml,details/WLF00000125.xml | lastModYmd=20260711 | inqplCtadrList | 충청북도 보건정책과 043-220-3154,043-220-3154,1,일치
+문의처,local:WLF00000127,details/WLF00000127.xml,details/WLF00000127.xml | lastModYmd=20260717 | inqplCtadrList | 충청남도 보건복지국 장애인복지과 장애인재활팀 041-635-4279,041-635-4279,1,일치
+문의처,local:WLF00000131,details/WLF00000131.xml,details/WLF00000131.xml | lastModYmd=20260703 | inqplCtadrList | 청송군청 주민행복과 054-870-6204,054-870-6204,1,일치
+문의처,local:WLF00000132,details/WLF00000132.xml,details/WLF00000132.xml | lastModYmd=20260827 | inqplCtadrList | 영양군청 주민복지과 054-680-6262,054-680-6262,1,일치
+문의처,local:WLF00000133,details/WLF00000133.xml,details/WLF00000133.xml | lastModYmd=20260827 | inqplCtadrList | 영양군청 주민복지과 054-680-6233,054-680-6233,1,일치
+문의처,local:WLF00000144,details/WLF00000144.xml,details/WLF00000144.xml | lastModYmd=20260812 | inqplCtadrList | 경상남도 여성가족과 여성권익담당 055-211-5234,055-211-5234,1,일치
+문의처,local:WLF00000145,details/WLF00000145.xml,details/WLF00000145.xml | lastModYmd=20260716 | inqplCtadrList | 경상남도 장애인복지과 055-211-5115,055-211-5115,1,일치
+청크 표기,local:WLF00001737,policy::local:WLF00001737::fixed::0001,,041-660-2341,1,본문의 별도 문의처 문구 확인 필요
+청크 표기,local:WLF00004342,policy::local:WLF00004342::fixed::0001,061-83,061-830-5909,1,청크 경계에서 번호 잘림
+청크 표기,local:WLF00005486,policy::local:WLF00005486::fixed::0001,041-746-,041-746-5311,1,청크 경계에서 번호 잘림
+청크 표기,local:WLF00005770,policy::local:WLF00005770::fixed::0001,042-2,042-270-4632 / 042-608-6763 / 042-611-2882 / 042-288-3052 / 042-606-7422 / 042-251-4423,1,청크 경계에서 번호 잘림
+청크 표기,local:WLF00005771,policy::local:WLF00005771::fixed::0001,042-270-4853 / 042-621-6014 / 042-288-8189 / 042-288-4485 / 042-611-5113 / ,042-270-4853 / 042-621-6014 / 042-288-8189 / 042-288-4485 / 042-611-5113 / 042-608-4497,1,청크 경계에서 번호 잘림
+청크 표기,local:WLF00005780,policy::local:WLF00005780::fixed::0001,0,063-454-2244,1,청크 경계에서 번호 잘림
+청크 표기,local:WLF00005893,policy::local:WLF00005893::fixed::0001,,061-530-5908,1,본문의 별도 문의처 문구 확인 필요
+청크 표기,local:WLF00006384,policy::local:WLF00006384::fixed::0002,05,054-789-6472,1,청크 경계에서 번호 잘림
+청크 표기,local:WLF00006639,policy::local:WLF00006639::fixed::0001,062-607-406,062-607-4061,1,청크 경계에서 번호 잘림

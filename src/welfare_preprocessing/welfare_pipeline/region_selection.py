@@ -92,7 +92,7 @@ def classify_region(p, candidate_by_id, include_unreviewed_candidates=True):
     scope_verified = p.get('region_scope_verified') is True
     # A known administrative label is not proof of eligibility. An unverified
     # national candidate must never be treated as a nationwide entitlement.
-    needs_review = (label in {'unknown','gwangju_jeonnam'} or
+    needs_review = (label == 'unknown' or
                     (label == 'national' and not scope_verified) or
                     source == 'automatic_candidate_unverified' or
                     (conflict and not verified) or

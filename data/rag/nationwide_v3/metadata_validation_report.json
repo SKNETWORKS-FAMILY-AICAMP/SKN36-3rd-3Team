@@ -1,0 +1,42 @@
+{
+  "data_version": "nationwide_2026_11_26_6efc3b7671b3",
+  "counts": {
+    "policies_all": 4833,
+    "policies_elderly_candidates": 2243,
+    "policy_metadata_input": 2243,
+    "policy_documents": 2243,
+    "policy_chunks": 2551,
+    "policy_graph_entities": 2243,
+    "guideline_documents": 1189,
+    "guideline_chunks": 2738
+  },
+  "contact_status": {
+    "source_group_confirmed": 2629,
+    "legacy_candidate_review": 2019,
+    "unknown": 185
+  },
+  "missing": {
+    "contact": 2204,
+    "application_text": 649,
+    "application_method_name": 958,
+    "sido_name": 0,
+    "sigungu_name": 840
+  },
+  "adopted_changes": 19555,
+  "checks": {
+    "registered_sigungu_without_applies_to": 3,
+    "documented_region_scope_exceptions": 3,
+    "unexplained_region_scope_gaps": 0,
+    "candidate_or_confirmed_without_basis": 0,
+    "invalid_sigungu": 0,
+    "graph_region_mismatches": 0,
+    "age_evidence_without_graph_age": 0,
+    "age_policies_with_added_conditions": 77,
+    "age_policies_with_unmerged_evidence": 13,
+    "overlong_chunks": 0,
+    "contact_lines": 2082,
+    "contact_line_mismatches": 0,
+    "graph_application_mismatches": 0
+  },
+  "issues": []
+}
