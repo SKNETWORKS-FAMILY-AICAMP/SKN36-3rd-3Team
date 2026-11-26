@@ -1,24 +1,24 @@
 {
   "data_version": "nationwide_2026_11_25_84d46d570a5b",
   "input": {
-    "total_policies": 4427,
-    "elderly_candidates": 2157,
+    "total_policies": 4497,
+    "elderly_candidates": 2197,
     "complete_nationwide_coverage": false
   },
   "documents": {
-    "policy": 2157,
+    "policy": 2197,
     "guideline": 1189
   },
   "chunks": {
     "strategy": "A_fixed",
     "chunk_size": 800,
     "overlap": 150,
-    "policy": 2436,
+    "policy": 2485,
     "guideline": 2738,
-    "total": 5174
+    "total": 5223
   },
   "neo4j": {
-    "policy_graph_entities": 2157
+    "policy_graph_entities": 2197
   },
   "validation": {
     "metadata_errors": 0,
@@ -27,12 +27,12 @@
     "policy_graph_ids_match": true,
     "policy_chunk_validation": {
       "strategy": "fixed",
-      "input_documents": 2157,
-      "chunks": 2436,
-      "unique_parent_documents": 2157,
+      "input_documents": 2197,
+      "chunks": 2485,
+      "unique_parent_documents": 2197,
       "errors": [],
       "min_chunk_chars": 139,
-      "avg_chunk_chars": 463.58,
+      "avg_chunk_chars": 464.83,
       "max_chunk_chars": 800
     },
     "guideline_chunk_validation": {
@@ -47,10 +47,28 @@
     }
   },
   "limitations": [
-    "광주 및 신규 전남 전체 원본 미포함",
+    "광주 상세 확보분 중 지역 근거 확인 건을 반영했으며 신규 전남 전체 및 상세 미확보 정책은 미포함",
     "연령 및 Need 태그는 자동 추출 후보",
     "지역 적용 범위 및 신청 자격 미확정",
     "관리자 승인 전 검토용 데이터",
     "임베딩 및 실제 DB 적재 미진행"
-  ]
+  ],
+  "gwangju_update": {
+    "data_version": "gwangju_2026_11_26_ac304e6af7ab",
+    "source": "전남광주통합특별시_복지서비스.zip",
+    "source_detail_count": 515,
+    "policies": 70,
+    "by_district": {
+      "서구": 10,
+      "남구": 8,
+      "북구": 15,
+      "동구": 8,
+      "시 단위": 21,
+      "광산구": 6,
+      "광주광역시교육청": 2
+    },
+    "elderly_candidates": 40,
+    "chunks": 49,
+    "existing_ids_skipped": []
+  }
 }
