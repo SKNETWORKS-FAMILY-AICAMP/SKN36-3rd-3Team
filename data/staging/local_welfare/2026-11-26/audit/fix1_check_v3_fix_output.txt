@@ -1,0 +1,27 @@
+버전: nationwide_2026_11_26_6efc3b7671b3 (not_approved)
+정책 4833 / 노인 후보 2243 / 정책 청크 2551 / PDF 청크 2738 / 그래프 2243
+
+FAIL  1. 정상 시군구가 있는데 applies_to=[] (미해결 사유 적은 것은 직접 제외): 3   예: local:WLF00000797, local:WLF00006096, local:WLF00006458
+PASS  1. candidate인데 scope_basis 없음: 0
+PASS  1. confirmed인데 scope_basis 없음: 0
+PASS  1. candidate/confirmed인데 applies_to 비어 있음: 0
+PASS  1. applies_to 항목 형식({sido, sigungu}) 위반: 0
+PASS  2. sigungu_name에 교육청 또는 '-': 0
+PASS  2. sido_name에 옛 이름(광주광역시/전라남도): 0
+PASS  3. 그래프 regions에 scope_status/scope_basis 칸 없음: 0
+PASS  3. 그래프 regions 값이 정책 값과 다름: 0
+PASS  4. age_evidence는 있는데 그래프 나이 조건 없음: 0
+PASS  4. 그래프 조건에 source_id/condition_group 없음: 0
+PASS  5. 800자를 넘는 청크: 0
+PASS  5. 청크 문의처 줄과 확정 번호 불일치: 0
+PASS  5. 확정되지 않은 문의처가 청크에 있음: 0
+PASS  6. 그래프에 application 묶음(4개 칸) 없음: 0
+PASS  6. 그래프 application 값이 정책 값과 다름: 0
+PASS  공통. 매니페스트 해시 불일치: 0
+PASS  공통. data_version이 여러 개이거나 매니페스트와 다름: 0
+PASS  공통. 중복 ID: 0
+PASS  공통. 노인 후보·문서·청크·그래프 ID 집합 불일치: 0
+PASS  공통. 청크 UUID 규칙 위반: 0
+PASS  공통. 청크 '지역:' 줄에 옛 이름: 0
+
+결과: 1개 항목 미통과

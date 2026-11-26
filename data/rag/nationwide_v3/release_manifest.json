@@ -1,0 +1,49 @@
+{
+  "data_version": "nationwide_2026_11_26_6efc3b7671b3",
+  "status": "not_approved",
+  "approved_by": null,
+  "approved_at": null,
+  "public_fields": {
+    "policy": [
+      "title",
+      "summary",
+      "target_text",
+      "selection_criteria_text",
+      "benefit_text",
+      "application_text",
+      "application_method_name",
+      "application_required",
+      "source_url",
+      "contact",
+      "department"
+    ],
+    "guideline": [
+      "text",
+      "title",
+      "chapter",
+      "section",
+      "page_start",
+      "page_end",
+      "source_url",
+      "publisher",
+      "publication_year"
+    ]
+  },
+  "derived_public_fields": {
+    "application_required": "원문 근거가 확인된 가공값 (application_basis 필수)"
+  },
+  "excluded_policy_ids": [],
+  "excluded_section_ids": [],
+  "files": {
+    "data/processed/local_welfare/nationwide/final_v3/policies_all.jsonl": "5fe63aa209268cb84566602bfa609475c9c5340b24360a77f139fc33bf103932",
+    "data/processed/local_welfare/nationwide/final_v3/policies_elderly_candidates.jsonl": "2149faaec22e65559293ccdf58d2035e74e9b05e1e64e7cc00f8ab835058df28",
+    "data/rag/nationwide_v3/policy_metadata_input.jsonl": "d5044948ff63e8a2dc8247a470ead7d9213d6d77333ab90ddb767822b8f60165",
+    "data/rag/nationwide_v3/policy_documents.jsonl": "038563c1be96c5d8337f6a19ca25757d748ef94ed432d8d952ddf917642816d5",
+    "data/rag/nationwide_v3/policy_chunks.jsonl": "3a2ae94978804b5fa14bda4b33aa200c9ebf5b0a7de5c84f4373538144359e2a",
+    "data/rag/nationwide_v3/policy_graph_entities.jsonl": "5b2bb4e831317147cf5596cda47668391c601358900efe02506a9350d36d4fb4",
+    "data/rag/nationwide_v3/guideline_documents.jsonl": "ca74fef97b8c03c9d3fad5f1c057152f76546a188ea9a1accf83e25a563bba5c",
+    "data/rag/nationwide_v3/guideline_chunks.jsonl": "66ede4084c3d4a76a321da7e70d47570de13da3f62310a8158d6ddb54a31bc51",
+    "data/rag/nationwide_v3/metadata_validation_report.json": "d5330b2d24bd0ab12e8d1c57667c315df952605e281550d2dc91b176d30ce145"
+  },
+  "check_report": "metadata_validation_report.json"
+}

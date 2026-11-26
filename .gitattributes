@@ -1,0 +1,5 @@
+# v3 릴리스 파일은 release_manifest.json 의 SHA-256 으로 검증합니다.
+# 줄바꿈이 자동 변환되면 해시가 달라지므로 바이트 그대로 저장·체크아웃합니다.
+data/processed/local_welfare/nationwide/final_v3/** -text
+data/rag/nationwide_v3/** -text
+data/staging/local_welfare/2026-11-26/** -text
