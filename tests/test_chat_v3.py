@@ -20,7 +20,7 @@ def doc(name, group, *, kind="policy", keys=(HS,), score=0.5):
     return {
         "id": f"uuid-{name}", "chunk_id": f"{name}::1", "parent_id": pid, "record_type": kind,
         "policy_id": pid if kind == "policy" else None, "section_id": pid if kind == "guideline" else None,
-        "text": f"{name} 본문", "score": score, "title": f"제목-{name}", "source_url": None,
+        "text": f"{name} 사업 본문 내용입니다", "score": score, "title": f"제목-{name}", "source_url": None,
         "metadata": {"record_type": kind, "applies_to_keys": list(keys),
                      "scope_status": ("candidate" if keys else "unknown") if kind == "policy" else None},
         "evidence_group": group, "region_keys": list(keys),
@@ -56,38 +56,122 @@ class FakeLLM:
 
     def __call__(self, system_text, user_text):
         if "근거 검증기" in system_text:
-            self.evidence_calls.append((system_text, json.loads(user_text)))
+            payload = json.loads(user_text)
+            self.evidence_calls.append((system_text, payload))
             if isinstance(self.judgement, Exception):
                 raise self.judgement
-            return self.judgement if isinstance(self.judgement, str) else json.dumps(self.judgement, ensure_ascii=False)
+            if isinstance(self.judgement, str):
+                return self.judgement
+            judgement = dict(self.judgement)
+            if "relevant" in judgement:   # 줄임 표기 judged(verdict, [번호]) 를 문서별 판단 형식으로 펼친다
+                judgement = expand(judgement, [d["text"] for d in payload["documents"]])
+            return json.dumps(judgement, ensure_ascii=False)
         self.answer_prompts.append(user_text)
         return "안내 드릴게요."
 
 
 def judged(verdict, relevant, reason="확인"):
+    """테스트용 줄임 표기. FakeLLM 이 받은 문서 수에 맞춰 문서별 판단 형식으로 펼친다."""
     return {"verdict": verdict, "reason": reason, "relevant": relevant}
+
+
+def expand(short, texts):
+    """줄임 표기를 실제 형식으로: 관련 문서는 본문 앞부분을 근거 문장으로 인용한다."""
+    rel = set(short["relevant"])
+    return {"verdict": short["verdict"], "reason": short["reason"], "documents": [
+        {"no": i, "relevant": i in rel, "why": "요구에 답함" if i in rel else "", "quote": text if i in rel else ""}
+        for i, text in enumerate(texts, 1)]}
+
+
+TEXTS = ["가나다 식사 배달 사업 본문 내용입니다", "나라마 난임 의료비 본문 내용입니다", "다라바 보청기 지원 본문 내용입니다",
+         "라마바 전국 급식 안내 내용입니다", "마바사 돌봄 안내 내용입니다"]
+
+
+def full(verdict, relevant, **overrides):
+    out = expand(judged(verdict, relevant), TEXTS)
+    out.update(overrides)
+    return out
 
 
 class RelevanceParsingTests(unittest.TestCase):
     def test_accepts_consistent_judgements(self):
-        self.assertEqual(V.parse_relevance(judged("sufficient", [3, 1]), 5), ("sufficient", "확인", [1, 3]))
-        self.assertEqual(V.parse_relevance(judged("insufficient", []), 5)[2], [])
+        verdict, reason, relevant, details = V.parse_relevance(full("sufficient", [3, 1]), TEXTS)
+        self.assertEqual((verdict, reason, relevant), ("sufficient", "확인", [1, 3]))
+        self.assertEqual(details[1]["why"], "요구에 답함")
+        self.assertEqual(V.parse_relevance(full("insufficient", []), TEXTS)[2], [])
 
     def test_rejects_contradictions_and_bad_shapes(self):
-        bad = [
-            judged("sufficient", []), judged("partial", []), judged("uncertain", [1]), judged("insufficient", [2]),
-            judged("sufficient", [0]), judged("sufficient", [6]), judged("sufficient", [1, 1]), judged("sufficient", ["1"]),
-            judged("sufficient", [True]), judged("sufficient", "1"), judged("maybe", [1]), {"verdict": "sufficient", "reason": "x"},
-        ]
-        for parsed in bad:
-            with self.subTest(parsed=parsed), self.assertRaises(ValueError):
-                V.parse_relevance(parsed, 5)
+        missing = full("sufficient", [1]); missing["documents"] = missing["documents"][:4]
+        dup = full("sufficient", [1]); dup["documents"][4]["no"] = 1
+        as_text = full("sufficient", [1]); as_text["documents"][0]["no"] = "1"
+        not_bool = full("sufficient", [1]); not_bool["documents"][0]["relevant"] = "yes"
+        no_quote = full("sufficient", [1]); no_quote["documents"][0]["quote"] = ""
+        bad = {
+            "관련 문서 없이 sufficient": full("sufficient", []), "관련 문서 없이 partial": full("partial", []),
+            "uncertain 인데 관련 문서": full("uncertain", [1]), "insufficient 인데 관련 문서": full("insufficient", [2]),
+            "번호 빠짐": missing, "번호 중복": dup, "번호가 글자": as_text, "relevant 가 글자": not_bool,
+            "모르는 verdict": full("maybe", [1]), "예전 형식(relevant 번호 목록)": judged("sufficient", [1]),
+            "documents 가 목록 아님": full("sufficient", [1], documents="1"),
+            "근거 문장을 하나도 확인 못함": no_quote,
+        }
+        for name, parsed in bad.items():
+            with self.subTest(case=name), self.assertRaises(ValueError):
+                V.parse_relevance(parsed, TEXTS)
+
+    def test_relevant_document_without_its_quote_is_dropped_and_recorded(self):
+        parsed = full("partial", [1, 2])
+        parsed["documents"][1]["quote"] = "식사 배달 사업 본문입니다"   # 2번 문서(난임 의료비)에 없는 문장
+        verdict, _, relevant, details = V.parse_relevance(parsed, TEXTS)
+        self.assertEqual((verdict, relevant), ("partial", [1]))
+        self.assertEqual(details[2]["dropped"], "quote_not_in_document")
+
+    def test_quote_made_of_real_fragments_is_accepted(self):
+        text = "사업 개요: 결식 우려 어르신께 식사를 드립니다\n선정 기준: 저소득\n지원 내용: 주2회 도시락 또는 반찬 배달\n‑ 기타 독거노인 등"
+        # 줄을 건너뛰어 이어 붙이거나 "..." 로 줄인 인용, 목록 기호가 빠진 인용은 받아들인다
+        self.assertTrue(V.quote_in_document("결식 우려 어르신께 식사를 드립니다\n지원 내용: 주2회 도시락 또는 반찬 배달", text))
+        self.assertTrue(V.quote_in_document("사업 개요: 결식 우려 ... 주2회 도시락 또는 반찬 배달", text))
+        self.assertTrue(V.quote_in_document("주2회 도시락 또는 반찬 배달 기타 독거노인 등", text))
+        # 10글자 이상 조각이 문서에 그대로 있으면 일부가 바뀌어도 인정하되 partial 로 구분하고,
+        # 문서에 없는 조각("매일 아침 배달")은 검증된 인용에서 뺀다
+        self.assertEqual(V.quote_check("결식 우려 어르신께 식사를 드립니다\n매일 아침 배달", text), "partial")
+        self.assertEqual(V.quote_parts("결식 우려 어르신께 식사를 드립니다\n매일 아침 배달", text),
+                         (["결식 우려 어르신께 식사를 드립니다"], ["매일 아침 배달"]))
+        self.assertEqual(V.quote_check("결식 우려 어르신께 식사를 드립니다", text), "exact")
+        # 그대로 있는 긴 조각이 하나도 없으면 받아들이지 않는다
+        self.assertEqual(V.quote_check("매일 아침 따뜻한 도시락 배달 서비스", text), "missing")
+        self.assertEqual(V.quote_check("주2회 도시락", text), "missing")   # 10글자가 안 되는 조각만 맞음
+        self.assertFalse(V.quote_in_document("", text))
+        # 원문의 괄호 속 한자·로마 숫자를 빼고 인용해도 같은 문장으로 본다
+        self.assertEqual(V.quote_check("배달하여 안부를 확인하고 동 지역사회보장협의체와 협력", "배달하여 안부를 확인하고 동(洞) 지역사회보장협의체와 협력"), "exact")
+        self.assertEqual(V.quote_check("대상 보건복지부 등록 시각장애인", "Ⅰ 대상 보건복지부 등록 시각장애인"), "exact")
+
+    def test_unverified_part_of_quote_is_kept_apart(self):
+        parsed = full("sufficient", [1])
+        parsed["documents"][0]["quote"] = "가나다 식사 배달 사업 본문\n매일 아침 무료 배달"
+        details = V.parse_relevance(parsed, TEXTS)[3]
+        self.assertEqual(details[1]["quote"], "가나다 식사 배달 사업 본문")
+        self.assertEqual((details[1]["note"], details[1]["quote_unverified"]), ("quote_partly_rephrased", "매일 아침 무료 배달"))
+
+    def test_why_and_quote_must_be_text_and_why_is_required_when_relevant(self):
+        for change in ({"why": ""}, {"why": 3}, {"quote": ["가나다"]}):
+            parsed = full("sufficient", [1])
+            parsed["documents"][0].update(change)
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                V.parse_relevance(parsed, TEXTS)
+
+    def test_quote_check_ignores_spacing_and_quote_marks(self):
+        parsed = full("sufficient", [1])
+        parsed["documents"][0]["quote"] = "“가나다  식사 배달 사업 본문”"
+        self.assertEqual(V.parse_relevance(parsed, TEXTS)[2], [1])
 
     def test_v3_prompt_keeps_legacy_criteria_and_changes_only_the_format(self):
         self.assertIn("문서 제목이 비슷하다는 이유만으로", EVIDENCE_PROMPT_V3)
         self.assertIn('"relevant"', EVIDENCE_PROMPT_V3)
+        self.assertIn('"quote"', EVIDENCE_PROMPT_V3)
         self.assertNotIn('"relevant"', EVIDENCE_PROMPT)
         self.assertIn("신청 자격이 불명확하더라도", EVIDENCE_PROMPT_V3)
+        self.assertIn("무조건 받는 거지?", EVIDENCE_PROMPT_V3)   # 자격 확정 질문에서 관련 정책을 버리지 않게
+        self.assertIn("만 40~64세", EVIDENCE_PROMPT_V3)
 
 
 class RetrievalNodeTests(unittest.TestCase):
@@ -145,8 +229,10 @@ class EvidenceNodeTests(unittest.TestCase):
         self.assertEqual([d["chunk_id"] for d in out["retrieved_docs"]], ["식사배달::1", "sec-급식::1"])
         result = out["retrieval_result"]
         self.assertEqual([d["chunk_id"] for d in result["documents"]], ["식사배달::1", "sec-급식::1"])
-        self.assertEqual(result["relevance"], {"status": "judged", "kept": {"local": 1, "national": 1, "reference": 0}, "local_policy_found": True})
+        self.assertEqual(result["relevance"], {"status": "judged", "kept": {"local": 1, "national": 1, "reference": 0},
+                                               "local_policy_found": True, "quote_mismatch": 0, "quote_partly_rephrased": 0})
         self.assertEqual(sum(c["kept"] for c in result["candidates_before_relevance"]), 2)
+        self.assertEqual(result["candidates_before_relevance"][0]["why"], "요구에 답함")
         sent = llm.evidence_calls[0][1]["documents"]
         self.assertEqual([d["no"] for d in sent], [1, 2, 3, 4, 5])
         self.assertEqual(sent[0]["evidence_group"], "local")
@@ -234,6 +320,7 @@ class GraphTests(unittest.TestCase):
         self.assertEqual([(d["evidence_group"], d["region"], d["region_status"]) for d in data["documents"]],
                          [("local", [HS], "candidate"), ("national", ["national"], None)])
         self.assertIn("담당 기관에서 확인", prompt)
+        self.assertIn("나이·대상 제한이 있으면", prompt)   # 2026-11-27 사용자 결정: 대상 나이를 밝힌다
         self.assertNotIn("난임의료비", prompt)    # 관련 없다고 판정된 정책
         self.assertNotIn("미상자료", prompt)      # 적용 지역 미상 자료
         self.assertEqual([s["chunk_id"] for s in result["sources"]], ["식사배달::1", "sec-급식::1"])

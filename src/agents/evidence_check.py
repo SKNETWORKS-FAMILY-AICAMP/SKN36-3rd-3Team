@@ -78,16 +78,17 @@ def _judge_v3(state: WelfareState, result: dict, docs: list, judge: Callable[[st
         return {"evidence_verdict": "insufficient", "evidence_reason": "사용 가능한 문서 본문이 없습니다."}
     region_name, region_text = v3_region_fields(
         result, selected_region(state.get("region")), region_guidance(state.get("region")))
+    documents = numbered_evidence(context)
     payload = {
         "original_question": state["question"],
         "selected_region": region_name,
         "region_instructions": region_text,
         "search_query": state.get("search_query") or state["question"],
-        "documents": numbered_evidence(context),
+        "documents": documents,
     }
     try:
         raw = judge(EVIDENCE_PROMPT_V3, json.dumps(payload, ensure_ascii=False))
-        verdict, reason, relevant = parse_relevance(_parse_json(raw), len(context))
+        verdict, reason, relevant, details = parse_relevance(_parse_json(raw), [d["text"] for d in documents])
     except Exception:
         return {
             "evidence_verdict": "uncertain",
@@ -97,7 +98,7 @@ def _judge_v3(state: WelfareState, result: dict, docs: list, judge: Callable[[st
     if verdict == "uncertain":
         # 판단하기 어렵다는 답은 '관련 정책 없음'이 아니다. 근거를 건드리지 않고 그대로 남긴다.
         return {"evidence_verdict": verdict, "evidence_reason": reason, "retrieval_result": relevance_uncertain(result)}
-    kept, updated = apply_relevance(result, context, relevant)
+    kept, updated = apply_relevance(result, context, relevant, details)
     return {
         "evidence_verdict": verdict,
         "evidence_reason": reason,

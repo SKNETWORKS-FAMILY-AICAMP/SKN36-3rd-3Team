@@ -11,6 +11,7 @@ RAG_RETRIEVAL_MODE=v3 일 때만 그래프에 들어간다. 3차(legacy_v1)·moc
 """
 from __future__ import annotations
 
+import re
 from typing import Any, Callable
 
 from .state import WelfareState
@@ -135,22 +136,35 @@ RELEVANCE_RULES = """
 [추가 규칙: 문서별 관련성]
 - documents 의 각 문서에는 번호(no)와 묶음(evidence_group)이 있습니다.
   local 은 사용자가 고른 지역의 정책, national 은 전국 공통 자료, reference 는 다른 지역일 수 있는 지역 정책입니다.
-- 질문에 답하는 데 실제로 쓸 수 있는 문서의 번호만 relevant 에 넣으세요. 주제가 다른 문서는 넣지 마세요.
-- 같은 지역의 정책이라는 이유만으로 관련 있다고 보지 마세요 (예: 식사 지원 질문에 난임 의료비 정책은 관련 없음).
-- 주제가 맞는 정책은 사용자의 신청 자격이 불명확하더라도 relevant 에 넣으세요. 자격 확정과 관련성은 다릅니다.
-- region_status 가 candidate 인 지역 정책은 적용 지역이 후보로 분류된 자료입니다. relevant 에 넣는 것은 주제가 맞다는 뜻일 뿐,
+- 모든 문서에 대해 하나씩 판단해 documents 목록에 적으세요. 번호(no)마다 정확히 한 번씩, 빠짐없이 적습니다.
+- relevant 는 그 문서가 사용자의 요구(예: 식사, 보일러 수리, 안부 확인)에 직접 답하는 내용을 담고 있을 때만 true 입니다.
+  같은 지역의 정책이라는 이유만으로 true 로 하지 마세요 (예: 식사 지원 질문에 아이돌봄·난임 의료비 정책은 false).
+- relevant 가 true 이면 why 에 그 문서가 질문의 어떤 요구에 답하는지 적고, quote 에 그 근거가 되는 문장을 문서 text 에서
+  글자 그대로 복사해 넣으세요 (10~60자). 문서에 그런 문장이 없으면 relevant 는 false 입니다.
+- 주제가 맞는 정책은 사용자의 신청 자격이 불명확하더라도 relevant 를 true 로 두세요. 자격 확정과 관련성은 다릅니다.
+  지원 대상에 나이·대상 제한이 있으면(예: 만 40~64세) why 에 그 제한을 함께 적으세요.
+- national 문서가 사용자의 요구에 해당하는 전국 제도(예: 식사 질문에 결식 우려 노인 무료급식, 안부 질문에 독거노인 돌봄)를
+  설명하면 relevant 를 true 로 두세요. 고른 지역에 관련 정책이 없을 때 이런 전국 자료가 안내의 근거가 됩니다.
+- 사용자가 "나도 받을 수 있지?", "무조건 받는 거지?"처럼 자격을 확정해 달라고 해도, 질문이 가리키는 정책이 문서에 있고
+  대상·조건이 적혀 있으면 그 문서는 relevant 를 true 로 두고 verdict 는 partial 로 하세요.
+  자격을 확정할 수 없다는 점은 답변 단계에서 안내합니다. 질문이 가리키는 정책이 문서에 아예 없을 때만 insufficient 입니다.
+- region_status 가 candidate 인 지역 정책은 적용 지역이 후보로 분류된 자료입니다. relevant 를 true 로 두는 것은 주제가 맞다는 뜻일 뿐,
   그 지역에 적용된다고 확정하거나 사용자가 받을 수 있다고 판단한 것이 아닙니다.
-- verdict 가 sufficient 또는 partial 이면 relevant 는 비어 있으면 안 됩니다.
-  verdict 가 insufficient 또는 uncertain 이면 relevant 는 빈 목록이어야 합니다.
+- verdict 가 sufficient 또는 partial 이면 relevant 가 true 인 문서가 하나 이상 있어야 합니다.
+  verdict 가 insufficient 또는 uncertain 이면 모든 문서의 relevant 가 false 여야 합니다.
+- reason 에 쓴 판단과 각 문서의 relevant 가 서로 어긋나지 않게 하세요.
 
 반드시 아래 JSON 객체만 반환하세요.
 
 {
   "verdict": "sufficient 또는 partial 또는 insufficient 또는 uncertain",
   "reason": "판단 이유를 짧게",
-  "relevant": [관련 있는 문서의 no 를 정수로]
+  "documents": [
+    {"no": 1, "relevant": true 또는 false, "why": "관련 있으면 질문의 어떤 요구에 답하는지, 없으면 빈 문자열", "quote": "관련 있으면 문서 text 의 근거 문장, 없으면 빈 문자열"}
+  ]
 }
 """
+MIN_QUOTE = 4
 
 
 def numbered_evidence(docs: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -170,19 +184,91 @@ def numbered_evidence(docs: list[dict[str, Any]]) -> list[dict[str, Any]]:
     ]
 
 
-def parse_relevance(parsed: dict[str, Any], count: int) -> tuple[str, str, list[int]]:
-    """LLM 판정을 검사한다. 모순이 있으면 ValueError (판정 실패로 처리된다)."""
+_QUOTE_BREAK = re.compile(r"\n|\.\.\.|…|⋯")
+
+
+def _letters(text: str) -> str:
+    """한글·영문·숫자만 남긴다. 띄어쓰기·줄바꿈·따옴표·목록 기호(‑, ･, |), 괄호 속 한자(洞), 로마 숫자(Ⅰ)처럼
+    인용할 때 흔히 빠지거나 달라지는 부분을 무시한다."""
+    return "".join(ch for ch in str(text) if "가" <= ch <= "힣" or (ch.isascii() and ch.isalnum()))
+
+
+QUOTE_ANCHOR = 10   # 문서에서 그대로 찾아야 하는 조각의 최소 글자 수
+
+
+def quote_parts(quote: str, text: str) -> tuple[list[str], list[str]]:
+    """인용을 줄·말줄임표로 나눠, 문서에 그대로 있는 조각과 없는 조각으로 가른다 (짧은 조각은 뺀다)."""
+    body = _letters(text)
+    verified, unverified = [], []
+    for raw in _QUOTE_BREAK.split(str(quote)):
+        piece = raw.strip()
+        if len(_letters(piece)) < MIN_QUOTE:
+            continue
+        (verified if _letters(piece) in body else unverified).append(piece)
+    return verified, unverified
+
+
+def quote_check(quote: str, text: str) -> str:
+    """근거 문장이 문서에 있는가: "exact"(모든 조각이 문서에 있음) / "partial"(일부 조각만) / "missing".
+
+    LLM 은 여러 줄을 이어 붙이거나 "..." 로 줄이고, 가끔 몇 글자를 바꿔 인용한다. 그래서 줄·말줄임표로 나눈 조각마다 본다.
+    10글자 이상인 조각 하나가 문서에 그대로 있으면 그 문서를 보고 판단한 것으로 인정한다. 이때 문서에 없는 조각은
+    검증된 인용으로 남기지 않는다(parse_relevance 가 따로 떼어 기록한다). 그런 조각이 하나도 없으면 missing.
+    인용이 있다는 것이 관련성을 보장하지는 않는다. 근거 없는 판단을 걸러 내는 최소한의 확인이다.
+    """
+    verified, unverified = quote_parts(quote, text)
+    if not any(len(_letters(p)) >= QUOTE_ANCHOR for p in verified):
+        return "missing"
+    return "partial" if unverified else "exact"
+
+
+def quote_in_document(quote: str, text: str) -> bool:
+    return quote_check(quote, text) != "missing"
+
+
+def parse_relevance(parsed: dict[str, Any], texts: list[str]) -> tuple[str, str, list[int], dict[int, dict]]:
+    """LLM 판정을 검사한다. 형식이 틀리거나 서로 모순되면 ValueError (판정 실패로 처리된다).
+
+    texts 는 판정에 보낸 문서 본문(번호 순서). 돌려주는 값: verdict, reason, 관련 문서 번호, 문서별 판단(why·quote·버린 까닭).
+    관련 있다고 했지만 근거 문장이 그 문서에 없으면 그 문서는 관련 없음으로 바꾸고 기록한다(근거 없는 판단을 믿지 않는다).
+    """
     verdict = parsed.get("verdict")
     if verdict not in ("sufficient", "partial", "insufficient", "uncertain"):
         raise ValueError("잘못된 검증 결과")
-    relevant = parsed.get("relevant")
-    if not isinstance(relevant, list) or any(isinstance(n, bool) or not isinstance(n, int) for n in relevant):
-        raise ValueError("relevant 는 정수 목록이어야 함")
-    if len(set(relevant)) != len(relevant) or any(not 1 <= n <= count for n in relevant):
-        raise ValueError("relevant 에 중복이나 범위를 벗어난 번호가 있음")
-    if (verdict in ("sufficient", "partial")) != bool(relevant):
-        raise ValueError("verdict 와 relevant 가 서로 맞지 않음")
-    return verdict, str(parsed.get("reason") or "")[:300], sorted(relevant)
+    docs = parsed.get("documents")
+    if not isinstance(docs, list) or not all(isinstance(d, dict) for d in docs):
+        raise ValueError("documents 는 문서별 판단의 목록이어야 함")
+    numbers = [d.get("no") for d in docs]
+    if any(isinstance(n, bool) or not isinstance(n, int) for n in numbers) or sorted(numbers) != list(range(1, len(texts) + 1)):
+        raise ValueError("documents 에 모든 문서 번호가 정확히 한 번씩 있어야 함")
+    details: dict[int, dict] = {}
+    for d in docs:
+        if not isinstance(d.get("relevant"), bool):
+            raise ValueError("relevant 는 true 또는 false 여야 함")
+        why, quote = d.get("why", ""), d.get("quote", "")
+        if not isinstance(why, str) or not isinstance(quote, str):
+            raise ValueError("why 와 quote 는 글자여야 함")
+        if d["relevant"] and not why.strip():
+            raise ValueError("관련 있다고 한 문서에 이유(why)가 없음")
+        item = {"relevant": d["relevant"], "why": why.strip()[:200], "quote": ""}
+        if item["relevant"]:
+            text = texts[d["no"] - 1]
+            if quote_check(quote, text) == "missing":
+                item.update(relevant=False, dropped="quote_not_in_document", quote_unverified=quote[:200])
+            else:
+                verified, unverified = quote_parts(quote, text)
+                item["quote"] = " … ".join(verified)[:300]   # 문서에서 확인된 조각만 인용으로 남긴다
+                if unverified:
+                    item.update(note="quote_partly_rephrased", quote_unverified=" … ".join(unverified)[:200])
+        details[d["no"]] = item
+    claimed = [n for n, d in details.items() if d["relevant"] or d.get("dropped")]
+    if (verdict in ("sufficient", "partial")) != bool(claimed):
+        raise ValueError("verdict 와 문서별 판단이 서로 맞지 않음")
+    relevant = sorted(n for n, d in details.items() if d["relevant"])
+    if verdict in ("sufficient", "partial") and not relevant:
+        # 관련 있다고 한 문서가 모두 근거 문장 확인에서 떨어졌다. 판정을 믿을 수 없으므로 실패로 본다.
+        raise ValueError("관련 있다고 한 문서의 근거 문장을 하나도 확인하지 못함")
+    return verdict, str(parsed.get("reason") or "")[:300], relevant, details
 
 
 def relevance_uncertain(result: dict[str, Any]) -> dict[str, Any]:
@@ -209,14 +295,17 @@ def v3_region_fields(result: dict[str, Any], selected: str | None, instructions:
     )
 
 
-def apply_relevance(result: dict[str, Any], docs: list[dict[str, Any]], relevant: list[int]) -> tuple[list[dict], dict]:
-    """관련 없다고 판정된 문서를 근거에서 완전히 뺀다. 원래 후보는 진단용으로 남긴다."""
+def apply_relevance(result: dict[str, Any], docs: list[dict[str, Any]], relevant: list[int],
+                    details: dict[int, dict] | None = None) -> tuple[list[dict], dict]:
+    """관련 없다고 판정된 문서를 근거에서 완전히 뺀다. 원래 후보와 문서별 판단은 진단용으로 남긴다."""
+    details = details or {}
     kept = [docs[n - 1] for n in relevant]
     updated = dict(result)
     updated["documents"] = kept
     updated["has_evidence"] = bool(kept)
     updated["candidates_before_relevance"] = [
-        {"chunk_id": d.get("chunk_id"), "evidence_group": d.get("evidence_group"), "kept": (i in relevant)}
+        {"chunk_id": d.get("chunk_id"), "evidence_group": d.get("evidence_group"), "kept": (i in relevant),
+         **{k: v for k, v in (details.get(i) or {}).items() if k in ("why", "quote", "quote_unverified", "dropped", "note")}}
         for i, d in enumerate(docs, 1)
     ]
     groups = [d.get("evidence_group") for d in kept]
@@ -225,6 +314,9 @@ def apply_relevance(result: dict[str, Any], docs: list[dict[str, Any]], relevant
         "kept": {g: groups.count(g) for g in ("local", "national", "reference")},
         # 정상 판정에서 고른 지역의 관련 정책이 하나도 남지 않았는가 (판정 실패와 구분한다)
         "local_policy_found": "local" in groups,
+        # 관련 있다고 했지만 근거 문장이 문서에 없어 뺀 문서 수 (0 이어야 정상)
+        "quote_mismatch": sum(1 for d in details.values() if d.get("dropped")),
+        "quote_partly_rephrased": sum(1 for d in details.values() if d.get("note")),
     }
     return kept, updated
 
@@ -238,6 +330,8 @@ def v3_answer_guidance(result: dict[str, Any]) -> str:
         "reference 는 특정 지역의 정책입니다. 지역 정책과 전국 공통 자료를 구분해서 설명하세요.",
         "region_status 가 candidate 인 지역 정책은 적용 지역이 후보로 분류된 자료입니다. 그 지역에 살면 받을 수 있다고 확정하지 말고, "
         "적용 지역과 자격은 담당 기관에서 확인하도록 안내하세요.",
+        "문서의 지원 대상에 나이·대상 제한이 있으면(예: 만 40~64세 중장년) 그 제한을 반드시 함께 말하고, "
+        "사용자가 해당하지 않을 수 있다고 안내하세요. 해당한다고 단정하거나 신청을 권하지 마세요.",
     ]
     if selection.get("kind") == "sido_only":
         lines.append(
