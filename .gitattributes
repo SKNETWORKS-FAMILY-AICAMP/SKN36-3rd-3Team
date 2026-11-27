@@ -11,3 +11,7 @@ scripts/embed_v3_chunks.py -text
 scripts/eval_v4_retrieval.py -text
 scripts/load_v3_qdrant.py -text
 scripts/verify_v3_vectors.py -text
+
+# Preserve relevance and chat evaluation script hashes.
+scripts/eval_v4_relevance.py -text
+scripts/eval_v4_chat.py -text
