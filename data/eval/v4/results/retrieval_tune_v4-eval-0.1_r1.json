@@ -1,0 +1,2148 @@
+{
+ "what": "검색 방식 비교 (방식 모의. 공식 성능 아님)",
+ "split": "tune",
+ "manifest": {
+  "name": "v4-eval-0.1",
+  "revision": 1
+ },
+ "data_version": "nationwide_2026_11_26_6efc3b7671b3",
+ "script_sha256": "4b7356e557698d490c4ca006afcf2241e9f9720e109c4c508b9000ed3a73ec39",
+ "inputs_sha256": {
+  "policy_chunks.jsonl": "3a2ae94978804b5fa14bda4b33aa200c9ebf5b0a7de5c84f4373538144359e2a",
+  "guideline_chunks.jsonl": "66ede4084c3d4a76a321da7e70d47570de13da3f62310a8158d6ddb54a31bc51",
+  "vectors.npy": "51aa313547766f74e6accc5f03a0b0df10e806287f9a57d710a35ae6d257da4b",
+  "chunk_map.csv": "adafdf9f434009a1597e487132d7a71f34d254ea35268f5a4cb185966d2737cd"
+ },
+ "caution": "legacy 는 청크 단위, split 은 지역 정책을 정책 단위로 중복 제거한다. 분리 검색만의 효과로 단정하지 않는다. local_hit@k 는 전국 PDF를 뺀 지역 정책 목록 기준. national_hit 는 문항당 등록한 기준 절 기준의 참고 지표.",
+ "embedding": {
+  "model": "nlpai-lab/KURE-v1",
+  "revision": "8b418a58414668e75532ed045c22d9ca018ae2b2"
+ },
+ "params": {
+  "legacy": {
+   "top_k": 12,
+   "limit": 8,
+   "max_per_section": 2
+  },
+  "split": {
+   "local_k": 5,
+   "national_k": 3,
+   "unverified_k": 3
+  }
+ },
+ "user_checked": {
+  "legacy": {
+   "questions": 22,
+   "local_hit@1": {
+    "n": 17,
+    "rate": 0.118
+   },
+   "local_hit@3": {
+    "n": 17,
+    "rate": 0.176
+   },
+   "local_hit@5": {
+    "n": 17,
+    "rate": 0.176
+   },
+   "national_hit": {
+    "n": 16,
+    "rate": 0.0
+   },
+   "local_returned_when_none": {
+    "n": 5,
+    "rate": 0.2
+   },
+   "wrong_region": {
+    "n": 22,
+    "rate": 0.0
+   },
+   "unverified_in_evidence": {
+    "n": 22,
+    "rate": 0.0
+   },
+   "must_not_hit": {
+    "n": 22,
+    "rate": 0.0
+   },
+   "avg_returned_local": 0.36
+  },
+  "split": {
+   "questions": 22,
+   "local_hit@1": {
+    "n": 17,
+    "rate": 0.529
+   },
+   "local_hit@3": {
+    "n": 17,
+    "rate": 0.882
+   },
+   "local_hit@5": {
+    "n": 17,
+    "rate": 0.882
+   },
+   "national_hit": {
+    "n": 16,
+    "rate": 0.125
+   },
+   "local_returned_when_none": {
+    "n": 5,
+    "rate": 1.0
+   },
+   "wrong_region": {
+    "n": 22,
+    "rate": 0.0
+   },
+   "unverified_in_evidence": {
+    "n": 22,
+    "rate": 0.0
+   },
+   "must_not_hit": {
+    "n": 22,
+    "rate": 0.0
+   },
+   "avg_returned_local": 5.0
+  }
+ },
+ "all_including_draft": {
+  "legacy": {
+   "questions": 43,
+   "local_hit@1": {
+    "n": 30,
+    "rate": 0.333
+   },
+   "local_hit@3": {
+    "n": 30,
+    "rate": 0.367
+   },
+   "local_hit@5": {
+    "n": 30,
+    "rate": 0.367
+   },
+   "national_hit": {
+    "n": 23,
+    "rate": 0.0
+   },
+   "unverified_list_hit": {
+    "n": 2,
+    "rate": 0.0
+   },
+   "local_returned_when_none": {
+    "n": 13,
+    "rate": 0.077
+   },
+   "wrong_region": {
+    "n": 43,
+    "rate": 0.0
+   },
+   "unverified_in_evidence": {
+    "n": 43,
+    "rate": 0.0
+   },
+   "must_not_hit": {
+    "n": 43,
+    "rate": 0.0
+   },
+   "avg_returned_local": 0.49
+  },
+  "split": {
+   "questions": 43,
+   "local_hit@1": {
+    "n": 30,
+    "rate": 0.733
+   },
+   "local_hit@3": {
+    "n": 30,
+    "rate": 0.933
+   },
+   "local_hit@5": {
+    "n": 30,
+    "rate": 0.933
+   },
+   "national_hit": {
+    "n": 23,
+    "rate": 0.174
+   },
+   "unverified_list_hit": {
+    "n": 2,
+    "rate": 1.0
+   },
+   "local_returned_when_none": {
+    "n": 13,
+    "rate": 1.0
+   },
+   "wrong_region": {
+    "n": 43,
+    "rate": 0.0
+   },
+   "unverified_in_evidence": {
+    "n": 43,
+    "rate": 0.0
+   },
+   "must_not_hit": {
+    "n": 43,
+    "rate": 0.0
+   },
+   "avg_returned_local": 5.0
+  }
+ },
+ "user_checked_by_kind": {
+  "base": {
+   "legacy": {
+    "questions": 4,
+    "local_hit@1": {
+     "n": 3,
+     "rate": 0.0
+    },
+    "local_hit@3": {
+     "n": 3,
+     "rate": 0.0
+    },
+    "local_hit@5": {
+     "n": 3,
+     "rate": 0.0
+    },
+    "national_hit": {
+     "n": 3,
+     "rate": 0.0
+    },
+    "local_returned_when_none": {
+     "n": 1,
+     "rate": 0.0
+    },
+    "wrong_region": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "avg_returned_local": 0.0
+   },
+   "split": {
+    "questions": 4,
+    "local_hit@1": {
+     "n": 3,
+     "rate": 0.667
+    },
+    "local_hit@3": {
+     "n": 3,
+     "rate": 1.0
+    },
+    "local_hit@5": {
+     "n": 3,
+     "rate": 1.0
+    },
+    "national_hit": {
+     "n": 3,
+     "rate": 0.0
+    },
+    "local_returned_when_none": {
+     "n": 1,
+     "rate": 1.0
+    },
+    "wrong_region": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "avg_returned_local": 5.0
+   }
+  },
+  "caregiver": {
+   "legacy": {
+    "questions": 4,
+    "local_hit@1": {
+     "n": 3,
+     "rate": 0.667
+    },
+    "local_hit@3": {
+     "n": 3,
+     "rate": 1.0
+    },
+    "local_hit@5": {
+     "n": 3,
+     "rate": 1.0
+    },
+    "national_hit": {
+     "n": 3,
+     "rate": 0.0
+    },
+    "local_returned_when_none": {
+     "n": 1,
+     "rate": 1.0
+    },
+    "wrong_region": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "avg_returned_local": 2.0
+   },
+   "split": {
+    "questions": 4,
+    "local_hit@1": {
+     "n": 3,
+     "rate": 0.667
+    },
+    "local_hit@3": {
+     "n": 3,
+     "rate": 1.0
+    },
+    "local_hit@5": {
+     "n": 3,
+     "rate": 1.0
+    },
+    "national_hit": {
+     "n": 3,
+     "rate": 0.0
+    },
+    "local_returned_when_none": {
+     "n": 1,
+     "rate": 1.0
+    },
+    "wrong_region": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "avg_returned_local": 5.0
+   }
+  },
+  "limit": {
+   "legacy": {
+    "questions": 6,
+    "local_hit@1": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "local_hit@3": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "local_hit@5": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "national_hit": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "local_returned_when_none": {
+     "n": 1,
+     "rate": 0.0
+    },
+    "wrong_region": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "avg_returned_local": 0.0
+   },
+   "split": {
+    "questions": 6,
+    "local_hit@1": {
+     "n": 5,
+     "rate": 0.6
+    },
+    "local_hit@3": {
+     "n": 5,
+     "rate": 0.8
+    },
+    "local_hit@5": {
+     "n": 5,
+     "rate": 0.8
+    },
+    "national_hit": {
+     "n": 4,
+     "rate": 0.0
+    },
+    "local_returned_when_none": {
+     "n": 1,
+     "rate": 1.0
+    },
+    "wrong_region": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "avg_returned_local": 5.0
+   }
+  },
+  "paraphrase": {
+   "legacy": {
+    "questions": 8,
+    "local_hit@1": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "local_hit@3": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "local_hit@5": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "national_hit": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "local_returned_when_none": {
+     "n": 2,
+     "rate": 0.0
+    },
+    "wrong_region": {
+     "n": 8,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 8,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 8,
+     "rate": 0.0
+    },
+    "avg_returned_local": 0.0
+   },
+   "split": {
+    "questions": 8,
+    "local_hit@1": {
+     "n": 6,
+     "rate": 0.333
+    },
+    "local_hit@3": {
+     "n": 6,
+     "rate": 0.833
+    },
+    "local_hit@5": {
+     "n": 6,
+     "rate": 0.833
+    },
+    "national_hit": {
+     "n": 6,
+     "rate": 0.333
+    },
+    "local_returned_when_none": {
+     "n": 2,
+     "rate": 1.0
+    },
+    "wrong_region": {
+     "n": 8,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 8,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 8,
+     "rate": 0.0
+    },
+    "avg_returned_local": 5.0
+   }
+  }
+ },
+ "user_checked_by_base": {
+  "L003": {
+   "legacy": {
+    "questions": 6,
+    "local_hit@1": {
+     "n": 6,
+     "rate": 0.167
+    },
+    "local_hit@3": {
+     "n": 6,
+     "rate": 0.167
+    },
+    "local_hit@5": {
+     "n": 6,
+     "rate": 0.167
+    },
+    "national_hit": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "wrong_region": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "avg_returned_local": 0.17
+   },
+   "split": {
+    "questions": 6,
+    "local_hit@1": {
+     "n": 6,
+     "rate": 1.0
+    },
+    "local_hit@3": {
+     "n": 6,
+     "rate": 1.0
+    },
+    "local_hit@5": {
+     "n": 6,
+     "rate": 1.0
+    },
+    "national_hit": {
+     "n": 6,
+     "rate": 0.167
+    },
+    "wrong_region": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "avg_returned_local": 5.0
+   }
+  },
+  "L006": {
+   "legacy": {
+    "questions": 5,
+    "national_hit": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "local_returned_when_none": {
+     "n": 5,
+     "rate": 0.2
+    },
+    "wrong_region": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "avg_returned_local": 0.2
+   },
+   "split": {
+    "questions": 5,
+    "national_hit": {
+     "n": 5,
+     "rate": 0.2
+    },
+    "local_returned_when_none": {
+     "n": 5,
+     "rate": 1.0
+    },
+    "wrong_region": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "avg_returned_local": 5.0
+   }
+  },
+  "L010": {
+   "legacy": {
+    "questions": 6,
+    "local_hit@1": {
+     "n": 6,
+     "rate": 0.167
+    },
+    "local_hit@3": {
+     "n": 6,
+     "rate": 0.167
+    },
+    "local_hit@5": {
+     "n": 6,
+     "rate": 0.167
+    },
+    "wrong_region": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "avg_returned_local": 0.33
+   },
+   "split": {
+    "questions": 6,
+    "local_hit@1": {
+     "n": 6,
+     "rate": 0.5
+    },
+    "local_hit@3": {
+     "n": 6,
+     "rate": 0.833
+    },
+    "local_hit@5": {
+     "n": 6,
+     "rate": 0.833
+    },
+    "wrong_region": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 6,
+     "rate": 0.0
+    },
+    "avg_returned_local": 5.0
+   }
+  },
+  "L030": {
+   "legacy": {
+    "questions": 5,
+    "local_hit@1": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "local_hit@3": {
+     "n": 5,
+     "rate": 0.2
+    },
+    "local_hit@5": {
+     "n": 5,
+     "rate": 0.2
+    },
+    "national_hit": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "wrong_region": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "avg_returned_local": 0.8
+   },
+   "split": {
+    "questions": 5,
+    "local_hit@1": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "local_hit@3": {
+     "n": 5,
+     "rate": 0.8
+    },
+    "local_hit@5": {
+     "n": 5,
+     "rate": 0.8
+    },
+    "national_hit": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "wrong_region": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "unverified_in_evidence": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "must_not_hit": {
+     "n": 5,
+     "rate": 0.0
+    },
+    "avg_returned_local": 5.0
+   }
+  }
+ },
+ "per_question": [
+  {
+   "qid": "L003",
+   "base": "L003",
+   "kind": "base",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "혼자 사는데 밥 챙겨 먹기가 힘들어. 밥 갖다주는 데 없나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.501,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "L004",
+   "base": "L004",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "다리가 아파서 밥을 못 해 먹어. 도시락 같은 거 갖다주는 데 있어?",
+   "legacy": {
+    "returned_local": 1,
+    "returned_total": 2,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5425,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 11,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5425,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": true
+   }
+  },
+  {
+   "qid": "L005",
+   "base": "L005",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "태백에 혼자 계신 엄마가 끼니를 자주 거르세요. 식사 챙겨 주는 서비스가 있을까요?",
+   "legacy": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.604,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 14,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.604,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "L006",
+   "base": "L006",
+   "kind": "base",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "no_policy",
+   "search_text": "혼자 사는데 밥 챙겨 먹기가 힘들어. 밥 갖다주는 데 없나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 7,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4401,
+    "local_returned_when_none": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "L007",
+   "base": "L007",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "no_policy",
+   "search_text": "밥 해 먹기가 힘든데 반찬이라도 갖다주는 데 있나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 10,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.442,
+    "local_returned_when_none": true,
+    "national_hit": true
+   }
+  },
+  {
+   "qid": "L009",
+   "base": "L009",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "보일러가 고장 나서 따뜻한 물이 안 나와. 고칠 돈이 없는데 도와주는 데 있나?",
+   "legacy": {
+    "returned_local": 1,
+    "returned_total": 6,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5015,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5015,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L010",
+   "base": "L010",
+   "kind": "base",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "보일러가 오래돼서 온수가 안 나와요. 수리비 지원받을 수 있어요?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 14,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.505,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L011",
+   "base": "L011",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "no_policy",
+   "search_text": "보일러가 고장 나서 따뜻한 물이 안 나와. 고칠 돈이 없는데 도와주는 데 있나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 5,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false,
+    "unverified_list_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 7,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4031,
+    "local_returned_when_none": true,
+    "unverified_list_hit": true
+   }
+  },
+  {
+   "qid": "L013",
+   "base": "L013",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "기름값이 비싸서 겨울에 보일러를 못 틀어. 난방비 보태주는 거 있나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 4,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 10,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4873,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "L014",
+   "base": "L014",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "겨울에 난방비가 너무 많이 나와서 걱정이야. 지원받을 수 있는 게 있어?",
+   "legacy": {
+    "returned_local": 1,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.6225,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 16,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.6225,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "L015",
+   "base": "L015",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "no_policy",
+   "search_text": "기름값이 비싸서 겨울에 보일러를 못 틀어. 난방비 보태주는 거 있나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 4,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 11,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.3902,
+    "local_returned_when_none": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "L017",
+   "base": "L017",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "영감이 귀가 어두워서 보청기를 해야 하는데 너무 비싸. 보태주는 거 있어?",
+   "legacy": {
+    "returned_local": 1,
+    "returned_total": 2,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4815,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4815,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L018",
+   "base": "L018",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "귀가 안 들려서 보청기 맞추고 싶은데 지원 있나?",
+   "legacy": {
+    "returned_local": 1,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5936,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 6,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5936,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L019",
+   "base": "L019",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "no_policy",
+   "search_text": "귀가 안 들려서 보청기 맞추고 싶은데 지원 있나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 2,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 7,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4339,
+    "local_returned_when_none": true
+   }
+  },
+  {
+   "qid": "L021",
+   "base": "L021",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "목욕탕 한번 가고 싶은데 돈이 아까워. 목욕비 주는 거 있다던데?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5248,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L022",
+   "base": "L022",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "머리도 깎고 목욕도 하고 싶은데 지원해 주는 거 있나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 5,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 10,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5523,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L023",
+   "base": "L023",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "머리 깎을 돈이 없어. 이발비 도와주는 거 있어?",
+   "legacy": {
+    "returned_local": 2,
+    "returned_total": 8,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5264,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 7,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5264,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L024",
+   "base": "L024",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "no_policy",
+   "search_text": "목욕탕 한번 가고 싶은데 돈이 아까워. 목욕비 주는 거 있다던데?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 14,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4103,
+    "local_returned_when_none": true
+   }
+  },
+  {
+   "qid": "L026",
+   "base": "L026",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "기초수급자인데 수도요금 깎아주는 거 있어?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 11,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5881,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L027",
+   "base": "L027",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "수급자는 수도세 감면된다던데 맞아?",
+   "legacy": {
+    "returned_local": 1,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5897,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 16,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5897,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L028",
+   "base": "L028",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "no_policy",
+   "search_text": "기초수급자인데 수도요금 깎아주는 거 있어?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 6,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4376,
+    "local_returned_when_none": true
+   }
+  },
+  {
+   "qid": "L030",
+   "base": "L030",
+   "kind": "base",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "혼자 살아서 며칠씩 말 한마디 못 해. 안부라도 물어봐 주는 데 있나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 5,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 13,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4379,
+    "local_hit@1": false,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "L031",
+   "base": "L031",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "no_policy",
+   "search_text": "혼자 살아서 며칠씩 말 한마디 못 해. 안부라도 물어봐 주는 데 있나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 5,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.49,
+    "local_returned_when_none": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "L044",
+   "base": "L044",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "has_policy",
+   "search_text": "지붕이 새서 비 오면 물이 떨어져. 고쳐주는 데 있어?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 7,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4245,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "L045",
+   "base": "L045",
+   "kind": "base",
+   "limit_type": null,
+   "status": "draft",
+   "local_case": "no_policy",
+   "search_text": "지붕이 새서 비 오면 물이 떨어져. 고쳐주는 데 있어?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 7,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false,
+    "unverified_list_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 7,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.3454,
+    "local_returned_when_none": true,
+    "unverified_list_hit": true
+   }
+  },
+  {
+   "qid": "V001",
+   "base": "L003",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "혼자 사는데 밥 갖다주는 데 없나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4675,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V002",
+   "base": "L003",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "혼자 사는 노인인데 식사 배달 지원 있나요?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.6606,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": true
+   }
+  },
+  {
+   "qid": "V003",
+   "base": "L003",
+   "kind": "caregiver",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "횡성에 혼자 계신 아버지, 도시락 배달 되나요?",
+   "legacy": {
+    "returned_local": 1,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.6265,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.6265,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V004",
+   "base": "L003",
+   "kind": "limit",
+   "limit_type": "eligibility_certainty",
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "이전 질문: 혼자 사는데 밥 갖다주는 데 없나?\n현재 질문: 그럼 나는 무조건 받는 거지?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 8,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4495,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V005",
+   "base": "L003",
+   "kind": "limit",
+   "limit_type": "unsupported_detail",
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "도시락 매일 와?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 17,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4344,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V006",
+   "base": "L006",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "no_policy",
+   "search_text": "혼자 사는데 밥 갖다주는 데 없나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 7,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4217,
+    "local_returned_when_none": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V007",
+   "base": "L006",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "no_policy",
+   "search_text": "혼자 사는 노인인데 식사 배달 지원 있나요?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 7,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5064,
+    "local_returned_when_none": true,
+    "national_hit": true
+   }
+  },
+  {
+   "qid": "V008",
+   "base": "L006",
+   "kind": "caregiver",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "no_policy",
+   "search_text": "강릉에 혼자 계신 어머니, 식사 챙겨 주는 데 있나요?",
+   "legacy": {
+    "returned_local": 1,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5539,
+    "local_returned_when_none": true,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 7,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5539,
+    "local_returned_when_none": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V009",
+   "base": "L006",
+   "kind": "limit",
+   "limit_type": "cross_region_premise",
+   "status": "user_checked",
+   "local_case": "no_policy",
+   "search_text": "횡성은 밥 갖다준다던데 여긴 왜 없어?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_returned_when_none": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 7,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.3718,
+    "local_returned_when_none": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V011",
+   "base": "L010",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "보일러가 낡아서 더운물이 안 나와. 고쳐 주는 데 있나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 8,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 14,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.413,
+    "local_hit@1": false,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "V012",
+   "base": "L010",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "보일러가 낡아 온수가 안 나와요. 수리 지원 있나요?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 3,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 14,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4912,
+    "local_hit@1": false,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "V013",
+   "base": "L010",
+   "kind": "caregiver",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "태백 아버지 댁 보일러가 낡아 온수가 안 나와요. 수리 지원 되나요?",
+   "legacy": {
+    "returned_local": 2,
+    "returned_total": 4,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5916,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 14,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5916,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "V014",
+   "base": "L010",
+   "kind": "limit",
+   "limit_type": "known_info",
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "보일러가 낡아 온수가 안 나와요. 내 집이고 기초연금만 받아요. 수리 지원 돼요?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 1,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 14,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5301,
+    "local_hit@1": true,
+    "local_hit@3": true,
+    "local_hit@5": true
+   }
+  },
+  {
+   "qid": "V015",
+   "base": "L010",
+   "kind": "limit",
+   "limit_type": "unsupported_scope",
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "새 걸로 다 바꿔줘?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 8,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 14,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.3238,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false
+   }
+  },
+  {
+   "qid": "V021",
+   "base": "L030",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "혼자 살아. 가끔 들여다봐 주는 데 없나?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 7,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 13,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4424,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V022",
+   "base": "L030",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "혼자 사는데 안부 확인해 주는 데 있나요?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 5,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 13,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5118,
+    "local_hit@1": false,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V023",
+   "base": "L030",
+   "kind": "caregiver",
+   "limit_type": null,
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "강북구에 혼자 사시는 어머니, 안부 확인해 주는 데 있나요?",
+   "legacy": {
+    "returned_local": 4,
+    "returned_total": 8,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5844,
+    "local_hit@1": false,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 13,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.5844,
+    "local_hit@1": false,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  },
+  {
+   "qid": "V025",
+   "base": "L030",
+   "kind": "limit",
+   "limit_type": "wrong_premise",
+   "status": "user_checked",
+   "local_case": "has_policy",
+   "search_text": "혼자 사는 노인이면 다 음료 갖다준다던데 맞아?",
+   "legacy": {
+    "returned_local": 0,
+    "returned_total": 7,
+    "candidates": 12,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": null,
+    "local_hit@1": false,
+    "local_hit@3": false,
+    "local_hit@5": false,
+    "national_hit": false
+   },
+   "split": {
+    "returned_local": 5,
+    "returned_total": 8,
+    "candidates": 13,
+    "wrong_region": false,
+    "unverified_in_evidence": false,
+    "must_not_hit": false,
+    "top_local_score": 0.4629,
+    "local_hit@1": false,
+    "local_hit@3": true,
+    "local_hit@5": true,
+    "national_hit": false
+   }
+  }
+ ]
+}

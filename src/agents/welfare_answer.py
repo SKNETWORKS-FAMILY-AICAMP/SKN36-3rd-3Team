@@ -9,7 +9,9 @@ from typing import Any, Callable
 from .state import WelfareState
 from src.generation.prompts import SYSTEM_PROMPT
 from .region_context import selected_region, region_guidance
+from .safety import distress_guidance
 from .welfare_retrieval import select_context_docs
+from .welfare_retrieval_v3 import is_v3_result, v3_answer_guidance, v3_region_fields
 
 
 def source_from_doc(doc: dict[str, Any]) -> dict[str, Any] | None:
@@ -105,6 +107,13 @@ def make_answer_node(
             }
             for doc in context_docs
         ]
+        if is_v3_result(result):
+            # 4차: 문서마다 어느 묶음(지역 정책·전국 자료·참고 후보)이고 어느 지역 것인지 함께 넘긴다.
+            # 적용 지역이 확정되지 않은 자료(unverified_candidates)는 넘기지 않는다.
+            for piece, doc in zip(pieces, context_docs):
+                piece["evidence_group"] = doc.get("evidence_group")
+                piece["region"] = doc.get("region_keys") or []
+                piece["region_status"] = (doc.get("metadata") or {}).get("scope_status")
 
         # 6. Neo4j 정책 관계 정보
         # 신청 자격이 검증된 사실로 취급하지 않는다.
@@ -193,6 +202,11 @@ def make_answer_node(
             ][:5],
         }
 
+        if is_v3_result(result):
+            # 시도까지만 고른 경우, 3차의 "지역을 다시 묻지 말라"와 부딪치지 않게 지역 지침을 바꾼다.
+            prompt_data["selected_region"], prompt_data["region_instructions"] = v3_region_fields(
+                result, prompt_data["selected_region"], prompt_data["region_instructions"])
+
         prompt = json.dumps(
             prompt_data,
             ensure_ascii=False,
@@ -220,11 +234,14 @@ def make_answer_node(
 
         # 11. 정서적 어려움이 감지된 경우
         if state.get("safety_status") == "distress":
+            # 사유(외로움·사별·학대 의심·증상 등)마다 먼저 확인할 것이 다르다.
             prompt += (
-                "\n사용자가 정서적 어려움을 나타냈으므로, "
-                "먼저 짧게 공감하고 이용 가능한 지원 정보만 "
-                "근거와 함께 안내하세요."
+                "\n사용자가 어려움을 나타냈으므로 정책 안내보다 확인이 먼저입니다. "
+                + distress_guidance(state.get("safety_reason"))
             )
+
+        if is_v3_result(result):
+            prompt += v3_answer_guidance(result)
 
         # 12. LLM 호출
         try:

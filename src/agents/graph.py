@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 
 from functools import lru_cache
@@ -22,6 +23,7 @@ from .safety import (
     safety_node,
     route_after_safety,
     urgent_response_node,
+    safety_note_node,
 )
 
 from .intent_check import (
@@ -43,6 +45,14 @@ from .evidence_check import (
 
 from .welfare_answer import make_answer_node
 
+from .welfare_retrieval_v3 import (
+    make_grouped_retrieval_node,
+    route_after_grouped_retrieval,
+    region_clarify_node,
+)
+
+logger = logging.getLogger(__name__)
+
 
 def build_graph(
     *,
@@ -50,8 +60,14 @@ def build_graph(
     retriever: Callable[..., dict[str, Any]] | None = None,
     llm_call: Callable[[str, str], str] | None = None,
     mode: str = "hybrid",
+    grouped_search: Callable[..., dict[str, Any]] | None = None,
 ):
-    """Safety, Intent, Retrieval, Evidence, Answer 노드를 연결한다."""
+    """Safety, Intent, Retrieval, Evidence, Answer 노드를 연결한다.
+
+    검색 방식은 그래프를 만들 때 한 번 정한다 (요청 도중에 바뀌지 않는다).
+    - 기본(legacy_v1): 3차 하이브리드 검색. 기존 동작 그대로.
+    - RAG_RETRIEVAL_MODE=v3: 4차 묶음별 검색. grouped_search 를 직접 주면 그것을 쓴다(테스트용).
+    """
 
     try:
         from langgraph.graph import StateGraph, START, END
@@ -61,12 +77,20 @@ def build_graph(
         ) from exc
 
     # 1. 검색기 준비
-    if retriever is None:
+    use_v3 = grouped_search is not None
+    if retriever is None and not use_v3:
         if mock:
             retriever = mock_retrieve
         else:
-            from src.retrieval.hybrid_retriever import retrieve_welfare
-            retriever = retrieve_welfare
+            from src.retrieval.config import resolve_mode
+            retrieval_mode, mode_explicit = resolve_mode()
+            if retrieval_mode == "v3":
+                use_v3 = True
+            else:
+                if not mode_explicit:
+                    logger.warning("RAG_RETRIEVAL_MODE 가 없어 legacy_v1(3차 검색)으로 동작합니다.")
+                from src.retrieval.hybrid_retriever import retrieve_welfare
+                retriever = retrieve_welfare
 
     # 2. 답변 생성 LLM 준비
     if llm_call is None:
@@ -90,6 +114,12 @@ def build_graph(
         urgent_response_node,
     )
 
+    # 확인 먼저(distress) 단계에서 상담 전화를 답변 끝에 붙이는 마무리 노드
+    graph.add_node(
+        "safety_note",
+        safety_note_node,
+    )
+
     graph.add_node(
         "intent_check",
         make_intent_node(mock=mock),
@@ -100,13 +130,24 @@ def build_graph(
         intent_response_node,
     )
 
-    graph.add_node(
-        "welfare_retrieval",
-        make_retrieval_node(
-            retriever,
-            mode=mode,
-        ),
-    )
+    if use_v3:
+        # 4차: 고른 지역의 정책·전국 자료를 따로 찾는 검색. 지역을 풀 수 없으면 지역 확인으로 끝낸다.
+        graph.add_node(
+            "welfare_retrieval",
+            make_grouped_retrieval_node(grouped_search),
+        )
+        graph.add_node(
+            "region_clarify",
+            region_clarify_node,
+        )
+    else:
+        graph.add_node(
+            "welfare_retrieval",
+            make_retrieval_node(
+                retriever,
+                mode=mode,
+            ),
+        )
 
     graph.add_node(
         "evidence_check",
@@ -169,17 +210,31 @@ def build_graph(
     # 모호한 질문 및 서비스 범위 밖 질문
     graph.add_edge(
         "intent_response",
-        END,
+        "safety_note",
     )
 
     # -----------------------------------
     # ③ Hybrid Retriever
     # -----------------------------------
 
-    graph.add_edge(
-        "welfare_retrieval",
-        "evidence_check",
-    )
+    if use_v3:
+        graph.add_conditional_edges(
+            "welfare_retrieval",
+            route_after_grouped_retrieval,
+            {
+                "evidence_check": "evidence_check",
+                "region_clarify": "region_clarify",
+            },
+        )
+        graph.add_edge(
+            "region_clarify",
+            "safety_note",
+        )
+    else:
+        graph.add_edge(
+            "welfare_retrieval",
+            "evidence_check",
+        )
 
     # -----------------------------------
     # ④ Evidence Check
@@ -197,7 +252,7 @@ def build_graph(
     # 근거가 부족한 경우
     graph.add_edge(
         "insufficient_evidence",
-        END,
+        "safety_note",
     )
 
     # -----------------------------------
@@ -206,6 +261,12 @@ def build_graph(
 
     graph.add_edge(
         "welfare_answer",
+        "safety_note",
+    )
+
+    # 검색을 거친 모든 경로는 마무리 노드를 지나 끝난다 (긴급 경로는 거치지 않음)
+    graph.add_edge(
+        "safety_note",
         END,
     )
 

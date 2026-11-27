@@ -10,6 +10,10 @@ from .state import WelfareState
 from src.generation.llm import call_llm
 from .region_context import selected_region, region_guidance
 from .welfare_retrieval import select_context_docs
+from .welfare_retrieval_v3 import (
+    RELEVANCE_RULES, apply_relevance, is_v3_result, numbered_evidence, parse_relevance, relevance_failed,
+    relevance_uncertain, v3_region_fields,
+)
 
 
 EVIDENCE_PROMPT = """
@@ -59,6 +63,49 @@ def _parse_json(raw: str) -> dict:
     return json.loads(raw)
 
 
+# 4차(v3)용 프롬프트: 3차 판단 기준은 그대로 두고, 반환 형식을 문서별 관련성까지 받는 것으로 바꾼다.
+EVIDENCE_PROMPT_V3 = EVIDENCE_PROMPT.split("반드시 JSON 객체만 반환하세요.")[0].rstrip() + RELEVANCE_RULES
+
+
+def _judge_v3(state: WelfareState, result: dict, docs: list, judge: Callable[[str, str], str]) -> dict[str, Any]:
+    """4차: LLM 호출 한 번으로 근거가 충분한지와, 문서 하나하나가 질문과 관련 있는지를 함께 받는다.
+
+    관련 없다고 나온 문서는 답변 근거에서 완전히 뺀다. 판정이 실패하면 '관련 정책 없음'이 아니라
+    '판정 불가'로 남기고 답변을 만들지 않는다.
+    """
+    context = select_context_docs(docs, limit=8)
+    if not context:
+        return {"evidence_verdict": "insufficient", "evidence_reason": "사용 가능한 문서 본문이 없습니다."}
+    region_name, region_text = v3_region_fields(
+        result, selected_region(state.get("region")), region_guidance(state.get("region")))
+    payload = {
+        "original_question": state["question"],
+        "selected_region": region_name,
+        "region_instructions": region_text,
+        "search_query": state.get("search_query") or state["question"],
+        "documents": numbered_evidence(context),
+    }
+    try:
+        raw = judge(EVIDENCE_PROMPT_V3, json.dumps(payload, ensure_ascii=False))
+        verdict, reason, relevant = parse_relevance(_parse_json(raw), len(context))
+    except Exception:
+        return {
+            "evidence_verdict": "uncertain",
+            "evidence_reason": "근거 검증에 실패했습니다.",
+            "retrieval_result": relevance_failed(result),
+        }
+    if verdict == "uncertain":
+        # 판단하기 어렵다는 답은 '관련 정책 없음'이 아니다. 근거를 건드리지 않고 그대로 남긴다.
+        return {"evidence_verdict": verdict, "evidence_reason": reason, "retrieval_result": relevance_uncertain(result)}
+    kept, updated = apply_relevance(result, context, relevant)
+    return {
+        "evidence_verdict": verdict,
+        "evidence_reason": reason,
+        "retrieved_docs": kept,
+        "retrieval_result": updated,
+    }
+
+
 def make_evidence_node(
     *,
     mock: bool = False,
@@ -83,6 +130,9 @@ def make_evidence_node(
                 "evidence_verdict": "insufficient",
                 "evidence_reason": "검색된 근거 문서가 없습니다.",
             }
+
+        if is_v3_result(result):
+            return _judge_v3(state, result, docs, judge)
 
         # 실제 Qdrant 검색 문서만 검증
         evidence = []

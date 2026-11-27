@@ -1,0 +1,57 @@
+{
+  "name": "v4-eval-0.1",
+  "revision": 1,
+  "frozen_at": "2026-11-27",
+  "data_version": "nationwide_2026_11_26_6efc3b7671b3",
+  "checker_sha256": "25062cd7c798077206254c37a756a1b980e127daf48536bb82e63f6c67430a3c",
+  "files": [
+    {
+      "file": "life_questions_draft.jsonl",
+      "sha256": "242e8ada03ed7018ffc33b67d2cd884156d18e74c157144ad2dae1994b64c962",
+      "questions": 51,
+      "label_status": {
+        "draft": 46,
+        "user_checked": 5
+      },
+      "split": {
+        "tune": 33,
+        "holdout": 18
+      }
+    },
+    {
+      "file": "life_variants_draft.jsonl",
+      "sha256": "907c555a6341297e3b5d747635fb4d8eb8302ebc3b8585c6f641fb47eccfc8fa",
+      "questions": 25,
+      "label_status": {
+        "user_checked": 25
+      },
+      "split": {
+        "tune": 25
+      }
+    },
+    {
+      "file": "safety_questions_draft.jsonl",
+      "sha256": "a611013e233e89bebdf9dc516d93f429d642392c1ddae2df0329aa9389872904",
+      "questions": 30,
+      "label_status": {
+        "user_checked": 30
+      }
+    },
+    {
+      "file": "regression_r3_122.jsonl",
+      "sha256": "bbc7fe243f04c604b8fac90ea96537de431bff250c47083cf39ca837746ad787",
+      "questions": 122,
+      "label_status": {
+        "draft": 122
+      },
+      "split": {
+        "regression": 122
+      }
+    },
+    {
+      "file": "personas.json",
+      "sha256": "47267cabfa9e41354952f11427dde118d7cb218e0abc4334df51fc745539da6f"
+    }
+  ],
+  "note": "공식 평가에는 user_checked 이면서 확인 당시 내용 지문이 일치하는 문항만 넣는다. 안전 문항은 전문가 검토를 거친 것이 아니다."
+}

@@ -7,6 +7,7 @@ from __future__ import annotations
 from typing import Any, Callable
 from uuid import uuid4
 
+from src.agents.safety import classify_safety
 from .conversation_store import load_history, save_exchange, validate_session_id
 
 # Avoid persisting high-risk or emotionally sensitive chat by default.
@@ -31,7 +32,12 @@ def run_chat_session(
     if len(question) > 2000:
         raise ValueError("question은 2000자 이하여야 합니다.")
     sid = validate_session_id(session_id) if session_id else str(uuid4())
-    history = load_history(sid, max_messages=max_history_messages)
+    # 긴급 안내는 대화 기록이 필요 없고 저장도 하지 않는다. 대화 기록 DB가 꺼져 있어도 안내가 나가야 하므로
+    # DB를 읽기 전에 안전 단계를 먼저 본다 (그래프 안에서도 다시 분류한다).
+    if classify_safety(question)[0] == "urgent":
+        history = []
+    else:
+        history = load_history(sid, max_messages=max_history_messages)
     result = invoke_graph({"question": question, "session_id": sid, "history": history})
     status = result.get("safety_status", "normal")
     answer_status = result.get("answer_status", "error")

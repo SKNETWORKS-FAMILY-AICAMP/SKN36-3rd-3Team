@@ -3,3 +3,11 @@
 data/processed/local_welfare/nationwide/final_v3/** -text
 data/rag/nationwide_v3/** -text
 data/staging/local_welfare/2026-11-26/** -text
+
+# 평가 고정 기록과 재현 스크립트의 SHA-256을 체크아웃 후에도 보존합니다.
+data/eval/v4/** -text
+scripts/build_eval_v4.py -text
+scripts/embed_v3_chunks.py -text
+scripts/eval_v4_retrieval.py -text
+scripts/load_v3_qdrant.py -text
+scripts/verify_v3_vectors.py -text
