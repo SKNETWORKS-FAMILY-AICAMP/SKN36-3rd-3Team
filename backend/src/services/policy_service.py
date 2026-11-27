@@ -128,7 +128,19 @@ def _guideline_item(doc: dict) -> GuidelineItem | None:
     )
 
 
+def _is_v3() -> bool:
+    """RAG_RETRIEVAL_MODE=v3 인가. 채팅과 같은 스위치를 쓴다 (적지 않으면 3차 방식)."""
+    from src.retrieval.config import resolve_mode
+
+    return resolve_mode()[0] == "v3"
+
+
 def search_policies(request: AskRequest) -> AskResult:
+    if _is_v3():
+        from backend.src.services.policy_service_v3 import search_policies_v3
+
+        return search_policies_v3(request)
+
     result = retrieve_welfare(
         question=request.question,
         mode="hybrid",
@@ -216,6 +228,11 @@ def _qdrant():
 
 def get_policy_detail(policy_id: str) -> PolicyDetail | None:
     """Qdrant에서 동일 policy_id의 정책 청크를 조회한다."""
+    if _is_v3():
+        from backend.src.services.policy_service_v3 import get_policy_detail_v3
+
+        return get_policy_detail_v3(policy_id)
+
     from qdrant_client.models import (
         Filter,
         FieldCondition,

@@ -100,6 +100,22 @@ def _empty_result(question: str) -> dict[str, Any]:
     }
 
 
+def public_unverified(state: dict[str, Any]) -> list[dict[str, Any]]:
+    """API 응답에 내보낼 '적용 지역 미확인' 목록. 내부 검색 결과 전체가 아니라 공개해도 되는 칸만 뽑는다.
+
+    답변을 만든 경우에만 내보낸다(긴급 안내·되묻기·근거 부족에서는 빈 목록).
+    registered_sido 는 그 자료가 등록된 시도일 뿐, 적용 지역이 아니다.
+    """
+    result = state.get("retrieval_result")
+    if not is_v3_result(result) or state.get("answer_status") != "success":
+        return []
+    return [
+        {"policy_id": d.get("policy_id"), "title": d.get("title"),
+         "registered_sido": (d.get("metadata") or {}).get("sido_name"), "scope_status": "unknown"}
+        for d in result.get("unverified_candidates") or [] if d.get("policy_id")
+    ]
+
+
 def route_after_grouped_retrieval(state: WelfareState) -> str:
     result = state.get("retrieval_result") or {}
     return "region_clarify" if result.get("region_error") else "evidence_check"

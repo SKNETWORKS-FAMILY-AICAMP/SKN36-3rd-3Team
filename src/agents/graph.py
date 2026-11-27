@@ -46,6 +46,7 @@ from .evidence_check import (
 from .welfare_answer import make_answer_node
 
 from .welfare_retrieval_v3 import (
+    public_unverified,
     make_grouped_retrieval_node,
     route_after_grouped_retrieval,
     region_clarify_node,
@@ -319,10 +320,14 @@ def ask_welfare(
     if memory_enabled and not mock:
         from src.memory.session_manager import run_chat_session
 
+        def invoke_with_public_fields(state: dict[str, Any]) -> dict[str, Any]:
+            out = _default_graph(mock).invoke({**state, "region": region})
+            return {**out, "region_unverified": public_unverified(out)}
+
         return run_chat_session(
             question,
             session_id,
-            lambda state: _default_graph(mock).invoke({**state, "region": region}),
+            invoke_with_public_fields,
         )
 
     # 일반 실행 및 Mock 실행
@@ -341,6 +346,7 @@ def ask_welfare(
     "answer_status": result["answer_status"],
     "session_id": session_id,
     "choices": result.get("choices", []),
+    "region_unverified": public_unverified(result),
 }
 
 

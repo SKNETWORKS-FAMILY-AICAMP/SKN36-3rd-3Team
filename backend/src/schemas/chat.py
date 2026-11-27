@@ -31,3 +31,5 @@ class ChatResponse(BaseModel):
     safety_status: str = "normal"
     answer_status: str
     choices: list[Any] = Field(default_factory=list)
+    # 4차(v3): 시도에 등록됐지만 적용 지역이 확인되지 않은 정책. 답변 근거가 아닌 별도 목록.
+    region_unverified: list[dict[str, Any]] = Field(default_factory=list)

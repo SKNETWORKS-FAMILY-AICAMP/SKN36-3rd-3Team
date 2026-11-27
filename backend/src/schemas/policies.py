@@ -38,6 +38,11 @@ class PolicyItem(UIModel):
     snippet: str = ""
     badges: list[Badge] = Field(default_factory=list)
     themes: list[str] = Field(default_factory=list)
+    # 4차(v3)에서만 채운다. applies_to 는 적용 지역 키("시도|시군구") 목록.
+    applies_to: list[str] = Field(default_factory=list)
+    scope_status: str | None = None
+    # 적용 지역이 확인되지 않은 자료가 등록된 시도. 적용 지역이 아니다.
+    registered_sido: str | None = None
 
 
 class GuidelineItem(UIModel):
@@ -76,6 +81,10 @@ class AskResult(UIModel):
         default_factory=list
     )
     reference_candidates: list[GuidelineItem] = Field(
+        default_factory=list
+    )
+    # 4차(v3): 시도에 등록됐지만 적용 지역이 확인되지 않은 정책. 검색 결과(items)와 섞지 않는 별도 목록.
+    region_unverified: list[PolicyItem] = Field(
         default_factory=list
     )
     fallback: Fallback | None = None
@@ -122,3 +131,9 @@ class PolicyDetail(UIModel):
     reference_candidates: list[GuidelineItem] = Field(
         default_factory=list
     )
+    # 4차(v3)에서만 채운다.
+    applies_to: list[str] = Field(default_factory=list)
+    scope_status: str | None = None
+    registered_sido: str | None = None
+    # 여러 조각으로 나뉜 본문을 정확히 이어 붙이지 못해 본문 칸을 비운 경우
+    body_incomplete: bool = False

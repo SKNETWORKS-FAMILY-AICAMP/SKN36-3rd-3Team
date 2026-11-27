@@ -51,4 +51,6 @@ def run_chat_session(
         "answer_status": answer_status,
         "session_id": sid,
         "choices": result.get("choices", []),
+        # 4차(v3)에서만 채워진다. 적용 지역이 확인되지 않은 정책의 별도 목록.
+        "region_unverified": result.get("region_unverified", []),
     }
