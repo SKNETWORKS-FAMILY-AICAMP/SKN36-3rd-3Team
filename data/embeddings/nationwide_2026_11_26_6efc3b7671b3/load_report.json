@@ -1,0 +1,81 @@
+{
+  "collection": "welfare_chunks_v3_6efc3b7671b3",
+  "qdrant_url": "http://localhost:6333",
+  "qdrant_version": "1.20.0",
+  "data_version": "nationwide_2026_11_26_6efc3b7671b3",
+  "load_id": "40bd65c750b2",
+  "load_schema_version": 1,
+  "embedding_config_id": "6aaacecf145b",
+  "manifest_sha256": "9e3136181d67ac09d7bf0283d8226816151ab8a981cdd01d750300eab9c83d1f",
+  "inputs": {
+    "policy_chunks.jsonl": "3a2ae94978804b5fa14bda4b33aa200c9ebf5b0a7de5c84f4373538144359e2a",
+    "guideline_chunks.jsonl": "66ede4084c3d4a76a321da7e70d47570de13da3f62310a8158d6ddb54a31bc51"
+  },
+  "outputs": {
+    "vectors.npy": "51aa313547766f74e6accc5f03a0b0df10e806287f9a57d710a35ae6d257da4b",
+    "chunk_map.csv": "adafdf9f434009a1597e487132d7a71f34d254ea35268f5a4cb185966d2737cd"
+  },
+  "n_points": 5289,
+  "mode": "execute",
+  "script_sha256": "ef3b281534eef082a531f89d3e77e4077e2f54058687562d12b7f302d22c2e0b",
+  "finished_at": "2026-11-27T02:50:14+00:00",
+  "checks": [
+    {
+      "status": "PASS",
+      "name": "컬렉션 설정 (1024·Cosine·payload 디스크)",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "name": "컬렉션 상태",
+      "detail": "green"
+    },
+    {
+      "status": "PASS",
+      "name": "전체 개수",
+      "detail": "5,289 / 기대 5,289"
+    },
+    {
+      "status": "PASS",
+      "name": "ID 집합 일치",
+      "detail": "빠진 것 0개, 모르는 것 0개"
+    },
+    {
+      "status": "PASS",
+      "name": "내용(본문+메타데이터) 전수 일치",
+      "detail": "불일치 0개"
+    },
+    {
+      "status": "PASS",
+      "name": "벡터 전수 수치 비교 (코사인)",
+      "detail": "최소 1.000000"
+    },
+    {
+      "status": "PASS",
+      "name": "색인 9개 (keyword)",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "name": "색인에 잡힌 개수",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "name": "조건별 개수 (지역 키 229종 전부, national 포함)",
+      "detail": ""
+    },
+    {
+      "status": "PASS",
+      "name": "정책 번호로 상세 조회",
+      "detail": "40개 정책 중 불일치 0개"
+    },
+    {
+      "status": "PASS",
+      "name": "조건 검색에서 자기 자신이 최고점",
+      "detail": "40개 중 실패 0개"
+    }
+  ],
+  "fail": 0,
+  "warn": 0
+}

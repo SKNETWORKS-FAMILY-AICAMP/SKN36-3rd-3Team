@@ -1,0 +1,2 @@
+# Preserve artifact SHA-256 values across Windows/Linux checkouts.
+* -text

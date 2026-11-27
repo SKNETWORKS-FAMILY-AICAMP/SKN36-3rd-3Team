@@ -1,0 +1,61 @@
+{
+  "data_version": "nationwide_2026_11_26_6efc3b7671b3",
+  "manifest_sha256": "9e3136181d67ac09d7bf0283d8226816151ab8a981cdd01d750300eab9c83d1f",
+  "inputs": {
+    "policy_chunks.jsonl": {
+      "sha256": "3a2ae94978804b5fa14bda4b33aa200c9ebf5b0a7de5c84f4373538144359e2a",
+      "rows": 2551
+    },
+    "guideline_chunks.jsonl": {
+      "sha256": "66ede4084c3d4a76a321da7e70d47570de13da3f62310a8158d6ddb54a31bc51",
+      "rows": 2738
+    }
+  },
+  "row_order": [
+    "policy_chunks.jsonl",
+    "guideline_chunks.jsonl"
+  ],
+  "n_rows": 5289,
+  "n_rows_total": 5289,
+  "sample": false,
+  "embedding": {
+    "model": "nlpai-lab/KURE-v1",
+    "revision": "8b418a58414668e75532ed045c22d9ca018ae2b2",
+    "dim": 1024,
+    "dtype": "torch.float32",
+    "max_seq_length": 8192,
+    "normalize": true,
+    "batch_size": 16,
+    "preprocess": "newline_to_space",
+    "prompt": null,
+    "distance": "cosine",
+    "config_id": "6aaacecf145b"
+  },
+  "max_tokens": 606,
+  "timing": {
+    "model_load_sec": 2.7,
+    "encode_sec": 88.43,
+    "chunks_per_sec": 59.8
+  },
+  "environment": {
+    "device": "cuda",
+    "gpu": "NVIDIA RTX PRO 4000 Blackwell",
+    "torch": "2.8.0+cu128",
+    "cuda": "12.8",
+    "sentence-transformers": "6.2.0",
+    "transformers": "5.24.1",
+    "numpy": "2.1.2",
+    "python": "3.12.3",
+    "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.39"
+  },
+  "script": {
+    "name": "embed_v3_chunks.py",
+    "sha256": "9dd27bf4f65e4c11b7b000486b46301e8147ad85f596a590d5f5b8695670f772"
+  },
+  "outputs": {
+    "vectors.npy": "51aa313547766f74e6accc5f03a0b0df10e806287f9a57d710a35ae6d257da4b",
+    "chunk_map.csv": "adafdf9f434009a1597e487132d7a71f34d254ea35268f5a4cb185966d2737cd"
+  },
+  "started_at": "2026-11-27T00:15:42+00:00",
+  "finished_at": "2026-11-27T00:17:19+00:00"
+}
