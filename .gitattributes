@@ -15,3 +15,5 @@ scripts/verify_v3_vectors.py -text
 # Preserve relevance and chat evaluation script hashes.
 scripts/eval_v4_relevance.py -text
 scripts/eval_v4_chat.py -text
+
+scripts/eval_intent_followups.py -text

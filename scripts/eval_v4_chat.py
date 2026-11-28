@@ -34,7 +34,13 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from eval_v4_relevance import PRICE_PER_M, chat_region  # noqa: E402
 from eval_v4_retrieval import file_sha256, read_jsonl  # noqa: E402
 
-AGE_LIMIT = re.compile(r"만\s*\d{2}\s*[~∼-]\s*\d{2}\s*세|\d{2}\s*세\s*이하|중장년")
+AGE_LIMIT = re.compile(r"(?:만\s*)?\d{2}\s*[~∼-]\s*\d{2}\s*세|\d{2}\s*세\s*이하|중장년")
+
+
+def mentions_title(answer: str, title: str | None) -> bool:
+    """답변이 그 사업을 언급했는가. 제목 앞 8글자(띄어쓰기 무시)로 본다."""
+    head = re.sub(r"\s+", "", str(title or ""))[:8]
+    return bool(head) and head in re.sub(r"\s+", "", answer)
 
 
 def main() -> None:
@@ -101,7 +107,8 @@ def main() -> None:
     def search(question, selection, **kwargs):
         return grouped_search.search_grouped(question, selection, settings=settings, exact=True, **kwargs)
 
-    graph = graph_module.build_graph(grouped_search=search, llm_call=llm_call)
+    graph = graph_module.build_graph(grouped_search=search, llm_call=llm_call,
+                                     region_keys=lambda: grouped_search.known_region_keys(settings))
 
     per_question = []
     started = time.time()
@@ -120,6 +127,7 @@ def main() -> None:
             "qid": qid, "kind": q.get("variant_kind") or "base", "limit_type": q.get("limit_type"), "eval_type": q["eval_type"],
             "status": q["label"]["status"], "question": q["question"], "history": history, "region": q["region"],
             "intent": out.get("intent"), "search_query": out.get("search_query"),
+            "search_region": (result.get("selection") or {}), "choices": out.get("choices"),
             "answer_status": out.get("answer_status"), "safety_status": out.get("safety_status"),
             "evidence_verdict": out.get("evidence_verdict"), "relevance": result.get("relevance"),
             "sources": sources, "kept_titles": kept_titles, "answer": out.get("answer"),
@@ -135,7 +143,10 @@ def main() -> None:
         if age_docs:
             rec["age_limited_docs"] = age_docs
             rec["age_limit_in_answer_input"] = any(AGE_LIMIT.search(x) for x in answer_inputs)
-            rec["age_limit_in_answer"] = bool(AGE_LIMIT.search(str(out.get("answer") or "")))
+            answer_text = str(out.get("answer") or "")
+            # 나이 제한 사업을 답변에서 아예 언급하지 않았다면 나이를 밝힐 일도 없다 (해당 없음).
+            rec["age_limited_doc_mentioned"] = any(mentions_title(answer_text, t) for t in age_docs)
+            rec["age_limit_in_answer"] = bool(AGE_LIMIT.search(answer_text))
         per_question.append(rec)
         print(f"{qid:<5} {str(rec['intent']):<8} {str(rec['answer_status']):<15} 판정 {str(rec['evidence_verdict']):<12} "
               f"호출 {rec['llm_stages']} | {q['question'][:26]}", flush=True)
@@ -143,7 +154,8 @@ def main() -> None:
     cost = usage["input"] / 1e6 * PRICE_PER_M["input"] + usage["output"] / 1e6 * PRICE_PER_M["output"]
     has = [r for r in per_question if "gold_in_sources" in r]
     none = [r for r in per_question if "local_in_sources_when_none" in r]
-    age = [r for r in per_question if "age_limited_docs" in r]
+    age = [r for r in per_question if "age_limited_docs" in r and r["age_limited_doc_mentioned"]]
+    age_na = [r["qid"] for r in per_question if "age_limited_docs" in r and not r["age_limited_doc_mentioned"]]
     report = {
         "what": "4차 채팅 전체 흐름 소규모 측정 (의도 확인·묶음별 검색·근거 판정·답변, 실제 LLM). 공식 성능 아님. 답변은 사람이 확인해야 함",
         "manifest": {"name": manifest["name"], "revision": manifest["revision"]}, "data_version": data_version,
@@ -157,6 +169,7 @@ def main() -> None:
             "gold_in_sources": f"{sum(r['gold_in_sources'] for r in has)}/{len(has)}",
             "no_local_when_none": f"{sum(not r['local_in_sources_when_none'] for r in none)}/{len(none)}",
             "age_limit_in_answer": f"{sum(r['age_limit_in_answer'] for r in age)}/{len(age)}",
+            "age_limit_not_applicable": age_na,
         },
         "per_question": per_question,
     }

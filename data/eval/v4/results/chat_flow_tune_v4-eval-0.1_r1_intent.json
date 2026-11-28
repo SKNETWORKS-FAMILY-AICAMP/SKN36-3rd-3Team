@@ -1,0 +1,933 @@
+{
+ "what": "4차 채팅 전체 흐름 소규모 측정 (의도 확인·묶음별 검색·근거 판정·답변, 실제 LLM). 공식 성능 아님. 답변은 사람이 확인해야 함",
+ "manifest": {
+  "name": "v4-eval-0.1",
+  "revision": 1
+ },
+ "data_version": "nationwide_2026_11_26_6efc3b7671b3",
+ "collection": "welfare_chunks_v3_6efc3b7671b3",
+ "model": "gpt-4.1-mini",
+ "measured_at": "2026-11-28T09:07:21",
+ "code_sha256": {
+  "script": "d1cd1c1ce0f05ba4792e03c42227d8017c069f0d12726c457168499594e8d560"
+ },
+ "usage": {
+  "input": 126132,
+  "output": 10269,
+  "calls": 42,
+  "estimated_usd": 0.0669,
+  "price_basis": {
+   "input": 0.4,
+   "output": 1.6
+  },
+  "seconds": 187.8
+ },
+ "summary": {
+  "questions": 15,
+  "answer_status": {
+   "success": 13,
+   "no_evidence": 2
+  },
+  "gold_in_sources": "9/9",
+  "no_local_when_none": "2/2",
+  "age_limit_in_answer": "3/4"
+ },
+ "per_question": [
+  {
+   "qid": "L003",
+   "kind": "base",
+   "limit_type": null,
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "혼자 사는데 밥 챙겨 먹기가 힘들어. 밥 갖다주는 데 없나?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "횡성군"
+   },
+   "intent": "search",
+   "search_query": "횡성군 어르신 식사 배달 서비스 현황 및 신청 방법",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "횡성군",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "횡성군"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 1,
+     "national": 1,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00000619",
+    "elderly_welfare_2026_vol1_p0227_05"
+   ],
+   "kept_titles": [
+    "저소득 결식우려 재가노인 식사배달사업",
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "answer": "횡성군에 사시는 저소득 어르신 중 혼자 사시면서 밥 챙기기 어려운 분께는 식사 배달 서비스가 있습니다.\n\n- **지원 대상:** 횡성군에 사는 저소득 어르신 중 밥을 거르기 쉬운 분\n- **지원 내용:** 주 2회 도시락이나 반찬을 집으로 배달해 드립니다\n- **신청 방법:** 별도 신청 없이 지원 대상자로 선정되면 서비스가 제공됩니다\n- **문의처:** 횡성군 가족복지과 033-340-2150로 연락해 자세한 내용을 확인하세요\n\n지금 전화로 문의하셔서 본인 상황에 맞는 지원을 받을 수 있는지 상담해 보시면 좋겠습니다. 혹시 다른 도움이 필요하신가요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "gold_in_sources": true
+  },
+  {
+   "qid": "L006",
+   "kind": "base",
+   "limit_type": null,
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "혼자 사는데 밥 챙겨 먹기가 힘들어. 밥 갖다주는 데 없나?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 강릉시 어르신 식사 배달 서비스 지원 방법",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "강릉시"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 0,
+     "national": 2,
+     "reference": 0
+    },
+    "local_policy_found": false,
+    "quote_mismatch": 1,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "elderly_welfare_2026_vol1_p0230_01",
+    "elderly_welfare_2026_vol1_p0227_01"
+   ],
+   "kept_titles": [
+    "2026년 노인보건복지사업안내 1권",
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "answer": "강릉시에서 밥을 배달해 주는 서비스에 대한 정보는 현재 자료에 없지만, 전국적으로 노인 도시락 배달 서비스가 있습니다.\n\n- **지원 내용:** 노인맞춤돌봄서비스를 통해 도시락과 반찬을 집으로 배달해 주는 곳이 있습니다. 배달 중 건강 상태도 확인해 줍니다.\n- **신청 장소:** 가까운 동 주민센터나 노인복지관에 문의하시면 지역에서 운영하는 식사 배달 서비스를 안내받을 수 있습니다.\n- **문의처:** 강릉시 주민센터나 노인복지 관련 기관에 연락해 보시면 구체적인 도움을 받을 수 있습니다.\n\n먼저 가까운 주민센터에 전화나 방문해서 밥 배달 서비스가 있는지 물어보시는 것이 좋겠습니다. 도움이 더 필요하시면 알려 주세요.",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "local_in_sources_when_none": []
+  },
+  {
+   "qid": "L010",
+   "kind": "base",
+   "limit_type": null,
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "보일러가 오래돼서 온수가 안 나와요. 수리비 지원받을 수 있어요?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "태백시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 태백시 노인 보일러 수리비 지원",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "태백시",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "태백시"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 1,
+     "national": 0,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00006338"
+   ],
+   "kept_titles": [
+    "태백시 주거취약계층 주거환경개선 지원사업"
+   ],
+   "answer": "보일러 같은 집 안의 오래된 설비 수리비 지원은 태백시에서 주거환경개선 사업으로 일부 도움을 받을 수 있습니다.\n\n- **지원 대상:** 태백시에 1년 이상 살고, 소득이 기준 중위소득 150% 이하인 분이 대상입니다. 65세 이상 어르신이 우선순위입니다.\n- **지원 내용:** 집 안에서 급하게 고쳐야 하는 노후 설비 수리비를 세대당 200만 원 이내에서 실제 비용만큼 지원합니다.\n- **신청 장소:** 태백시 관할 동 행정복지센터에 직접 방문해서 신청하셔야 합니다.\n\n다만, 이 사업이 태백시에 적용되는지와 본인이 지원 대상인지 정확한 확인은 동 행정복지센터에 문의해 보시는 게 좋습니다. 지금 가까운 동 주민센터에 가서 상담을 받아보시겠어요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "gold_in_sources": true
+  },
+  {
+   "qid": "L020",
+   "kind": "base",
+   "limit_type": null,
+   "eval_type": "behavior",
+   "status": "user_checked",
+   "question": "보청기 지원해 주는 데 있어?",
+   "history": [],
+   "region": {
+    "kind": "sido_only",
+    "sido": "강원특별자치도",
+    "sigungu": null
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 보청기 지원 내용과 신청 방법",
+   "search_region": {
+    "kind": "sido_only",
+    "sido": "강원특별자치도",
+    "sigungu": null,
+    "source": "screen",
+    "screen": {
+     "kind": "sido_only",
+     "sido": "강원특별자치도",
+     "sigungu": null
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 2,
+     "national": 0,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 1
+   },
+   "sources": [
+    "local:WLF00004035",
+    "local:WLF00006160"
+   ],
+   "kept_titles": [
+    "횡성군 어르신 보청기 및 보행기 지원사업",
+    "고성군 노인 보청기 구입비 지원"
+   ],
+   "answer": "강원특별자치도 내에서는 시·군마다 보청기 지원 사업이 다릅니다. 어느 시·군에 사시는지 알려주시면 더 자세히 안내해 드릴 수 있습니다.\n\n- **지원 대상:** 예를 들어 횡성군은 만 70세 이상 저소득 난청 어르신, 고성군은 70세 이상 기초생활수급자나 기초연금 수급자 중 난청 진단을 받은 분이 대상입니다.\n- **지원 내용:** 횡성군은 보청기 구입비를 지원하고, 고성군은 최대 111만원 한도 내에서 일부 비용을 지원합니다.\n- **신청 장소:** 각 시·군 읍면동 행정복지센터에 방문하여 신청하셔야 합니다.\n\n먼저 사시는 시·군 이름을 알려주실 수 있나요? 그러면 그 지역의 지원 내용을 자세히 알려드리겠습니다.",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ]
+  },
+  {
+   "qid": "L030",
+   "kind": "base",
+   "limit_type": null,
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "혼자 살아서 며칠씩 말 한마디 못 해. 안부라도 물어봐 주는 데 있나?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "서울특별시",
+    "sigungu": "강북구"
+   },
+   "intent": "search",
+   "search_query": "서울특별시 강북구 어르신 안부 확인 서비스",
+   "search_region": {
+    "kind": "region",
+    "sido": "서울특별시",
+    "sigungu": "강북구",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "서울특별시",
+     "sigungu": "강북구"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 2,
+     "national": 0,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00005663",
+    "local:WLF00001212"
+   ],
+   "kept_titles": [
+    "고독사 예방 밑반찬 지원사업 기운찬",
+    "복지사각지대 건강음료배달 사업"
+   ],
+   "answer": "혼자 사시면서 안부를 물어봐 주는 도움은 서울 강북구에 몇 가지가 있지만, 나이나 상황에 따라 다를 수 있어 담당 기관에 꼭 확인하셔야 합니다.\n\n- **고독사 예방 밑반찬 지원사업:** 만 40~64세 중장년 1인 가구 중 일정 조건에 해당하면 주 1회 밑반찬과 함께 안부 확인을 받을 수 있습니다. 별도 신청 없이 지원됩니다.\n- **복지사각지대 건강음료배달 사업:** 저소득이나 돌봄이 필요한 분들에게 건강음료를 배달하며 안부를 확인하는 서비스로, 동 주민센터에 방문 신청해야 합니다.\n- **문의처:** 강북구 복지정책과 02-901-2494 또는 02-901-6722에 연락해 본인 상황에 맞는 지원 가능 여부를 상담받으세요.\n\n지금 가까운 동 주민센터나 위 번호로 연락해 도움을 요청해 보시는 것이 좋겠습니다. 혹시 연령대나 건강 상태에 대해 더 알려주실 수 있나요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "gold_in_sources": true,
+   "age_limited_docs": [
+    "고독사 예방 밑반찬 지원사업 기운찬"
+   ],
+   "age_limit_in_answer_input": true,
+   "age_limit_in_answer": true
+  },
+  {
+   "qid": "V004",
+   "kind": "limit",
+   "limit_type": "eligibility_certainty",
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "그럼 나는 무조건 받는 거지?",
+   "history": [
+    {
+     "role": "user",
+     "content": "혼자 사는데 밥 갖다주는 데 없나?"
+    },
+    {
+     "role": "assistant",
+     "content": "횡성군에 어르신 식사 배달 사업이 있어요. 결식 우려가 있는 저소득 어르신이 대상이에요."
+    }
+   ],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "횡성군"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 횡성군 어르신 식사 배달 사업 지원 대상",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "횡성군",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "횡성군"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 1,
+     "national": 1,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00000619",
+    "elderly_welfare_2026_vol1_p0227_01"
+   ],
+   "kept_titles": [
+    "저소득 결식우려 재가노인 식사배달사업",
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "answer": "식사 배달 지원은 무조건 받는 것은 아니고, 조건에 맞는 분들이 대상입니다.\n\n- **지원 대상:** 횡성군에 사는 저소득이고 혼자 사시면서 밥을 거르실 위험이 있는 어르신이 대상입니다.\n- **지원 내용:** 주 2회 도시락이나 반찬을 집으로 배달해 드립니다.\n- **신청 방법:** 별도 신청 없이 대상자로 확인되면 지원됩니다. 자세한 자격 확인은 담당 부서에 문의하세요.\n\n- **문의처:** 횡성군 가족복지과 033-340-2150로 연락하시면 자세한 안내를 받으실 수 있습니다.\n\n지원받을 수 있는지 먼저 담당 부서에 전화해 보시겠어요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "gold_in_sources": true
+  },
+  {
+   "qid": "V005",
+   "kind": "limit",
+   "limit_type": "unsupported_detail",
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "도시락 매일 와?",
+   "history": [
+    {
+     "role": "user",
+     "content": "혼자 사는데 밥 갖다주는 데 없나?"
+    },
+    {
+     "role": "assistant",
+     "content": "횡성군에 어르신 식사 배달 사업이 있어요. 결식 우려가 있는 저소득 어르신이 대상이에요."
+    }
+   ],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "횡성군"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 횡성군 어르신 식사 배달 사업 도시락 배달 빈도",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "횡성군",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "횡성군"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 1,
+     "national": 0,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00000619"
+   ],
+   "kept_titles": [
+    "저소득 결식우려 재가노인 식사배달사업"
+   ],
+   "answer": "횡성군의 저소득 어르신 식사배달 사업은 매일 도시락을 배달하지 않고, 주 2회 도시락이나 반찬을 배달해 드립니다.\n\n- **지원 내용:** 주 2회 도시락 또는 반찬을 집으로 배달해 드립니다.\n- **지원 대상:** 횡성군에 사는 저소득이고 식사 걱정이 있는 어르신이 대상입니다.\n- **문의처:** 자세한 내용과 신청 자격은 횡성군 가족복지과(033-340-2150)에 문의하시면 안내받을 수 있습니다.\n\n필요하면 가족복지과에 전화해 지원 자격과 배달 횟수를 꼭 확인해 보세요. 도움이 더 필요하시면 알려주세요.",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "gold_in_sources": true
+  },
+  {
+   "qid": "V009",
+   "kind": "limit",
+   "limit_type": "cross_region_premise",
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "횡성은 밥 갖다준다던데 여긴 왜 없어?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 강릉시 어르신 식사 배달 사업 현황 및 지원 내용",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "강릉시"
+    },
+    "compared": [
+     "강원특별자치도 횡성군"
+    ]
+   },
+   "choices": null,
+   "answer_status": "no_evidence",
+   "safety_status": "normal",
+   "evidence_verdict": "uncertain",
+   "relevance": {
+    "status": "failed"
+   },
+   "sources": [],
+   "kept_titles": [
+    "강릉시 어르신 이.미용비 지원사업",
+    "어르신 이·미용비 지원 사업",
+    "강릉시 아이돌봄서비스 본인부담금 추가 지원",
+    "강릉시 보훈명예수당 지원",
+    "행려자 일시구호",
+    "2026년 노인보건복지사업안내 1권",
+    "2026년 노인보건복지사업안내 1권",
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "answer": "관련 자료는 찾았지만, 정확한 내용을 확인하기 어려워요. 필요한 지원 상황을 조금 더 알려주시겠어요?",
+   "llm_stages": [
+    "intent",
+    "evidence"
+   ],
+   "local_in_sources_when_none": []
+  },
+  {
+   "qid": "V010",
+   "kind": "limit",
+   "limit_type": "region_conflict",
+   "eval_type": "behavior",
+   "status": "user_checked",
+   "question": "횡성 엄마가 밥을 못 챙겨 드세요. 도시락 되나요?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 강릉시 어르신 도시락 배달 서비스 지원 방법",
+   "search_region": {},
+   "choices": [
+    {
+     "id": "1",
+     "label": "강원특별자치도 강릉시 기준"
+    },
+    {
+     "id": "2",
+     "label": "강원특별자치도 횡성군 기준"
+    }
+   ],
+   "answer_status": "no_evidence",
+   "safety_status": "normal",
+   "evidence_verdict": null,
+   "relevance": null,
+   "sources": [],
+   "kept_titles": [],
+   "answer": "화면에서 고르신 지역은 강원특별자치도 강릉시인데, 말씀에는 강원특별자치도 횡성군이(가) 나와요. 어느 지역 기준으로 찾아 드릴까요?\n1. 강원특별자치도 강릉시 기준\n2. 강원특별자치도 횡성군 기준",
+   "llm_stages": [
+    "intent"
+   ]
+  },
+  {
+   "qid": "V014",
+   "kind": "limit",
+   "limit_type": "known_info",
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "보일러가 낡아 온수가 안 나와요. 내 집이고 기초연금만 받아요. 수리 지원 돼요?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "태백시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 태백시 노인 기초연금 수급자 보일러 수리 지원",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "태백시",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "태백시"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 1,
+     "national": 0,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00006338"
+   ],
+   "kept_titles": [
+    "태백시 주거취약계층 주거환경개선 지원사업"
+   ],
+   "answer": "보일러 수리 같은 집안 노후 설비 수리는 태백시에서 주거취약계층을 대상으로 지원할 수 있으나, 기초연금만 받으시는 경우 지원 대상인지 꼭 확인이 필요합니다.\n\n- **지원 대상:** 태백시에 1년 이상 살고, 소득이 기준 중위소득 150% 이하인 분이 대상입니다. 주택이 정상적인 집이어야 하며, 65세 이상 고령자 우선 지원합니다.\n- **지원 내용:** 집 안의 급한 노후 설비 수리비를 최대 200만 원까지 지원하며, 초과 비용은 본인이 부담해야 합니다.\n- **신청 장소:** 태백시 주소지 동 행정복지센터에 직접 방문해 신청하셔야 합니다.\n\n기초연금만 받으신다고 해서 바로 지원이 되는지 확실하지 않으니, 먼저 동 행정복지센터에 문의하셔서 소득 기준과 지원 가능 여부를 확인해 보시는 것이 좋습니다. 도움이 필요하시면 동 행정복지센터에 연락해 보시겠어요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "gold_in_sources": true
+  },
+  {
+   "qid": "V015",
+   "kind": "limit",
+   "limit_type": "unsupported_scope",
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "새 걸로 다 바꿔줘?",
+   "history": [
+    {
+     "role": "user",
+     "content": "보일러가 낡아서 더운물이 안 나와. 고쳐 주는 데 있나?"
+    },
+    {
+     "role": "assistant",
+     "content": "태백시에 집 안의 낡은 설비를 고쳐 주는 주거환경개선 지원사업이 있어요. 소득 기준과 주거 형태에 따라 달라져요."
+    }
+   ],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "태백시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 태백시 주거환경개선 지원사업 보일러 교체 신청 방법",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "태백시",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "태백시"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 1,
+     "national": 2,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00006338",
+    "welfare_services_2026_p0040_02",
+    "welfare_services_2026_p0044_01"
+   ],
+   "kept_titles": [
+    "태백시 주거취약계층 주거환경개선 지원사업",
+    "2026 나에게 힘이 되는 복지서비스",
+    "2026 나에게 힘이 되는 복지서비스"
+   ],
+   "answer": "보일러나 가스시설 같은 낡은 집안 설비를 새 것으로 바꾸는 지원은 태백시에서 일부 도움을 받을 수 있습니다.\n\n- **신청 장소:** 태백시 관할 동 행정복지센터에 방문하셔서 신청하시면 됩니다.\n- **지원 대상:** 태백시에 1년 이상 살고, 소득이 기준 중위소득 150% 이하인 분 중 주택 노후도가 심한 65세 이상 어르신이 우선 지원 대상입니다.\n- **지원 내용:** 보일러 같은 노후 설비를 최대 200만 원 이내에서 고쳐 주거나 수리해 줍니다. 다만, 집 밖 수리는 지원되지 않습니다.\n- **가스시설 교체:** LPG용기 사용하는 집은 고무호스를 금속배관으로 바꾸는 안전시설 지원도 읍면동 주민센터에서 신청할 수 있습니다.\n\n먼저 가까운 동 행정복지센터에 가셔서 본인의 상황을 말씀드리고, 지원 자격과 절차를 자세히 상담받아 보세요. 도움이 더 필요하시면 알려 주세요.",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "gold_in_sources": true
+  },
+  {
+   "qid": "V019",
+   "kind": "limit",
+   "limit_type": "region_in_question",
+   "eval_type": "behavior",
+   "status": "user_checked",
+   "question": "횡성인데 보청기 돼?",
+   "history": [],
+   "region": {
+    "kind": "sido_only",
+    "sido": "강원특별자치도",
+    "sigungu": null
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 횡성군 보청기 지원 사업 내용 및 신청 방법",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "횡성군",
+    "source": "question",
+    "screen": {
+     "kind": "sido_only",
+     "sido": "강원특별자치도",
+     "sigungu": null
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "sufficient",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 1,
+     "national": 0,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00004035"
+   ],
+   "kept_titles": [
+    "횡성군 어르신 보청기 및 보행기 지원사업"
+   ],
+   "answer": "횡성군에서는 만 70세 이상 어르신 중 난청 진단을 받은 분에게 보청기 구입비용을 지원하는 사업이 있습니다. 다만, 지원 대상에 해당하는지 담당 부서에 꼭 확인하셔야 합니다.\n\n- **지원 대상:** 만 70세 이상이고 난청 진단(이비인후과 전문의 진단)이 있으면서 기초생활수급자, 차상위계층, 또는 기초연금 수급자여야 합니다.\n- **지원 내용:** 보청기 구입 비용을 지원합니다.\n- **신청 장소:** 읍면 행정복지센터 복지팀에 방문하여 신청서를 제출해야 합니다.\n- **문의처:** 횡성군 가족복지과 033-340-2150으로 연락해 자세한 내용을 확인하세요.\n\n먼저 가까운 읍면 행정복지센터에 문의해 보시는 것이 좋겠습니다. 혹시 지원 대상 조건에 대해 더 궁금한 점 있으신가요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ]
+  },
+  {
+   "qid": "V021",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "혼자 살아. 가끔 들여다봐 주는 데 없나?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "서울특별시",
+    "sigungu": "강북구"
+   },
+   "intent": "search",
+   "search_query": "서울특별시 강북구 어르신 돌봄 서비스 방문 지원",
+   "search_region": {
+    "kind": "region",
+    "sido": "서울특별시",
+    "sigungu": "강북구",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "서울특별시",
+     "sigungu": "강북구"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 2,
+     "national": 2,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00005663",
+    "local:WLF00001212",
+    "welfare_services_2026_p0316_02",
+    "welfare_services_2026_p0026_01"
+   ],
+   "kept_titles": [
+    "고독사 예방 밑반찬 지원사업 기운찬",
+    "복지사각지대 건강음료배달 사업",
+    "2026 나에게 힘이 되는 복지서비스",
+    "2026 나에게 힘이 되는 복지서비스"
+   ],
+   "answer": "혼자 사시는 어르신을 위해 서울 강북구에서 안부 확인과 돌봄을 돕는 몇 가지 지원이 있습니다.\n\n- **고독사 예방 밑반찬 지원사업:** 만 40~64세 중장년 1인 가구 중 일정 조건에 해당하면 주 1회 밑반찬과 함께 안부 확인을 받을 수 있습니다. 다만, 이 사업은 동장이 필요하다고 인정해야 지원 가능합니다.\n- **복지사각지대 건강음료배달 사업:** 저소득 돌봄 취약가구에 건강음료를 배달하며 안부를 확인하는 서비스로, 동 주민센터에 방문 신청해야 합니다.\n- **문의처:** 강북구 복지정책과 (밑반찬 02-901-2494, 건강음료배달 02-901-6722)로 연락해 자세한 지원 대상과 신청 방법을 확인하시는 것이 좋습니다.\n\n지금 가까운 동 주민센터에 연락하거나 방문해서 본인의 상황을 말씀드리고 어떤 지원을 받을 수 있는지 상담받아 보세요. 혹시 혼자 생활하시면서 특별히 어려운 점이 있으신가요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "gold_in_sources": true,
+   "age_limited_docs": [
+    "고독사 예방 밑반찬 지원사업 기운찬"
+   ],
+   "age_limit_in_answer_input": true,
+   "age_limit_in_answer": true
+  },
+  {
+   "qid": "V022",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "혼자 사는데 안부 확인해 주는 데 있나요?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "서울특별시",
+    "sigungu": "강북구"
+   },
+   "intent": "search",
+   "search_query": "서울특별시 강북구 어르신 안부 확인 서비스 지원 내용 및 신청 방법",
+   "search_region": {
+    "kind": "region",
+    "sido": "서울특별시",
+    "sigungu": "강북구",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "서울특별시",
+     "sigungu": "강북구"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 2,
+     "national": 0,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00005663",
+    "local:WLF00001212"
+   ],
+   "kept_titles": [
+    "고독사 예방 밑반찬 지원사업 기운찬",
+    "복지사각지대 건강음료배달 사업"
+   ],
+   "answer": "혼자 사시는 분의 안부 확인은 서울 강북구에서 몇 가지 도움 사업이 있습니다만, 지원 대상과 조건을 꼭 확인하셔야 합니다.\n\n- **고독사 예방 밑반찬 지원사업:** 만 40~64세 중장년 1인 가구 중 고독사 위험이 있는 분에게 주 1회 밑반찬과 함께 안부 확인을 해줍니다. 다만, 이 사업은 안부 확인을 거부하는 분이나 동장이 필요하다고 인정한 분이 대상입니다.\n- **복지사각지대 건강음료배달 사업:** 저소득이나 장애인 등 돌봄이 필요한 분에게 건강음료를 배달하며 안부를 확인합니다. 신청은 강북구 동 주민센터에 방문해서 하시면 됩니다.\n- **문의처:** 두 사업 모두 강북구 복지생활국 복지정책과에서 담당하며, 전화로 자세한 지원 대상과 신청 방법을 확인하실 수 있습니다.\n\n먼저 본인이 해당하는지, 그리고 어떤 지원이 필요한지 강북구 주민센터에 문의해 보시는 것이 좋겠습니다. 도움이 필요하시면 연락해 보시겠어요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "gold_in_sources": true,
+   "age_limited_docs": [
+    "고독사 예방 밑반찬 지원사업 기운찬"
+   ],
+   "age_limit_in_answer_input": true,
+   "age_limit_in_answer": true
+  },
+  {
+   "qid": "V024",
+   "kind": "limit",
+   "limit_type": "refusal",
+   "eval_type": "behavior",
+   "status": "user_checked",
+   "question": "말하기 싫어.",
+   "history": [
+    {
+     "role": "user",
+     "content": "혼자 사는데 안부 확인해 주는 데 있나?"
+    },
+    {
+     "role": "assistant",
+     "content": "강북구에 음료를 배달하면서 안부를 확인하는 사업이 있어요. 저소득 돌봄 취약가구가 대상이라, 기초생활수급자나 차상위에 해당하시는지 여쭤봐도 될까요?"
+    }
+   ],
+   "region": {
+    "kind": "region",
+    "sido": "서울특별시",
+    "sigungu": "강북구"
+   },
+   "intent": "search",
+   "search_query": "서울특별시 강북구 저소득 돌봄 취약가구 안부 확인 서비스 신청 방법",
+   "search_region": {
+    "kind": "region",
+    "sido": "서울특별시",
+    "sigungu": "강북구",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "서울특별시",
+     "sigungu": "강북구"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 2,
+     "national": 0,
+     "reference": 0
+    },
+    "local_policy_found": true,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "local:WLF00001212",
+    "local:WLF00005663"
+   ],
+   "kept_titles": [
+    "복지사각지대 건강음료배달 사업",
+    "고독사 예방 밑반찬 지원사업 기운찬"
+   ],
+   "answer": "말하기 싫으시다면, 강북구에서 혼자 사는 어르신 안부를 확인해 주는 몇 가지 도움 사업이 있습니다.\n\n- **복지사각지대 건강음료배달 사업:** 저소득 돌봄이 필요한 분들께 건강음료를 배달하며 안부를 확인하는 사업입니다. 신청은 동 주민센터에 방문해서 하시면 됩니다.\n- **고독사 예방 밑반찬 지원사업 기운찬:** 고독사 위험이 있는 40~64세 1인 가구에 주 1회 밑반찬을 제공하며 안부를 확인합니다. 별도 신청 없이 지원됩니다.\n- **문의처:** 자세한 내용은 강북구 복지생활국 복지정책과(02-901-6722 또는 02-901-2494)로 연락해 보세요.\n\n필요하시면 동 주민센터에 방문하거나 전화로 상담을 받아보시는 게 좋겠습니다. 혹시 지금 혼자 계시면서 특별히 어려운 점이 있으신가요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "age_limited_docs": [
+    "고독사 예방 밑반찬 지원사업 기운찬"
+   ],
+   "age_limit_in_answer_input": true,
+   "age_limit_in_answer": false
+  }
+ ]
+}
