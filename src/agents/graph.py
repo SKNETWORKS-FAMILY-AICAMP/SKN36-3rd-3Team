@@ -46,6 +46,8 @@ from .evidence_check import (
 from .welfare_answer import make_answer_node
 
 from .welfare_retrieval_v3 import (
+    default_region_keys,
+    wrap_intent_for_region_answers,
     public_unverified,
     make_grouped_retrieval_node,
     route_after_grouped_retrieval,
@@ -62,6 +64,7 @@ def build_graph(
     llm_call: Callable[[str, str], str] | None = None,
     mode: str = "hybrid",
     grouped_search: Callable[..., dict[str, Any]] | None = None,
+    region_keys: Callable[[], list[str]] | None = None,
 ):
     """Safety, Intent, Retrieval, Evidence, Answer 노드를 연결한다.
 
@@ -93,6 +96,13 @@ def build_graph(
                 from src.retrieval.hybrid_retriever import retrieve_welfare
                 retriever = retrieve_welfare
 
+    # 4차: 검색 설정과 지역 이름 목록을 그래프를 만들 때 한 번 정해, 검색 노드와 의도 확인이 같은 것을 쓴다.
+    v3_settings, v3_region_keys = None, region_keys
+    if use_v3 and grouped_search is None:
+        from src.retrieval.config import load_settings
+        v3_settings = load_settings()
+        v3_region_keys = region_keys or default_region_keys(v3_settings)
+
     # 2. 답변 생성 LLM 준비
     if llm_call is None:
         from src.generation.llm import call_llm
@@ -123,7 +133,8 @@ def build_graph(
 
     graph.add_node(
         "intent_check",
-        make_intent_node(mock=mock),
+        # 4차: 지역을 물은 뒤 사용자가 지역 이름으로 답하면 의도 확인을 건너뛰고 원래 질문으로 검색한다.
+        wrap_intent_for_region_answers(make_intent_node(mock=mock), v3_region_keys) if use_v3 else make_intent_node(mock=mock),
     )
 
     graph.add_node(
@@ -135,7 +146,7 @@ def build_graph(
         # 4차: 고른 지역의 정책·전국 자료를 따로 찾는 검색. 지역을 풀 수 없으면 지역 확인으로 끝낸다.
         graph.add_node(
             "welfare_retrieval",
-            make_grouped_retrieval_node(grouped_search),
+            make_grouped_retrieval_node(grouped_search, settings=v3_settings, region_keys=v3_region_keys),
         )
         graph.add_node(
             "region_clarify",

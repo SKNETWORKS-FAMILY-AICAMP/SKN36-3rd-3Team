@@ -11,7 +11,7 @@ from src.generation.prompts import SYSTEM_PROMPT
 from .region_context import selected_region, region_guidance
 from .safety import distress_guidance
 from .welfare_retrieval import select_context_docs
-from .welfare_retrieval_v3 import is_v3_result, v3_answer_guidance, v3_region_fields
+from .welfare_retrieval_v3 import answer_group_label, is_v3_result, v3_answer_guidance, v3_region_fields
 
 
 def source_from_doc(doc: dict[str, Any]) -> dict[str, Any] | None:
@@ -111,8 +111,9 @@ def make_answer_node(
             # 4차: 문서마다 어느 묶음(지역 정책·전국 자료·참고 후보)이고 어느 지역 것인지 함께 넘긴다.
             # 적용 지역이 확정되지 않은 자료(unverified_candidates)는 넘기지 않는다.
             for piece, doc in zip(pieces, context_docs):
-                piece["evidence_group"] = doc.get("evidence_group")
-                piece["region"] = doc.get("region_keys") or []
+                piece["evidence_group"] = answer_group_label(doc.get("evidence_group"))
+                # 안내서 자료의 지역 키 'national' 도 '전국 공통'으로 읽히므로 답변 LLM 에는 넘기지 않는다.
+                piece["region"] = [] if doc.get("evidence_group") == "national" else (doc.get("region_keys") or [])
                 piece["region_status"] = (doc.get("metadata") or {}).get("scope_status")
 
         # 6. Neo4j 정책 관계 정보

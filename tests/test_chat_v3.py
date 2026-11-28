@@ -13,6 +13,7 @@ from src.retrieval.config import RetrievalConfigError
 
 HS = "강원특별자치도|횡성군"
 REGION = {"kind": "region", "sido_name": "강원", "sigungu_name": "횡성군"}
+REGION_GN = {"kind": "region", "sido_name": "강원", "sigungu_name": "강릉시"}
 
 
 def doc(name, group, *, kind="policy", keys=(HS,), score=0.5):
@@ -218,6 +219,137 @@ class RetrievalNodeTests(unittest.TestCase):
             V.make_grouped_retrieval_node(broken)({"question": "q", "region": REGION})
 
 
+REGION_KEYS = ["강원특별자치도|강릉시", "강원특별자치도|횡성군", "강원특별자치도|고성군", "경상남도|고성군"]
+
+
+class QuestionRegionTests(unittest.TestCase):
+    """질문 속 지역 이름 읽기가 검색 노드에 연결됐는지 본다."""
+
+    def run_node(self, region, question, history=None):
+        search = FakeSearch()
+        node = V.make_grouped_retrieval_node(search, region_keys=lambda: REGION_KEYS)
+        state = {"question": question, "region": region, "history": history or []}
+        return node(state), search
+
+    def test_sido_only_screen_narrowed_by_question(self):
+        out, search = self.run_node({"kind": "region", "sido_name": "강원"}, "횡성인데 보청기 돼?")
+        self.assertEqual(search.calls[0][1], R.select_region("강원", "횡성군"))
+        selection = out["retrieval_result"]["selection"]
+        self.assertEqual((selection["source"], selection["screen"]["kind"]), ("question", "sido_only"))
+        name, text = V.v3_region_fields(out["retrieval_result"], None, "화면 지침")
+        self.assertEqual(name, "강원특별자치도 횡성군")
+        self.assertIn("다시 묻지 마세요", text)
+
+    def test_conflict_with_screen_asks_without_searching(self):
+        out, search = self.run_node(REGION_GN, "횡성 엄마가 밥을 못 챙겨 드세요. 도시락 되나요?")
+        self.assertEqual(search.calls, [])
+        error = out["retrieval_result"]["region_error"]
+        self.assertEqual(error["kind"], "region_conflict")
+        self.assertEqual(V.route_after_grouped_retrieval(out), "region_clarify")
+        answer = V.region_clarify_node(out)
+        self.assertIn("어느 지역 기준으로 찾아 드릴까요?", answer["answer"])
+        self.assertEqual([c["label"] for c in answer["choices"]], ["강원특별자치도 강릉시 기준", "강원특별자치도 횡성군 기준"])
+
+    def test_answer_to_the_region_question_is_used(self):
+        history = [{"role": "user", "content": "횡성 엄마가 밥을 못 챙겨 드세요."},
+                   {"role": "assistant", "content": "화면에서 고르신 지역은 … 어느 지역 기준으로 찾아 드릴까요?"}]
+        out, search = self.run_node(REGION_GN, "강원특별자치도 횡성군 기준", history)
+        self.assertEqual(search.calls[0][1], R.select_region("강원", "횡성군"))
+
+    def test_chosen_region_is_used_with_the_original_question_and_kept_afterwards(self):
+        ask_turn = [{"role": "user", "content": "횡성 엄마가 밥을 못 챙겨 드세요. 도시락 되나요?"},
+                    {"role": "assistant", "content": "화면에서 고르신 지역은 강원특별자치도 강릉시인데 … 어느 지역 기준으로 찾아 드릴까요?"}]
+        out, search = self.run_node(REGION_GN, "강원특별자치도 횡성군 기준", ask_turn)
+        self.assertEqual(search.calls[0][0], "횡성 엄마가 밥을 못 챙겨 드세요. 도시락 되나요?")   # 원래 질문으로 검색
+        self.assertEqual(search.calls[0][1], R.select_region("강원", "횡성군"))
+        self.assertEqual(out["search_query"], "횡성 엄마가 밥을 못 챙겨 드세요. 도시락 되나요?")
+        later = ask_turn + [{"role": "user", "content": "강원특별자치도 횡성군 기준"},
+                            {"role": "assistant", "content": "횡성군에는 식사배달사업이 있어요."}]
+        out, search = self.run_node(REGION_GN, "신청은 어디서 해?", later)
+        self.assertEqual(search.calls[0][1], R.select_region("강원", "횡성군"))   # 고른 지역이 다음 질문에도 남는다
+        self.assertEqual(out["retrieval_result"]["selection"]["source"], "question")
+
+    def test_search_words_follow_the_chosen_region(self):
+        history = [{"role": "user", "content": "횡성 엄마가 밥을 못 챙겨 드세요."},
+                   {"role": "assistant", "content": "화면에서 고르신 지역은 강원특별자치도 강릉시인데 … 어느 지역 기준으로 찾아 드릴까요?"},
+                   {"role": "user", "content": "강원특별자치도 횡성군 기준"}, {"role": "assistant", "content": "안내했어요."}]
+        search = FakeSearch()
+        node = V.make_grouped_retrieval_node(search, region_keys=lambda: REGION_KEYS)
+        out = node({"question": "신청은 어디서 해?", "region": REGION_GN, "history": history,
+                    "search_query": "강원 강릉시에서 어르신 도시락 배달 신청 방법"})
+        self.assertEqual(search.calls[0][0], "강원특별자치도 횡성군에서 어르신 도시락 배달 신청 방법")
+        self.assertEqual(out["search_query"], search.calls[0][0])
+
+    def test_align_changes_only_region_words(self):
+        index = V.region_index_loader(lambda: REGION_KEYS)()
+        gn, hs = R.select_region("강원", "강릉시"), R.select_region("강원", "횡성군")
+        cases = {
+            "강원 강릉시에서 어르신 도시락 배달": "강원특별자치도 횡성군에서 어르신 도시락 배달",
+            "강원특별자치도 횡성군 도시락 배달": "강원특별자치도 횡성군 도시락 배달",        # 이미 맞으면 그대로 (겹쳐 붙이지 않음)
+            "어르신 도시락 배달": "강원특별자치도 횡성군 어르신 도시락 배달",
+            "경기 회복이 안 돼서 도시락 배달": "강원특별자치도 횡성군 경기 회복이 안 돼서 도시락 배달",   # 일반 낱말은 그대로
+        }
+        for question, want in cases.items():
+            with self.subTest(question=question):
+                self.assertEqual(V._align_region_words(question, gn, hs, index), want)
+
+    def test_refusal_is_not_overwritten_by_an_earlier_region(self):
+        # 앞서 '횡성'을 말한 사용자 말이 있어도, 지역을 묻는 말에 거절하면 그 지역으로 좁히지 않는다.
+        history = [{"role": "user", "content": "횡성인데 보청기 돼?"}, {"role": "assistant", "content": "안내했어요."},
+                   {"role": "user", "content": "분당구에 사는데 보청기 돼?"},
+                   {"role": "assistant", "content": "말씀하신 '분당구'을(를) … 어느 지역 기준으로 찾아 드릴까요?"}]
+        out, search = self.run_node({"kind": "region", "sido_name": "강원"}, "횡성 말고요", history)
+        self.assertEqual(search.calls[0][1], R.select_region("강원"))
+        self.assertEqual(out["retrieval_result"]["selection"]["source"], "screen")
+
+    def test_answer_without_a_region_does_not_resume_the_old_question(self):
+        history = [{"role": "user", "content": "횡성 엄마가 밥을 못 챙겨 드세요."},
+                   {"role": "assistant", "content": "화면에서 고르신 지역은 강원특별자치도 강릉시인데 … 어느 지역 기준으로 찾아 드릴까요?"}]
+        out, search = self.run_node(REGION_GN, "모르겠어요", history)
+        self.assertEqual(search.calls[0][0], "모르겠어요")
+        self.assertNotIn("search_query", out)
+
+    def test_unknown_place_asks_instead_of_using_the_screen_region(self):
+        out, search = self.run_node(REGION_GN, "분당구에 사는데 보청기 돼?")
+        self.assertEqual(search.calls, [])
+        answer = V.region_clarify_node(out)
+        self.assertIn("'분당구'을(를) 지금 자료의 지역 목록에서 찾지 못했어요", answer["answer"])
+        self.assertEqual([c["label"] for c in answer["choices"]], ["강원특별자치도 강릉시 기준"])
+
+    def test_comparison_keeps_screen_and_is_told_to_answer_step(self):
+        out, search = self.run_node(REGION_GN, "횡성은 밥 갖다준다던데 여긴 왜 없어?")
+        self.assertEqual(search.calls[0][1], R.select_region("강원", "강릉시"))
+        self.assertEqual(out["retrieval_result"]["selection"]["compared"], ["강원특별자치도 횡성군"])
+        self.assertIn("다른 지역(강원특별자치도 횡성군)을 비교해서", V.v3_answer_guidance(out["retrieval_result"]))
+
+    def test_guidance_never_calls_national_documents_common_everywhere(self):
+        # 안내서의 무료급식처럼 시·군·구가 자체 시행하는 사업을 '전국 공통 지원'이라 부르지 않게 한다.
+        result = {"selection": {"kind": "region", "sido": "강원특별자치도", "sigungu": "강릉시"},
+                  "relevance": {"status": "judged", "local_policy_found": False}}
+        guidance = V.v3_answer_guidance(result)
+        self.assertIn(V.NATIONAL_WORDING, guidance)
+        self.assertIn("정부 안내서에 소개된 제도", guidance)
+        self.assertNotIn("national 은 전국 공통 자료", guidance)
+        self.assertNotIn("전국 공통 자료를 안내하고", guidance)
+        # 답변 LLM 에는 national 대신 guidebook 이라는 이름으로 넘긴다. 다른 묶음 이름은 그대로.
+        self.assertEqual(V.answer_group_label("national"), "guidebook")
+        self.assertEqual(V.answer_group_label("local"), "local")
+        self.assertEqual(V.answer_group_label("reference"), "reference")
+
+    def test_region_said_in_an_earlier_turn_narrows_but_never_asks(self):
+        history = [{"role": "user", "content": "횡성인데 보청기 돼?"}, {"role": "assistant", "content": "횡성군에 보청기 지원이 있어요."}]
+        out, search = self.run_node({"kind": "region", "sido_name": "강원"}, "어디 가서 신청해?", history)
+        self.assertEqual(search.calls[0][1], R.select_region("강원", "횡성군"))
+        history = [{"role": "user", "content": "횡성 엄마 얘기야"}, {"role": "assistant", "content": "네"}]
+        out, search = self.run_node(REGION_GN, "어디 가서 신청해?", history)
+        self.assertEqual(search.calls[0][1], R.select_region("강원", "강릉시"))   # 앞 대화만으로는 묻지 않는다
+
+    def test_without_region_keys_reading_is_off(self):
+        search = FakeSearch()
+        V.make_grouped_retrieval_node(search)({"question": "횡성 엄마가 밥을 못 챙겨 드세요.", "region": REGION_GN})
+        self.assertEqual(search.calls[0][1], R.select_region("강원", "강릉시"))
+
+
 class EvidenceNodeTests(unittest.TestCase):
     def state(self):
         out = V.make_grouped_retrieval_node(FakeSearch())({"question": "밥 갖다주는 데 없나?", "region": REGION})
@@ -318,7 +450,8 @@ class GraphTests(unittest.TestCase):
         prompt = llm.answer_prompts[0]
         data = json.loads(prompt.split("\n", 1)[0])
         self.assertEqual([(d["evidence_group"], d["region"], d["region_status"]) for d in data["documents"]],
-                         [("local", [HS], "candidate"), ("national", ["national"], None)])
+                         [("local", [HS], "candidate"), ("guidebook", [], None)])   # 안내서 자료는 '전국'으로 읽히지 않게
+        self.assertNotIn('"national"', prompt.split("\n", 1)[0])
         self.assertIn("담당 기관에서 확인", prompt)
         self.assertIn("나이·대상 제한이 있으면", prompt)   # 2026-11-27 사용자 결정: 대상 나이를 밝힌다
         self.assertNotIn("난임의료비", prompt)    # 관련 없다고 판정된 정책
@@ -361,6 +494,26 @@ class GraphTests(unittest.TestCase):
         self.assertEqual(result["answer_status"], "safety_response")
         self.assertEqual((search.calls, llm.evidence_calls), ([], []))
 
+    def test_region_answer_skips_intent_and_resumes_the_original_question(self):
+        intent_calls = []
+        with patch("src.agents.intent_check.classify_intent",
+                   side_effect=lambda question, history, region: intent_calls.append(question) or
+                   {"intent": "clarify", "search_query": "", "clarification_question": "무엇이 필요하세요?\n1. 가\n2. 나"}):
+            llm, search = FakeLLM(judged("sufficient", [1])), FakeSearch()
+            graph = self.graph_module.build_graph(grouped_search=search, llm_call=llm, region_keys=lambda: REGION_KEYS)
+            history = [{"role": "user", "content": "횡성 엄마가 밥을 못 챙겨 드세요."},
+                       {"role": "assistant", "content": "화면에서 고르신 지역은 강원특별자치도 강릉시인데 … 어느 지역 기준으로 찾아 드릴까요?"}]
+            out = graph.invoke({"question": "강원특별자치도 횡성군 기준", "session_id": None, "region": REGION_GN, "history": history})
+            self.assertEqual(intent_calls, [])                                   # 의도 확인 LLM 을 부르지 않음
+            self.assertEqual(search.calls[0][0], "횡성 엄마가 밥을 못 챙겨 드세요.")
+            self.assertEqual(search.calls[0][1], R.select_region("강원", "횡성군"))
+            self.assertEqual(out["answer_status"], "success")
+            out = graph.invoke({"question": "모르겠어요", "session_id": None, "region": REGION_GN, "history": history})
+            self.assertEqual(intent_calls, ["모르겠어요"])                       # 지역 이름이 없는 답은 평소처럼 의도 확인
+            sido_only = {"kind": "region", "sido_name": "강원"}
+            graph.invoke({"question": "횡성 말고요", "session_id": None, "region": sido_only, "history": history})
+            self.assertEqual(intent_calls, ["모르겠어요", "횡성 말고요"])        # 거절은 선택이 아니다 (시도만 고른 화면에서도)
+
     def test_mode_is_chosen_when_the_graph_is_built(self):
         legacy_retriever = lambda question, mode="hybrid", k=12: {"documents": [], "graph_results": [], "has_evidence": False}  # noqa: E731
         nodes = lambda g: set(g.get_graph().nodes)  # noqa: E731
@@ -385,14 +538,14 @@ class GraphTests(unittest.TestCase):
                 self.graph_module.build_graph(llm_call=FakeLLM({}))
 
     def test_built_graph_keeps_searching_the_collection_it_was_built_with(self):
-        seen = []
+        seen, seen_keys = [], []
 
         def fake_search(question, selection, *, settings=None, **kwargs):
             seen.append((settings.collection, settings.data_version))
             return FakeSearch()(question, selection)
 
         env = {"RAG_RETRIEVAL_MODE": "v3", "QDRANT_COLLECTION": "col_a", "RAG_DATA_VERSION": "dv_a"}
-        with patch.dict(os.environ, env, clear=False), patch("src.retrieval.grouped_search.search_grouped", fake_search):
+        with patch.dict(os.environ, env, clear=False), patch("src.retrieval.grouped_search.search_grouped", fake_search),                 patch("src.retrieval.grouped_search.known_region_keys", lambda settings: seen_keys.append(settings.collection) or REGION_KEYS):
             os.environ.pop("QDRANT_COLLECTION_NAME", None)
             graph = self.graph_module.build_graph(llm_call=FakeLLM(judged("sufficient", [1])))
             os.environ.update({"QDRANT_COLLECTION": "col_b", "RAG_DATA_VERSION": "dv_b"})   # 만든 뒤에 환경 변수가 바뀜
@@ -400,6 +553,7 @@ class GraphTests(unittest.TestCase):
             os.environ["RAG_RETRIEVAL_MODE"] = "legacy_v1"
             graph.invoke({"question": "밥 갖다주는 데 없나?", "session_id": None, "region": REGION})
         self.assertEqual(seen, [("col_a", "dv_a"), ("col_a", "dv_a")])
+        self.assertEqual(seen_keys, ["col_a"])   # 지역 이름 목록도 그래프를 만들 때의 컬렉션에서, 한 번만 받는다
 
 
 if __name__ == "__main__":

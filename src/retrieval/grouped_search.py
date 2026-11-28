@@ -46,6 +46,24 @@ def _default_embed(question: str) -> list[float]:
     return _embedding_model().encode(question.replace("\n", " "), normalize_embeddings=True, convert_to_numpy=True).tolist()
 
 
+_region_keys_cache: dict[tuple[str, str, str], list[str]] = {}
+
+
+def known_region_keys(settings: RetrievalSettings, client: Any = None) -> list[str]:
+    """데이터에 있는 지역 키("시도|시군구") 목록. 질문 속 지역 이름을 알아보는 데 쓴다. 성공한 결과만 기억한다."""
+    key = (settings.qdrant_url, settings.collection, str(settings.data_version))
+    if key not in _region_keys_cache:
+        client = client if client is not None else _client_for(settings.qdrant_url)
+        _ensure_verified(client, settings)
+        response = client.facet(collection_name=settings.collection, key="metadata.applies_to_keys",
+                                facet_filter=_filter(settings), limit=5000, exact=True)
+        keys = sorted(str(h.value) for h in response.hits if "|" in str(h.value))
+        if not keys:
+            raise RetrievalConfigError("데이터에서 지역 키를 하나도 찾지 못했습니다.")
+        _region_keys_cache[key] = keys
+    return _region_keys_cache[key]
+
+
 def _ensure_verified(client: Any, settings: RetrievalSettings) -> None:
     key = (settings.qdrant_url, settings.collection, str(settings.data_version))
     if key not in _verified:

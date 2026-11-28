@@ -1,0 +1,290 @@
+{
+ "what": "4차 채팅 전체 흐름 소규모 측정 (의도 확인·묶음별 검색·근거 판정·답변, 실제 LLM). 공식 성능 아님. 답변은 사람이 확인해야 함",
+ "manifest": {
+  "name": "v4-eval-0.1",
+  "revision": 1
+ },
+ "data_version": "nationwide_2026_11_26_6efc3b7671b3",
+ "collection": "welfare_chunks_v3_6efc3b7671b3",
+ "model": "gpt-4.1-mini",
+ "measured_at": "2026-11-28T09:26:28",
+ "code_sha256": {
+  "script": "48a6a3a9bce2a2e12a8a823c9d46662bb8c3b60c67d4e9e5fa823b8403ac6974"
+ },
+ "usage": {
+  "input": 34542,
+  "output": 3307,
+  "calls": 12,
+  "estimated_usd": 0.0191,
+  "price_basis": {
+   "input": 0.4,
+   "output": 1.6
+  },
+  "seconds": 65.5
+ },
+ "summary": {
+  "questions": 4,
+  "answer_status": {
+   "success": 4
+  },
+  "gold_in_sources": "0/0",
+  "no_local_when_none": "4/4",
+  "age_limit_in_answer": "0/0",
+  "age_limit_not_applicable": [
+   "V006",
+   "V008"
+  ]
+ },
+ "per_question": [
+  {
+   "qid": "V009",
+   "kind": "limit",
+   "limit_type": "cross_region_premise",
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "횡성은 밥 갖다준다던데 여긴 왜 없어?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 강릉시 어르신 식사 배달 사업 현황 및 지원 내용",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "강릉시"
+    },
+    "compared": [
+     "강원특별자치도 횡성군"
+    ]
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 0,
+     "national": 3,
+     "reference": 0
+    },
+    "local_policy_found": false,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "elderly_welfare_2026_vol1_p0227_01",
+    "elderly_welfare_2026_vol1_p0230_01",
+    "elderly_welfare_2026_vol1_p0230_01"
+   ],
+   "kept_titles": [
+    "2026년 노인보건복지사업안내 1권",
+    "2026년 노인보건복지사업안내 1권",
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "answer": "강원특별자치도 강릉시에서는 횡성군처럼 밥을 집으로 갖다 주는 정책이 검색 자료에 나타나지 않았습니다. 다만, 전국적으로 노인 무료급식과 도시락 배달 사업이 있으니 참고하세요.\n\n- **전국 공통 지원:** 저소득 노인이나 거동이 불편한 노인에게 경로식당 무료급식이나 도시락 배달 서비스가 있습니다.  \n- **지원 내용:** 도시락 배달 시 건강과 안전도 함께 확인하는 서비스가 포함됩니다.  \n- **문의처:** 강릉시 주민센터나 노인복지 담당 부서에 문의하시면 지역 내 지원 여부와 신청 방법을 자세히 안내받으실 수 있습니다.\n\n지금 가까운 주민센터에 전화나 방문해서 강릉시에서 제공하는 식사 지원 서비스가 있는지 확인해 보시는 것이 좋겠습니다. 혹시 다른 도움이 필요하신가요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "local_in_sources_when_none": []
+  },
+  {
+   "qid": "V006",
+   "kind": "paraphrase",
+   "limit_type": null,
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "혼자 사는데 밥 갖다주는 데 없나?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 강릉시 어르신 식사 배달 서비스",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "강릉시"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 0,
+     "national": 3,
+     "reference": 0
+    },
+    "local_policy_found": false,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "elderly_welfare_2026_vol1_p0230_01",
+    "elderly_welfare_2026_vol1_p0227_01",
+    "elderly_welfare_2026_vol1_p0227_05"
+   ],
+   "kept_titles": [
+    "2026년 노인보건복지사업안내 1권",
+    "2026년 노인보건복지사업안내 1권",
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "answer": "강릉시에서 혼자 사시는 어르신께 밥을 배달해 주는 서비스에 대한 구체적인 정보는 현재 자료에 없습니다. 다만, 전국적으로는 밥과 반찬을 배달해 드리는 노인 돌봄 서비스가 있습니다.\n\n- **지원 내용:** 저소득 독거노인이나 거동이 불편한 어르신께 밥, 국, 반찬 등을 배달해 드리는 서비스가 있습니다. 건강 상태에 맞는 식사도 제공할 수 있습니다.\n- **지원 대상:** 보통 60세 이상 저소득 독거노인 등이 대상이며, 지역별로 다를 수 있으니 확인이 필요합니다.\n- **문의처:** 가까운 동 주민센터나 강릉시 노인복지 관련 부서에 문의하시면 지역 맞춤 지원 여부와 신청 방법을 안내받을 수 있습니다.\n\n지금 가까운 주민센터에 전화나 방문하셔서 밥 배달 서비스가 있는지 물어보시는 것이 좋겠습니다. 혹시 다른 도움이 필요하신가요?",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "local_in_sources_when_none": [],
+   "age_limited_docs": [
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "age_limit_in_answer_input": true,
+   "age_limited_doc_mentioned": false,
+   "age_limit_in_answer": false
+  },
+  {
+   "qid": "V008",
+   "kind": "caregiver",
+   "limit_type": null,
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "강릉에 혼자 계신 어머니, 식사 챙겨 주는 데 있나요?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 강릉시 어르신 식사 지원 서비스",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "강릉시"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 0,
+     "national": 2,
+     "reference": 0
+    },
+    "local_policy_found": false,
+    "quote_mismatch": 0,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "elderly_welfare_2026_vol1_p0227_02",
+    "elderly_welfare_2026_vol1_p0227_05"
+   ],
+   "kept_titles": [
+    "2026년 노인보건복지사업안내 1권",
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "answer": "강릉시에 혼자 계신 어머니께 식사를 챙겨 드리는 지원은 현재 자료에 강릉시 지역 정책은 확인되지 않았습니다. 다만, 전국적으로는 저소득 독거노인에게 무료 또는 저렴한 식사 지원 제도가 있습니다.\n\n- **지원 대상:** 기초생활수급자, 차상위계층, 저소득 독거노인 등 식사를 거를 우려가 있는 60세 이상 노인에게 지원됩니다.\n- **지원 내용:** 밥, 국, 반찬 등 가정식처럼 식사를 제공하며, 건강 상태에 맞는 치료식도 고려합니다. 저소득 노인은 무료로 받을 수 있습니다.\n- **문의처:** 가까운 동 주민센터나 노인복지관에 연락하여 강릉시 내 식사 지원 서비스가 있는지 확인해 보시는 것이 좋습니다.\n\n먼저 어머니께서 기초생활수급자나 차상위계층인지, 식사 준비가 어려운 상황인지 알려주실 수 있나요? 그러면 더 자세히 안내해 드리겠습니다.",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "local_in_sources_when_none": [],
+   "age_limited_docs": [
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "age_limit_in_answer_input": true,
+   "age_limited_doc_mentioned": false,
+   "age_limit_in_answer": false
+  },
+  {
+   "qid": "L006",
+   "kind": "base",
+   "limit_type": null,
+   "eval_type": "retrieval",
+   "status": "user_checked",
+   "question": "혼자 사는데 밥 챙겨 먹기가 힘들어. 밥 갖다주는 데 없나?",
+   "history": [],
+   "region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시"
+   },
+   "intent": "search",
+   "search_query": "강원특별자치도 강릉시 어르신 식사 배달 서비스 지원 방법",
+   "search_region": {
+    "kind": "region",
+    "sido": "강원특별자치도",
+    "sigungu": "강릉시",
+    "source": "screen",
+    "screen": {
+     "kind": "region",
+     "sido": "강원특별자치도",
+     "sigungu": "강릉시"
+    },
+    "compared": []
+   },
+   "choices": null,
+   "answer_status": "success",
+   "safety_status": "normal",
+   "evidence_verdict": "partial",
+   "relevance": {
+    "status": "judged",
+    "kept": {
+     "local": 0,
+     "national": 2,
+     "reference": 0
+    },
+    "local_policy_found": false,
+    "quote_mismatch": 1,
+    "quote_partly_rephrased": 0
+   },
+   "sources": [
+    "elderly_welfare_2026_vol1_p0230_01",
+    "elderly_welfare_2026_vol1_p0227_01"
+   ],
+   "kept_titles": [
+    "2026년 노인보건복지사업안내 1권",
+    "2026년 노인보건복지사업안내 1권"
+   ],
+   "answer": "강릉시에서 밥을 배달해 주는 서비스에 대한 구체적인 정보는 지금 자료에 없지만, 전국적으로 노인 도시락 배달 서비스가 있습니다.\n\n- **지원 내용:** 노인맞춤돌봄서비스를 통해 도시락과 반찬을 배달해 주는 곳이 있습니다. 배달하면서 건강 상태도 확인해 줍니다.\n- **신청 장소:** 가까운 동 주민센터나 노인복지관에 문의하시면 지역에서 운영하는 식사 배달 서비스를 안내받을 수 있습니다.\n- **문의처:** 강릉시 주민센터에 연락해 보시면 강릉시에서 제공하는 식사 지원 서비스가 있는지 알려줍니다.\n\n먼저 가까운 주민센터에 전화하거나 방문해서 식사 배달 서비스가 있는지 물어보시는 것이 좋겠습니다. 도움이 필요하시면 언제든 말씀해 주세요.",
+   "llm_stages": [
+    "intent",
+    "evidence",
+    "answer"
+   ],
+   "local_in_sources_when_none": []
+  }
+ ]
+}
